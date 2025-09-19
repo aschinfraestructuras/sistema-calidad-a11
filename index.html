@@ -3,81 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal de Calidad ASCH - A-11 (Langa - Aranda)</title>
+    <title>Portal de Calidad ASCH-OHLA - Sistema de Gestão de Qualidade</title>
     <link rel="stylesheet" href="assets/styles.css">
-    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏗️</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏗️</text></svg>">
 </head>
 <body>
-    <!-- Header Principal -->
+    <!-- Header -->
     <header class="header">
-        <div class="header-content">
-            <div class="logo-section">
-                <div class="logo">🏗️</div>
+        <div class="header-container">
+            <div class="logo-section" onclick="portal.showDashboard()" style="cursor: pointer;">
+                <div class="logo">📋</div>
                 <div class="title-section">
-                    <h1>Portal de Calidad ASCH</h1>
-                    <p class="subtitle">A-11 • Langa de Duero - Aranda de Duero</p>
-                    <div class="status-badge">
-                        <span class="status-dot"></span>
-                        Sistema Activo
-                    </div>
+                    <h1>Portal de Calidad ASCH-OHLA</h1>
+                    <h2>Sistema de Gestão de Qualidade • UTE A11 LANGA-ARANDA</h2>
+                    <div class="project-info">A-11 • Langa de Duero - Aranda de Duero</div>
                 </div>
             </div>
             <div class="header-actions">
-                <button id="themeToggle" class="theme-toggle" title="Cambiar tema">
-                    <span class="theme-icon">🌙</span>
-                </button>
                 <div class="search-container">
-                    <input type="text" id="searchInput" placeholder="Buscar documentos, tags o PK..." class="search-input">
-                    <button id="searchBtn" class="search-btn">🔍</button>
+                    <input type="text" id="searchInput" placeholder="Buscar documentos, tags o códigos..." class="search-input">
+                    <button class="search-btn" id="searchBtn">🔍</button>
                 </div>
+                <button id="uploadBtn" class="upload-btn">
+                    <span class="btn-icon">📤</span>
+                    <span class="btn-text">Subir Documento</span>
+                </button>
+                <button id="dashboardBtn" class="dashboard-btn">
+                    <span class="btn-icon">📊</span>
+                    <span class="btn-text">Dashboard</span>
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- Layout Principal -->
+    <!-- Main Layout -->
     <div class="main-layout">
-        <!-- Sidebar de Navegación -->
-        <nav class="sidebar">
+        <!-- Sidebar -->
+        <aside class="sidebar">
             <div class="sidebar-header">
-                <h2>Capítulos de Calidad</h2>
-                <div class="chapter-count" id="totalDocs">0 documentos</div>
+                <h3>Capítulos de Calidad</h3>
+                <div class="chapter-count" id="chapterCount">21 capítulos</div>
             </div>
             
             <div class="chapters-list" id="chaptersList">
-                <!-- Los capítulos se cargarán dinámicamente -->
+                <!-- Capítulos serão carregados dinamicamente -->
             </div>
             
             <div class="sidebar-footer">
                 <div class="quick-stats">
                     <div class="stat-item">
-                        <span class="stat-number" id="totalChapters">21</span>
-                        <span class="stat-label">Capítulos</span>
+                        <span class="stat-number" id="totalDocs">0</span>
+                        <span class="stat-label">Documentos</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number" id="activeDocs">0</span>
-                        <span class="stat-label">Activos</span>
+                        <span class="stat-number" id="uploadedDocs">0</span>
+                        <span class="stat-label">Subidos</span>
                     </div>
                 </div>
             </div>
-        </nav>
+        </aside>
 
-        <!-- Contenido Principal -->
+        <!-- Main Content -->
         <main class="main-content">
-            <!-- Breadcrumb -->
-            <nav class="breadcrumb" id="breadcrumb">
-                <span class="breadcrumb-item active">Inicio</span>
-            </nav>
+            <!-- Welcome Section -->
+            <div id="welcomeSection" class="welcome-section">
+                <div class="welcome-content">
+                    <div class="welcome-icon">📊</div>
+                    <h2>Dashboard de Calidad ASCH-OHLA</h2>
+                    <p>Sistema de Gestão de Qualidade - UTE A11 LANGA-ARANDA</p>
+                    
+                    <!-- Informações da Obra -->
+                    <div class="work-info-section">
+                        <h3>🏗️ Información de la Obra</h3>
+                        <div class="work-info-grid">
+                            <div class="work-info-card">
+                                <div class="info-icon">🛣️</div>
+                                <div class="info-content">
+                                    <h4>Autovía A-11</h4>
+                                    <p>Tramo: Variante de Langa de Duero - Variante de Aranda de Duero</p>
+                                </div>
+                            </div>
+                            <div class="work-info-card">
+                                <div class="info-icon">🤝</div>
+                                <div class="info-content">
+                                    <h4>UTE A11 LANGA-ARANDA</h4>
+                                    <p>Contratista: OHLA - ASCH</p>
+                                </div>
+                            </div>
+                            <div class="work-info-card">
+                                <div class="info-icon">📅</div>
+                                <div class="info-content">
+                                    <h4>Estado del Proyecto</h4>
+                                    <p>En ejecución • Fase: Construcción</p>
+                                </div>
+                            </div>
+                            <div class="work-info-card">
+                                <div class="info-icon">👷</div>
+                                <div class="info-content">
+                                    <h4>Responsable de Calidad</h4>
+                                    <p>José Antunes • Técnico de Calidad</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-            <!-- Filtros y Controles -->
-            <div class="content-header">
-                <div class="filters-section">
+                    <div class="stats-grid">
+                        <div class="stat-card primary">
+                            <div class="stat-icon">📚</div>
+                            <div class="stat-number">21</div>
+                            <div class="stat-label">Capítulos de Calidad</div>
+                        </div>
+                        <div class="stat-card success">
+                            <div class="stat-icon">📄</div>
+                            <div class="stat-number" id="totalDocuments">0</div>
+                            <div class="stat-label">Documentos Totales</div>
+                        </div>
+                        <div class="stat-card info">
+                            <div class="stat-icon">📤</div>
+                            <div class="stat-number" id="uploadedDocuments">0</div>
+                            <div class="stat-label">Documentos Subidos</div>
+                        </div>
+                        <div class="stat-card warning">
+                            <div class="stat-icon">🕒</div>
+                            <div class="stat-number" id="recentDocuments">0</div>
+                            <div class="stat-label">Esta Semana</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Documentos Subidos Recentemente -->
+                    <div class="recent-documents">
+                        <div class="recent-docs-header">
+                            <h3>Documentos Subidos Recientemente</h3>
+                            <button class="btn-danger" onclick="portal.clearAllUploadedDocuments()" title="Eliminar todos los documentos subidos">
+                                🗑️ Limpiar Todo
+                            </button>
+                        </div>
+                        <div class="recent-docs-list" id="recentDocsList">
+                            <p class="text-muted">No hay documentos subidos recientemente</p>
+                        </div>
+                    </div>
+
+                    <!-- Ações Rápidas -->
+                    <div class="quick-actions">
+                        <h3>⚡ Acciones Rápidas</h3>
+                        <div class="actions-grid">
+                            <button class="action-card" onclick="portal.showUpload()">
+                                <div class="action-icon">📤</div>
+                                <div class="action-text">Subir Documento</div>
+                            </button>
+                            <button class="action-card" onclick="portal.selectChapter(portal.manifest.secciones[0])">
+                                <div class="action-icon">📋</div>
+                                <div class="action-text">Ver Capítulo 01</div>
+                            </button>
+                            <button class="action-card" onclick="portal.selectChapter(portal.manifest.secciones[5])">
+                                <div class="action-icon">🔍</div>
+                                <div class="action-text">Ver PPI (Cap. 06)</div>
+                            </button>
+                            <button class="action-card" onclick="portal.selectChapter(portal.manifest.secciones[14])">
+                                <div class="action-icon">🧪</div>
+                                <div class="action-text">Ver Laboratorio (Cap. 15)</div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documents Section -->
+            <div id="documentsSection" class="documents-section hidden">
+                <div class="section-header">
+                    <div class="breadcrumb" id="breadcrumb">
+                        <span class="breadcrumb-item">Inicio</span>
+                    </div>
+                    <div class="section-title">
+                        <h2 id="sectionTitle">Documentos</h2>
+                        <div class="section-meta">
+                            <span id="sectionCode"></span>
+                            <span id="documentCount">0 documentos</span>
+                        </div>
+                    </div>
+                    <div class="section-actions">
+                        <button id="addDocumentBtn" class="add-document-btn">
+                            <span class="btn-icon">➕</span>
+                            <span class="btn-text">Añadir Documento</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="filters-bar">
                     <div class="filter-group">
                         <label for="statusFilter">Estado:</label>
                         <select id="statusFilter" class="filter-select">
                             <option value="">Todos</option>
                             <option value="Aprobado">Aprobado</option>
-                            <option value="Borrador">Borrador</option>
-                            <option value="Obsoleto">Obsoleto</option>
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Revisión">Revisión</option>
                         </select>
                     </div>
                     <div class="filter-group">
@@ -89,100 +208,107 @@
                             <option value="month">Este mes</option>
                         </select>
                     </div>
-                    <button id="clearFilters" class="clear-filters-btn">Limpiar filtros</button>
-                </div>
-                
-                <div class="view-controls">
-                    <button id="gridView" class="view-btn active" title="Vista de tarjetas">⊞</button>
-                    <button id="listView" class="view-btn" title="Vista de lista">☰</button>
-                </div>
-            </div>
-
-            <!-- Área de Contenido -->
-            <div class="content-area">
-                <!-- Mensaje de bienvenida -->
-                <div id="welcomeMessage" class="welcome-section">
-                    <div class="welcome-content">
-                        <h2>Bienvenido al Portal de Calidad</h2>
-                        <p>Seleccione un capítulo del menú lateral para explorar los documentos de calidad de la obra A-11.</p>
-                        <div class="welcome-features">
-                            <div class="feature-item">
-                                <span class="feature-icon">🔍</span>
-                                <span>Búsqueda avanzada por texto y tags</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon">📁</span>
-                                <span>21 capítulos organizados por ISO</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon">📱</span>
-                                <span>Acceso desde cualquier dispositivo</span>
-                            </div>
-                        </div>
-                    </div>
+                    <button id="clearFiltersBtn" class="clear-filters-btn">Limpiar filtros</button>
                 </div>
 
-                <!-- Lista de documentos -->
-                <div id="documentsContainer" class="documents-container hidden">
-                    <div class="section-header">
-                        <h2 id="sectionTitle">Documentos</h2>
-                        <div class="section-info">
-                            <span id="sectionCode" class="section-code"></span>
-                            <span id="docCount" class="doc-count">0 documentos</span>
-                        </div>
-                    </div>
-                    <div id="documentsList" class="documents-list">
-                        <!-- Los documentos se cargarán dinámicamente -->
-                    </div>
-                </div>
-
-                <!-- Mensaje de búsqueda sin resultados -->
-                <div id="noResults" class="no-results hidden">
-                    <div class="no-results-content">
-                        <span class="no-results-icon">🔍</span>
-                        <h3>No se encontraron documentos</h3>
-                        <p>Intente ajustar los filtros o términos de búsqueda.</p>
-                        <button id="resetSearch" class="reset-search-btn">Limpiar búsqueda</button>
-                    </div>
+                <div class="documents-grid" id="documentsGrid">
+                    <!-- Documentos serão carregados aqui -->
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- Modal de Documento -->
-    <div id="documentModal" class="modal hidden">
+    <!-- Upload Modal -->
+    <div id="uploadModal" class="modal hidden">
         <div class="modal-overlay"></div>
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="modalTitle">Documento</h3>
-                <div class="modal-actions">
-                    <button id="downloadDoc" class="modal-btn download-btn" title="Descargar">
-                        📥
-                    </button>
-                    <button id="printDoc" class="modal-btn print-btn" title="Imprimir">
-                        🖨️
-                    </button>
-                    <button id="closeModal" class="modal-btn close-btn" title="Cerrar">
-                        ✕
-                    </button>
-                </div>
+                <h3>Subir Documento</h3>
+                <button class="close-btn" id="closeUploadModal">✕</button>
             </div>
             <div class="modal-body">
-                <iframe id="documentFrame" src="" frameborder="0"></iframe>
+                <form id="uploadForm">
+                    <div class="form-group">
+                        <label for="documentTitle">Título del Documento:</label>
+                        <input type="text" id="documentTitle" required placeholder="Ej: Plan de Calidad - Semana 1">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="documentChapter">Capítulo:</label>
+                        <select id="documentChapter" required>
+                            <option value="">Seleccionar capítulo...</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="documentTags">Tags (opcional):</label>
+                        <input type="text" id="documentTags" placeholder="Ej: calidad, plan, semana1">
+                        <small>Separa las tags con comas</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fileInput">Archivo:</label>
+                        <div class="file-upload-area" id="fileUploadArea">
+                            <input type="file" id="fileInput" accept=".html,.htm,.pdf,.doc,.docx,.rtf,.txt,.md,.xls,.xlsx,.csv,.ods,.ppt,.pptx,.odp,.jpg,.jpeg,.png,.gif,.bmp,.svg,.webp,.tiff,.xml,.json,.yaml,.yml,.ini,.cfg,.conf,.js,.css,.php,.py,.java,.cpp,.c,.h,.zip,.rar,.7z,.tar,.gz,.dwg,.dxf,.cad,.psd,.ai,.eps" hidden>
+                            <div class="upload-placeholder">
+                                <div class="upload-icon">📄</div>
+                                <p>Arrastra un archivo aquí o haz clic para seleccionar</p>
+                                <p class="file-types">Soporta: Documentos, Planilhas, Imagens, Código, Arquivos CAD, e muito mais!</p>
+                                <button type="button" class="select-file-btn">Seleccionar Archivo</button>
+                            </div>
+                            <div class="file-preview hidden" id="filePreview">
+                                <div class="file-info">
+                                    <span class="file-icon" id="fileIcon">📄</span>
+                                    <div class="file-details">
+                                        <div class="file-name" id="fileName"></div>
+                                        <div class="file-size" id="fileSize"></div>
+                                    </div>
+                                </div>
+                                <button type="button" class="remove-file-btn" id="removeFileBtn">✕</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancelUpload">Cancelar</button>
+                        <button type="submit" class="btn-primary" id="submitUpload">Subir Documento</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 
-    <!-- Loading Spinner -->
-    <div id="loadingSpinner" class="loading-spinner hidden">
-        <div class="spinner"></div>
-        <p>Cargando documentos...</p>
+    <!-- Document Viewer Modal -->
+    <div id="viewerModal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content viewer-content">
+            <div class="modal-header">
+                <h3 id="viewerTitle">Documento</h3>
+                <div class="viewer-actions">
+                    <button class="btn-secondary" id="printBtn">🖨️ Imprimir</button>
+                    <button class="btn-secondary" id="downloadBtn">📥 Descargar</button>
+                    <button class="btn-secondary" id="editBtn">✏️ Editar</button>
+                    <button class="close-btn" id="closeViewerModal">✕</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="viewerContent">
+                    <iframe id="documentFrame" src="about:blank"></iframe>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Toast Notifications -->
     <div id="toastContainer" class="toast-container"></div>
 
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner hidden">
+        <div class="spinner"></div>
+        <p>Cargando...</p>
+    </div>
+
     <!-- Scripts -->
-    <script src="assets/app.js"></script>
+    <script src="assets/app-simple.js"></script>
 </body>
 </html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPI - Control de armaduras PK 15+200</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #2563eb;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2563eb;
+            margin: 0;
+            font-size: 1.8em;
+        }
+        .header .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .info-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #2563eb;
+        }
+        .info-item strong {
+            color: #2563eb;
+        }
+        .section {
+            margin-bottom: 25px;
+        }
+        .section h2 {
+            color: #2563eb;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 10px;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .table th, .table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .table th {
+            background-color: #2563eb;
+            color: white;
+        }
+        .table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        .status.aprobado {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .signature-section {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .signature-box {
+            border: 2px solid #ddd;
+            padding: 20px;
+            text-align: center;
+            min-height: 100px;
+        }
+        .signature-box h3 {
+            margin-top: 0;
+            color: #2563eb;
+        }
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <!--
+    METADATOS:
+    - Título: PPI - Control de armaduras PK 15+200
+    - Capítulo: 06
+    - Tags: PPI, armaduras, control, PK
+    - Estado: Aprobado
+    - Fecha: 2025-09-26
+    - Autor: ASCH Infraestructuras
+    -->
+
+    <div class="container">
+        <div class="header">
+            <h1>PUNTO DE INSPECCIÓN Y CONTROL (PPI)</h1>
+            <div class="subtitle">Control de Armaduras - PK 15+200</div>
+            <div class="subtitle">Obra A-11 • Langa de Duero - Aranda de Duero</div>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-item">
+                <strong>Fecha de Inspección:</strong><br>
+                26 de Septiembre de 2025
+            </div>
+            <div class="info-item">
+                <strong>Punto Kilométrico:</strong><br>
+                PK 15+200
+            </div>
+            <div class="info-item">
+                <strong>Inspector Responsable:</strong><br>
+                Juan Carlos Martínez
+            </div>
+            <div class="info-item">
+                <strong>Estado:</strong><br>
+                <span class="status aprobado">APROBADO</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📋 Datos Generales</h2>
+            <table class="table">
+                <tr>
+                    <th>Elemento</th>
+                    <th>Especificación</th>
+                    <th>Medida Real</th>
+                    <th>Conformidad</th>
+                </tr>
+                <tr>
+                    <td>Diámetro barras principales</td>
+                    <td>Ø 20 mm</td>
+                    <td>Ø 20.1 mm</td>
+                    <td>✅ Conforme</td>
+                </tr>
+                <tr>
+                    <td>Separación entre barras</td>
+                    <td>200 mm</td>
+                    <td>198 mm</td>
+                    <td>✅ Conforme</td>
+                </tr>
+                <tr>
+                    <td>Recubrimiento mínimo</td>
+                    <td>40 mm</td>
+                    <td>42 mm</td>
+                    <td>✅ Conforme</td>
+                </tr>
+                <tr>
+                    <td>Longitud de solape</td>
+                    <td>800 mm</td>
+                    <td>820 mm</td>
+                    <td>✅ Conforme</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>🔍 Observaciones</h2>
+            <p>La inspección de las armaduras en el punto PK 15+200 ha sido realizada conforme a las especificaciones del proyecto. Todas las medidas tomadas se encuentran dentro de los márgenes de tolerancia establecidos.</p>
+            
+            <p><strong>Detalles técnicos:</strong></p>
+            <ul>
+                <li>Las barras de acero B500S presentan el diámetro nominal especificado</li>
+                <li>La separación entre barras es uniforme y conforme</li>
+                <li>El recubrimiento de hormigón es adecuado</li>
+                <li>Los solapes están correctamente ejecutados</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>📸 Documentación Fotográfica</h2>
+            <p>Se han tomado fotografías de la inspección que se adjuntan al expediente:</p>
+            <ul>
+                <li>Foto 001: Vista general de la armadura</li>
+                <li>Foto 002: Detalle de separación entre barras</li>
+                <li>Foto 003: Medición de recubrimiento</li>
+                <li>Foto 004: Detalle de solapes</li>
+            </ul>
+        </div>
+
+        <div class="signature-section">
+            <div class="signature-box">
+                <h3>Inspector de Calidad</h3>
+                <p>Juan Carlos Martínez</p>
+                <p>Nº Colegiado: 12345</p>
+                <p>Fecha: 26/09/2025</p>
+                <div style="margin-top: 20px; border-top: 1px solid #ddd; padding-top: 10px;">
+                    <small>Firma</small>
+                </div>
+            </div>
+            <div class="signature-box">
+                <h3>Jefe de Obra</h3>
+                <p>María González</p>
+                <p>ASCH Infraestructuras</p>
+                <p>Fecha: 26/09/2025</p>
+                <div style="margin-top: 20px; border-top: 1px solid #ddd; padding-top: 10px;">
+                    <small>Firma</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

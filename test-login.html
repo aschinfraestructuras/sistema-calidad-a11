@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Login</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        button { padding: 10px 20px; margin: 5px; }
+        input { padding: 8px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Teste de Login - Portal de Calidad</h1>
+    
+    <div class="test-section">
+        <h2>1. Verificar Configuração</h2>
+        <div id="configStatus">Carregando...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. Teste de Login</h2>
+        <input type="text" id="username" placeholder="Username" value="admin">
+        <input type="password" id="password" placeholder="Password" value="asch2025">
+        <button onclick="testLogin()">Testar Login</button>
+        <div id="loginResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. Verificar LocalStorage</h2>
+        <button onclick="checkLocalStorage()">Verificar LocalStorage</button>
+        <div id="localStorageResult"></div>
+    </div>
+
+    <script src="config.js"></script>
+    <script>
+        // Verificar se CONFIG está carregado
+        function checkConfig() {
+            const statusDiv = document.getElementById('configStatus');
+            
+            if (typeof CONFIG !== 'undefined') {
+                statusDiv.innerHTML = `
+                    <div class="success">
+                        ✅ CONFIG carregado com sucesso!<br>
+                        Auth enabled: ${CONFIG.auth.enabled}<br>
+                        Usuários: ${CONFIG.auth.users.length}<br>
+                        Usuários: ${CONFIG.auth.users.map(u => u.username).join(', ')}
+                    </div>
+                `;
+            } else {
+                statusDiv.innerHTML = '<div class="error">❌ CONFIG não está carregado!</div>';
+            }
+        }
+        
+        // Função para gerar hash SHA-256
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+        
+        // Testar login
+        async function testLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const resultDiv = document.getElementById('loginResult');
+            
+            if (typeof CONFIG === 'undefined') {
+                resultDiv.innerHTML = '<div class="error">❌ CONFIG não está carregado!</div>';
+                return;
+            }
+            
+            try {
+                // Gerar hash da senha
+                const passwordHash = await hashPassword(password);
+                
+                // Verificar se o hash corresponde
+                const user = CONFIG.auth.users.find(u => 
+                    u.username === username && u.passwordHash === passwordHash
+                );
+                
+                if (user) {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            ✅ Login bem-sucedido!<br>
+                            Usuário: ${user.name}<br>
+                            Role: ${user.role}<br>
+                            Hash da senha: ${passwordHash.substring(0, 16)}...
+                        </div>
+                    `;
+                    
+                    // Simular login
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    localStorage.setItem('isAuthenticated', 'true');
+                } else {
+                    resultDiv.innerHTML = '<div class="error">❌ Credenciais inválidas!</div>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Erro: ${error.message}</div>`;
+            }
+        }
+        
+        // Verificar localStorage
+        function checkLocalStorage() {
+            const resultDiv = document.getElementById('localStorageResult');
+            const currentUser = localStorage.getItem('currentUser');
+            const isAuthenticated = localStorage.getItem('isAuthenticated');
+            
+            resultDiv.innerHTML = `
+                <div class="test-section">
+                    <strong>LocalStorage:</strong><br>
+                    currentUser: ${currentUser || 'Não definido'}<br>
+                    isAuthenticated: ${isAuthenticated || 'Não definido'}
+                </div>
+            `;
+        }
+        
+        // Executar verificações ao carregar
+        window.onload = function() {
+            checkConfig();
+            checkLocalStorage();
+        };
+    </script>
+</body>
+</html>

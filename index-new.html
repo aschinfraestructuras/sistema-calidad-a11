@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Calidad ASCH-OHLA - UTE A11</title>
+    <link rel="stylesheet" href="assets/styles-new.css">
+    <link rel="manifest" href="data/manifest.json">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo">🏗️</div>
+                <div class="title-section">
+                    <h1>Portal de Calidad</h1>
+                    <h2>ASCH - OHLA • UTE A11 LANGA-ARANDA</h2>
+                    <div class="project-info">A-11 • Langa de Duero - Aranda de Duero</div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Buscar documentos..." class="search-input">
+                    <button class="search-btn">🔍</button>
+                </div>
+                <button id="uploadBtn" class="upload-btn">📤 Subir Documento</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Capítulos de Calidad</h3>
+                <div class="chapter-count" id="chapterCount">21 capítulos</div>
+            </div>
+            
+            <div class="chapters-list" id="chaptersList">
+                <!-- Capítulos serão carregados aqui -->
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Welcome Section -->
+            <div id="welcomeSection" class="welcome-section">
+                <div class="welcome-content">
+                    <h2>Bienvenido al Portal de Calidad</h2>
+                    <p>Sistema de gestión de documentos para la obra A-11</p>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalDocuments">0</div>
+                            <div class="stat-label">Documentos</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">21</div>
+                            <div class="stat-label">Capítulos</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="uploadedDocuments">0</div>
+                            <div class="stat-label">Subidos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documents Section -->
+            <div id="documentsSection" class="documents-section hidden">
+                <div class="section-header">
+                    <div class="breadcrumb" id="breadcrumb">
+                        <span class="breadcrumb-item">Inicio</span>
+                    </div>
+                    <div class="section-title">
+                        <h2 id="sectionTitle">Documentos</h2>
+                        <div class="section-meta">
+                            <span id="sectionCode"></span>
+                            <span id="documentCount">0 documentos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="documents-grid" id="documentsGrid">
+                    <!-- Documentos serão carregados aqui -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Upload Modal -->
+    <div id="uploadModal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Subir Documento</h3>
+                <button class="close-btn" id="closeUploadModal">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="uploadForm">
+                    <div class="form-group">
+                        <label for="documentTitle">Título del Documento:</label>
+                        <input type="text" id="documentTitle" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="documentChapter">Capítulo:</label>
+                        <select id="documentChapter" required>
+                            <option value="">Seleccionar capítulo...</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fileInput">Archivo HTML:</label>
+                        <div class="file-upload-area" id="fileUploadArea">
+                            <input type="file" id="fileInput" accept=".html" hidden>
+                            <div class="upload-placeholder">
+                                <div class="upload-icon">📄</div>
+                                <p>Arrastra un archivo HTML aquí o haz clic para seleccionar</p>
+                                <button type="button" class="select-file-btn">Seleccionar Archivo</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancelUpload">Cancelar</button>
+                        <button type="submit" class="btn-primary">Subir Documento</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Document Viewer Modal -->
+    <div id="viewerModal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content viewer-content">
+            <div class="modal-header">
+                <h3 id="viewerTitle">Documento</h3>
+                <div class="viewer-actions">
+                    <button class="btn-secondary" id="printBtn">🖨️ Imprimir</button>
+                    <button class="btn-secondary" id="downloadBtn">📥 Descargar</button>
+                    <button class="close-btn" id="closeViewerModal">✕</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <iframe id="documentFrame" src="about:blank"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="assets/app-new.js"></script>
+</body>
+</html>

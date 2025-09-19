@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Upload</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <h1>Teste de Upload - Portal de Calidad</h1>
+    
+    <div class="test-section">
+        <h2>Teste 1: Botão Añadir Documento</h2>
+        <button id="addDocumentBtn">➕ Añadir Documento</button>
+        <p>Status: <span id="status1">Não testado</span></p>
+    </div>
+
+    <div class="test-section">
+        <h2>Teste 2: Modal de Upload</h2>
+        <button id="testModalBtn">📤 Abrir Modal</button>
+        <p>Status: <span id="status2">Não testado</span></p>
+    </div>
+
+    <div class="test-section">
+        <h2>Teste 3: Seleção de Arquivo</h2>
+        <input type="file" id="testFileInput" accept=".html,.pdf,.doc,.docx,.txt">
+        <button id="testFileBtn">📁 Testar Arquivo</button>
+        <p>Status: <span id="status3">Não testado</span></p>
+    </div>
+
+    <!-- Modal de Upload -->
+    <div id="uploadModal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Subir Documento</h3>
+                <button class="close-btn" id="closeUploadModal">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="uploadForm">
+                    <div class="form-group">
+                        <label for="documentTitle">Título del Documento:</label>
+                        <input type="text" id="documentTitle" required placeholder="Ej: Teste de Upload">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="documentChapter">Capítulo:</label>
+                        <select id="documentChapter" required>
+                            <option value="">Seleccionar capítulo...</option>
+                            <option value="01">01 - Sistema de Gestión</option>
+                            <option value="02">02 - Plan de Ensayos</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fileInput">Archivo:</label>
+                        <div class="file-upload-area" id="fileUploadArea">
+                            <input type="file" id="fileInput" accept=".html,.pdf,.doc,.docx,.txt" hidden>
+                            <div class="upload-placeholder">
+                                <div class="upload-icon">📄</div>
+                                <p>Arrastra un archivo aquí o haz clic para seleccionar</p>
+                                <button type="button" class="select-file-btn">Seleccionar Archivo</button>
+                            </div>
+                            <div class="file-preview hidden" id="filePreview">
+                                <div class="file-info">
+                                    <span class="file-icon" id="fileIcon">📄</span>
+                                    <div class="file-details">
+                                        <div class="file-name" id="fileName"></div>
+                                        <div class="file-size" id="fileSize"></div>
+                                    </div>
+                                </div>
+                                <button type="button" class="remove-file-btn" id="removeFileBtn">✕</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancelUpload">Cancelar</button>
+                        <button type="submit" class="btn-primary" id="submitUpload">Subir Documento</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Teste simples
+        console.log('🧪 Iniciando testes...');
+
+        // Teste 1: Botão Añadir Documento
+        const addDocumentBtn = document.getElementById('addDocumentBtn');
+        if (addDocumentBtn) {
+            addDocumentBtn.addEventListener('click', () => {
+                console.log('✅ Botão Añadir Documento funcionando');
+                document.getElementById('status1').textContent = '✅ Funcionando';
+                showUpload();
+            });
+        } else {
+            document.getElementById('status1').textContent = '❌ Botão não encontrado';
+        }
+
+        // Teste 2: Modal
+        const testModalBtn = document.getElementById('testModalBtn');
+        if (testModalBtn) {
+            testModalBtn.addEventListener('click', () => {
+                console.log('✅ Botão Modal funcionando');
+                document.getElementById('status2').textContent = '✅ Funcionando';
+                showUpload();
+            });
+        }
+
+        // Teste 3: Arquivo
+        const testFileBtn = document.getElementById('testFileBtn');
+        if (testFileBtn) {
+            testFileBtn.addEventListener('click', () => {
+                const fileInput = document.getElementById('testFileInput');
+                if (fileInput.files.length > 0) {
+                    console.log('✅ Arquivo selecionado:', fileInput.files[0].name);
+                    document.getElementById('status3').textContent = '✅ Arquivo: ' + fileInput.files[0].name;
+                } else {
+                    document.getElementById('status3').textContent = '❌ Nenhum arquivo selecionado';
+                }
+            });
+        }
+
+        function showUpload() {
+            console.log('📤 Mostrando modal de upload');
+            const modal = document.getElementById('uploadModal');
+            console.log('Modal encontrado:', modal);
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                console.log('✅ Modal de upload mostrado');
+            } else {
+                console.error('❌ Modal de upload não encontrado!');
+            }
+        }
+
+        function hideUpload() {
+            const modal = document.getElementById('uploadModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Event listeners do modal
+        document.getElementById('closeUploadModal').addEventListener('click', hideUpload);
+        document.getElementById('cancelUpload').addEventListener('click', hideUpload);
+        document.getElementById('submitUpload').addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('📤 Submit do upload clicado');
+            alert('Upload funcionando! (Teste)');
+        });
+
+        // Seleção de arquivo
+        document.getElementById('fileInput').addEventListener('change', (e) => {
+            console.log('📁 Arquivo selecionado:', e.target.files[0]);
+        });
+
+        document.querySelector('.select-file-btn').addEventListener('click', () => {
+            document.getElementById('fileInput').click();
+        });
+    </script>
+</body>
+</html>

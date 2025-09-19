@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planificación Semanal - PPIs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .logo-header {
+            background-color: white;
+            border: 2px solid #000;
+            padding: 15px;
+            margin-bottom: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-placeholder {
+            width: 120px;
+            height: 60px;
+            border: 2px dashed #3b82f6;
+            background: #eff6ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #3b82f6;
+            border-radius: 4px;
+        }
+        
+        .company-logos {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .ute-info {
+            text-align: right;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .header {
+            background-color: #c41e3a;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .document-info {
+            background-color: white;
+            padding: 15px;
+            border: 2px solid #333;
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
+        
+        .obra-title {
+            background-color: #4a5568;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .week-info {
+            background-color: #2d3748;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        
+        .section {
+            background-color: white;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background-color: #68d391;
+            color: #1a202c;
+            padding: 10px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-header.pending {
+            background-color: #f6e05e;
+        }
+        
+        .check-icon {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        
+        .ppi-item {
+            border-left: 4px solid #3182ce;
+            margin: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .ppi-header {
+            background-color: #3182ce;
+            color: white;
+            padding: 8px 12px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .ppi-title {
+            padding: 12px;
+            font-weight: bold;
+            color: #2d3748;
+        }
+        
+        .ppi-details {
+            display: flex;
+            background-color: #e2e8f0;
+        }
+        
+        .ppi-detail {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-right: 1px solid #cbd5e0;
+            font-size: 12px;
+        }
+        
+        .ppi-detail:last-child {
+            border-right: none;
+        }
+        
+        .ppi-detail strong {
+            display: block;
+            color: #4a5568;
+            margin-bottom: 5px;
+        }
+        
+        .responsibles {
+            background-color: #4a5568;
+            color: white;
+            padding: 8px 12px;
+            font-size: 11px;
+        }
+        
+        .codes-section, .notes-section {
+            margin-top: 20px;
+            background-color: white;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .codes-header, .notes-header {
+            background-color: #4a5568;
+            color: white;
+            padding: 10px;
+            margin: -15px -15px 15px -15px;
+            font-weight: bold;
+        }
+        
+        .codes-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        .codes-table th {
+            background-color: #2d3748;
+            color: white;
+            padding: 8px;
+            text-align: left;
+            font-size: 12px;
+        }
+        
+        .codes-table td {
+            padding: 8px;
+            border: 1px solid #e2e8f0;
+            font-size: 11px;
+            background-color: #fef5e7;
+        }
+        
+        .notes-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .notes-list li {
+            padding: 5px 0;
+            font-size: 11px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .notes-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .communication-footer {
+            background-color: #2d3748;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        
+        /* Estilos para campos editables */
+        .editable {
+            border: 2px dashed #3b82f6;
+            background: #eff6ff;
+            padding: 4px 8px;
+            border-radius: 3px;
+            cursor: text;
+            min-height: 18px;
+            display: inline-block;
+            min-width: 100px;
+        }
+        
+        .editable:hover {
+            background: #dbeafe;
+            border-color: #1d4ed8;
+        }
+        
+        .editable:focus {
+            outline: none;
+            background: white;
+            border: 2px solid #1d4ed8;
+        }
+        
+        .editable:empty:before {
+            content: "Clic para editar...";
+            color: #9ca3af;
+            font-style: italic;
+        }
+        
+        .editable-block {
+            border: 2px dashed #3b82f6;
+            background: #eff6ff;
+            padding: 8px;
+            border-radius: 3px;
+            cursor: text;
+            min-height: 20px;
+            width: 100%;
+        }
+        
+        .editable-block:hover {
+            background: #dbeafe;
+            border-color: #1d4ed8;
+        }
+        
+        .editable-block:focus {
+            outline: none;
+            background: white;
+            border: 2px solid #1d4ed8;
+        }
+        
+        .editable-block:empty:before {
+            content: "Clic para editar...";
+            color: #9ca3af;
+            font-style: italic;
+        }
+        
+        .add-ppi-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .add-ppi-btn:hover {
+            background: #059669;
+        }
+        
+        .remove-ppi-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 10px;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+        
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #1e3a8a;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        
+        .print-button:hover {
+            background: #1e40af;
+        }
+        
+        @media print {
+            .editable, .editable-block {
+                border: none;
+                background: transparent;
+                padding: 0;
+            }
+            .add-ppi-btn, .remove-ppi-btn, .print-button {
+                display: none;
+            }
+            .logo-placeholder {
+                border: 1px solid #ccc;
+                background: #f9f9f9;
+            }
+        }
+        
+        .alert {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            color: #92400e;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button" onclick="window.print()">Imprimir</button>
+    
+    <div class="alert">
+        <strong>Instrucciones:</strong> Haga clic en los campos azules para editarlos. Use los botones para añadir/eliminar PPIs según necesidad.
+    </div>
+    
+    <div class="logo-header">
+        <div class="logo-section">
+            <div class="logo-placeholder">
+                LOGO AQUÍ
+            </div>
+            <div class="company-logos">
+                <div style="font-size: 20px; font-weight: bold; color: #0066cc;">OHLA</div>
+                <div style="font-size: 24px; font-weight: bold; color: #c41e3a;">A</div>
+                <div style="font-size: 24px; font-weight: bold; color: #333;">S</div>
+                <div style="font-size: 24px; font-weight: bold; color: #c41e3a;">CH</div>
+            </div>
+        </div>
+        <div class="ute-info">
+            <div>UTE OHLA-ASCH</div>
+            <div>Autovía del Duero A-11</div>
+        </div>
+    </div>
+    
+    <div class="header">
+        PLANIFICACIÓN SEMANAL - PUNTOS DE PARADA (PPIs)
+    </div>
+    
+    <div class="document-info">
+        <strong>COMUNICACIÓN:</strong> <span class="editable" contenteditable="true">006</span><br>
+        <strong>FECHA:</strong> <span class="editable" contenteditable="true">25/07/2025</span><br>
+        <strong>HOJA Nº:</strong> <span class="editable" contenteditable="true">1</span> / DE: <span class="editable" contenteditable="true">1</span><br>
+        <strong>REVISIÓN:</strong> <span class="editable" contenteditable="true">01</span>
+    </div>
+
+    <div class="obra-title">
+        <div class="editable-block" contenteditable="true">AUTOVÍA DEL DUERO (A-11)<br>
+TRAMO: VARIANTE DE LANGA DE DUERO – VARIANTE DE ARANDA DE DUERO<br>
+UTE: OHLA ASCH</div>
+    </div>
+
+    <div class="week-info">
+        📅 Semana: <span class="editable" contenteditable="true">28/07/2025 - 02/08/2025</span> | SEMANA <span class="editable" contenteditable="true">31</span>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <span class="check-icon">✅</span>
+            <span class="editable" contenteditable="true">ACTIVIDADES CONFIRMADAS</span>
+        </div>
+        
+        <!-- PPI para revisão acero antes Losa ENAGÁS -->
+        <div class="ppi-item">
+            <button class="remove-ppi-btn" onclick="removePPI(this)">×</button>
+            <div class="ppi-header">
+                <span class="editable" contenteditable="true">PPI-006</span>
+            </div>
+            <div class="ppi-title">
+                <span class="editable-block" contenteditable="true">Revisión montaje acero Losa ENAGÁS 105</span>
+            </div>
+            <div class="ppi-details">
+                <div class="ppi-detail">
+                    <strong>FECHA</strong>
+                    <span class="editable" contenteditable="true">LUNES 28/07</span>
+                </div>
+                <div class="ppi-detail">
+                    <strong>HORA</strong>
+                    <span class="editable" contenteditable="true">A combinar telefónicamente</span>
+                </div>
+                <div class="ppi-detail">
+                    <strong>LOCAL</strong>
+                    <span class="editable" contenteditable="true">LOSA ENAGÁS 105</span>
+                </div>
+            </div>
+            <div class="responsibles">
+                Responsables: <span class="editable" contenteditable="true">Pablo Ribao (Jefe Producción) • Juan Cáceres (Encargado) • José Antunes (Resp. Calidad)</span>
+            </div>
+        </div>
+
+        <!-- PPI para hormigonado Losa ENAGÁS -->
+        <div class="ppi-item">
+            <button class="remove-ppi-btn" onclick="removePPI(this)">×</button>
+            <div class="ppi-header">
+                <span class="editable" contenteditable="true">PPI-008</span>
+            </div>
+            <div class="ppi-title">
+                <span class="editable-block" contenteditable="true">Hormigonado Losa ENAGÁS 105 (180 m³ + Balance a determinar en obra de HA-35/B/20/I)</span>
+            </div>
+            <div class="ppi-details">
+                <div class="ppi-detail">
+                    <strong>FECHA</strong>
+                    <span class="editable" contenteditable="true">MARTES 29/07</span>
+                </div>
+                <div class="ppi-detail">
+                    <strong>HORA</strong>
+                    <span class="editable" contenteditable="true">07:00h<br>(a confirmar)</span>
+                </div>
+                <div class="ppi-detail">
+                    <strong>LOCAL</strong>
+                    <span class="editable" contenteditable="true">LOSA ENAGÁS 105</span>
+                </div>
+            </div>
+            <div class="responsibles">
+                Responsables: <span class="editable" contenteditable="true">Pablo Ribao (Jefe Producción) • Juan Cáceres (Encargado - 680457869) • José Antunes (Resp. Calidade)</span>
+            </div>
+        </div>
+
+        <!-- PPI para revisão acero antes PI 14+400 -->
+        <div class="ppi-item">
+            <button class="remove-ppi-btn" onclick="removePPI(this)">×</button>
+            <div class="ppi-header">
+                <span class="editable" contenteditable="true">PPI-006</span>
+            </div>
+            <div class="ppi-title">
+                <span class="editable-block" contenteditable="true">Revisión montaje acero cimentación PI 14+400 fase 1</span>
+            </div>
+            <div class="ppi-details">
+                <div class="ppi-detail">
+                    <strong>FECHA</strong>
+                    <span class="editable" contenteditable="true">MIÉRCOLES 30/07</span>
+                </div>
+                <div class="ppi-detail">
+                    <strong>HORA</strong>
+                    <span class="editable" contenteditable="true">A combinar telefónicamente</span>
+                </div>
+                <div class="ppi-detail">
+                    <strong>LOCAL</strong>
+                    <span class="editable" contenteditable="true">PI 14+400</span>
+                </div>
+            </div>
+            <div class="responsibles">
+                Responsables: <span class="editable" contenteditable="true">Miguel Nortes (Jefe Producción) • Aurelio (Encargado) • José Antunes (Resp. Calidad)</span>
+            </div>
+        </div>
+
+        <!-- PPI para hormigonado PI 14+400 -->
+        <div class="ppi-item">
+            <button class="remove-ppi-btn" onclick="removePPI(this)">×</button>
+            <div class="ppi-header">
+                <span class="editable" contenteditable="true">PPI-008</span>
+            </div>
+            <div class="ppi-title">
+                <span class="editable-block" contenteditable="true">Hormigonado cimentación PI 14+400 fase 1 (271 m³ de HA-30/F/20/XC2)</span>
+            </div>
+            <div class="ppi-details">
+                <div class="ppi-detail">
+                    <strong>FECHA</strong>
+                    <span class="editable" contenteditable="true">JUEVES 31/07</span>
+                </div>
+                <div class="ppi-detail">
+                    <strong>HORA</strong>
+                    <span class="editable" contenteditable="true">07:00h<br>(a confirmar)</span>
+                </div>
+                <div class="ppi-detail">
+                    <strong>LOCAL</strong>
+                    <span class="editable" contenteditable="true">PI 14+400</span>
+                </div>
+            </div>
+            <div class="responsibles">
+                Responsables: <span class="editable" contenteditable="true">Miguel Nortes (Jefe Producción) • Aurelio (Encargado) • José Antunes (Resp. Calidad)</span>
+            </div>
+        </div>
+
+        <!-- PPI para revisão acero antes hastial 10+570 -->
+        <div class="ppi-item">
+            <button class="remove-ppi-btn" onclick="removePPI(this)">×</button>
+            <div class="ppi-header">
+                <span class="editable" contenteditable="true">PPI-006</span>
+            </div>
+            <div class="ppi-title">
+                <span class="editable-block" contenteditable="true">Revisión montaje acero hastiales PI 10+570 fase 1 de 4</span>
+            </div>
+            <div class="ppi-details">
+                <div class="ppi-detail">
+                    <strong>FECHA</strong>
+                    <span class="editable" contenteditable="true">JUEVES 31/07</span>
+                </div>
+                <div class="ppi-detail">
+                    <strong>HORA</strong>
+                    <span class="editable" contenteditable="true">A combinar telefónicamente</span>
+                </div>
+                <div class="ppi-detail">
+                    <strong>LOCAL</strong>
+                    <span class="editable" contenteditable="true">PI 10+570</span>
+                </div>
+            </div>
+            <div class="responsibles">
+                Responsables: <span class="editable" contenteditable="true">Miguel Nortes (Jefe Producción) • Aurelio (Encargado) • José Antunes (Resp. Calidad)</span>
+            </div>
+        </div>
+
+        <!-- PPI para hormigonado hastial 10+570 -->
+        <div class="ppi-item">
+            <button class="remove-ppi-btn" onclick="removePPI(this)">×</button>
+            <div class="ppi-header">
+                <span class="editable" contenteditable="true">PPI-008</span>
+            </div>
+            <div class="ppi-title">
+                <span class="editable-block" contenteditable="true">Hormigonado hastiales PI 10+570 fase 1 de 4 (110 m³ de HA-30/F/20/XC4)</span>
+            </div>
+            <div class="ppi-details">
+                <div class="ppi-detail">
+                    <strong>FECHA</strong>
+                    <span class="editable" contenteditable="true">VIERNES 01/08</span>
+                </div>
+                <div class="ppi-detail">
+                    <strong>HORA</strong>
+                    <span class="editable" contenteditable="true">07:00h<br>(a confirmar)</span>
+                </div>
+                <div class="ppi-detail">
+                    <strong>LOCAL</strong>
+                    <span class="editable" contenteditable="true">PI 10+570</span>
+                </div>
+            </div>
+            <div class="responsibles">
+                Responsables: <span class="editable" contenteditable="true">Miguel Nortes (Jefe Producción) • Aurelio (Encargado) • José Antunes (Resp. Calidad)</span>
+            </div>
+        </div>
+
+        <button class="add-ppi-btn" onclick="addNewPPI()">
+            + Añadir nuevo PPI
+        </button>
+    </div>
+
+    <div class="codes-section">
+        <div class="codes-header">📋 <span class="editable" contenteditable="true">CÓDIGOS DE ESTRUCTURAS</span></div>
+        <table class="codes-table">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Descripción</th>
+                    <th>PK</th>
+                    <th>Tipo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="editable" contenteditable="true">PI 10+570</span></td>
+                    <td><span class="editable" contenteditable="true">Paso Inferior</span></td>
+                    <td><span class="editable" contenteditable="true">10+570</span></td>
+                    <td><span class="editable" contenteditable="true">Estructura</span></td>
+                </tr>
+                <tr>
+                    <td><span class="editable" contenteditable="true">PI 14+400</span></td>
+                    <td><span class="editable" contenteditable="true">Paso Inferior</span></td>
+                    <td><span class="editable" contenteditable="true">14+400</span></td>
+                    <td><span class="editable" contenteditable="true">Estructura</span></td>
+                </tr>
+                <tr>
+                    <td><span class="editable" contenteditable="true">LOSA ENAGÁS 105</span></td>
+                    <td><span class="editable" contenteditable="true">Losa Cruzamiento</span></td>
+                    <td><span class="editable" contenteditable="true">Varios</span></td>
+                    <td><span class="editable" contenteditable="true">Losa</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="notes-section">
+        <div class="notes-header">📝 <span class="editable" contenteditable="true">NOTAS IMPORTANTES</span></div>
+        <ul class="notes-list">
+            <li class="editable-block" contenteditable="true">• Cada PPI será comunicado el día anterior con horarios confirmados</li>
+            <li class="editable-block" contenteditable="true">• Todo sujeto a cambios que serán comunicados oportunamente</li>
+            <li class="editable-block" contenteditable="true">• Solo se comunican puntos PP (Punto de Parada), no PC (Punto de Control)</li>
+            <li class="editable-block" contenteditable="true">• Coordinación previa obligatoria entre Dirección de Obra y Encargados</li>
+            <li class="editable-block" contenteditable="true">• Podrán haber otros puntos de parada durante la semana - estos son los actuales confirmados</li>
+            <li class="editable-block" contenteditable="true">• Todos los PPIs adicionales serán comunicados con un mínimo de 24 horas de antelación</li>
+            <li class="editable-block" contenteditable="true">• Actividades de recepción y montaje de acero son PC (Punto de Control) - seguimiento continuo</li>
+            <li class="editable-block" contenteditable="true">• Las revisiones de armaduras se realizarán siempre el día anterior al hormigonado correspondiente</li>
+        </ul>
+    </div>
+
+    <div class="communication-footer">
+        <span class="editable-block" contenteditable="true">📋 COMUNICACIÓN EMITIDA POR CALIDAD<br>
+Documento de planificación y coordinación - ESTRUCTURAS</span>
+    </div>
+
+    <script>
+        // Funcionalidade para campos editáveis
+        document.addEventListener('DOMContentLoaded', function() {
+            const editableFields = document.querySelectorAll('.editable, .editable-block');
+            editableFields.forEach(field => {
+                field.addEventListener('click', function() {
+                    this.focus();
+                    if (this.textContent === 'Clic para editar...') {
+                        this.textContent = '';
+                    }
+                });
+                
+                field.addEventListener('blur', function() {
+                    if (this.textContent.trim() === '') {
+                        this.textContent = 'Clic para editar...';
+                        this.style.fontStyle = 'italic';
+                        this.style.color = '#9ca3af';
+                    } else {
+                        this.style.fontStyle = 'normal';
+                        this.style.color = '#333';
+                    }
+                });
+            });
+        });
+
+        // Função para adicionar novo PPI
+        function addNewPPI() {
+            const section = document.querySelector('.section');
+            const addButton = document.querySelector('.add-ppi-btn');
+            
+            const newPPI = document.createElement('div');
+            newPPI.className = 'ppi-item';
+            newPPI.innerHTML = `
+                <button class="remove-ppi-btn" onclick="removePPI(this)">×</button>
+                <div class="ppi-header">
+                    <span class="editable" contenteditable="true">PPI-XXX</span>
+                </div>
+                <div class="ppi-title">
+                    <span class="editable-block" contenteditable="true">Nueva actividad PPI</span>
+                </div>
+                <div class="ppi-details">
+                    <div class="ppi-detail">
+                        <strong>FECHA</strong>
+                        <span class="editable" contenteditable="true">A definir</span>
+                    </div>
+                    <div class="ppi-detail">
+                        <strong>HORA</strong>
+                        <span class="editable" contenteditable="true">A definir</span>
+                    </div>
+                    <div class="ppi-detail">
+                        <strong>LOCAL</strong>
+                        <span class="editable" contenteditable="true">A definir</span>
+                    </div>
+                </div>
+                <div class="responsibles">
+                    Responsables: <span class="editable" contenteditable="true">A definir</span>
+                </div>
+            `;
+            
+            section.insertBefore(newPPI, addButton);
+            
+            // Aplicar funcionalidade editable aos novos campos
+            const newEditableFields = newPPI.querySelectorAll('.editable, .editable-block');
+            newEditableFields.forEach(field => {
+                field.addEventListener('click', function() {
+                    this.focus();
+                    if (this.textContent === 'Clic para editar...') {
+                        this.textContent = '';
+                    }
+                });
+                
+                field.addEventListener('blur', function() {
+                    if (this.textContent.trim() === '') {
+                        this.textContent = 'Clic para editar...';
+                        this.style.fontStyle = 'italic';
+                        this.style.color = '#9ca3af';
+                    } else {
+                        this.style.fontStyle = 'normal';
+                        this.style.color = '#333';
+                    }
+                });
+            });
+        }
+
+        // Função para remover PPI
+        function removePPI(button) {
+            if (confirm('¿Está seguro de que desea eliminar este PPI?')) {
+                button.closest('.ppi-item').remove();
+            }
+        }
+    </script>
+</body>
+</html>

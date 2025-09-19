@@ -2,13 +2,48 @@
   "secciones": [
     {
       "codigo": "01",
-      "titulo": "Plan de Aseguramiento de la Calidad (PAC)",
+      "titulo": "Sistema de Gestión de Documentos",
       "items": [
         {
-          "titulo": "PAC - Plan de Aseguramiento de la Calidad A-11",
-          "ruta": "registros/01_PAC/2025-09-19_PAC-A11-v1.0.html",
-          "tags": ["PAC", "calidad", "plan", "aseguramiento"],
+          "titulo": "Manual de Usuario - Portal de Calidad",
+          "ruta": "registros/01_PAC/2025-09-19_manual-usuario-portal.html",
+          "tags": ["manual", "usuario", "portal", "calidad"],
           "fecha": "2025-09-19",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Procedimiento de Subida de Documentos",
+          "ruta": "registros/01_PAC/01_Procedimientos_Calidad/02.01_Procedimentos_Ejecucion/2025-09-20_procedimiento-subida-documentos.html",
+          "tags": ["procedimiento", "subida", "documentos", "calidad"],
+          "fecha": "2025-09-20",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Normas de Nomenclatura de Archivos",
+          "ruta": "registros/01_PAC/01_Procedimientos_Calidad/02.02_Procedimentos_Generales/2025-09-21_normas-nomenclatura-archivos.html",
+          "tags": ["normas", "nomenclatura", "archivos", "organización"],
+          "fecha": "2025-09-21",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Sistema de Versiones - Control de Cambios",
+          "ruta": "registros/01_PAC/02_PAC_Revisiones/PAC_Rev00/2025-09-15_sistema-versiones-control.html",
+          "tags": ["versiones", "control", "cambios", "trazabilidad"],
+          "fecha": "2025-09-15",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Actualización del Sistema - Septiembre 2025",
+          "ruta": "registros/01_PAC/02_PAC_Revisiones/PAC_Rev01/2025-09-25_actualizacion-sistema-septiembre.html",
+          "tags": ["actualización", "sistema", "septiembre", "mejoras"],
+          "fecha": "2025-09-25",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Estructura Organizacional - Gestión Digital",
+          "ruta": "registros/01_PAC/03_Organigrama_Obra/2025-09-18_estructura-gestion-digital.html",
+          "tags": ["estructura", "organizacional", "gestión", "digital"],
+          "fecha": "2025-09-18",
           "estado": "Aprobado"
         }
       ]
@@ -22,6 +57,27 @@
           "ruta": "registros/02_Plan_Ensayos/2025-09-19_plan-ensayos-suelos.html",
           "tags": ["ensayos", "suelos", "cimentación", "control"],
           "fecha": "2025-09-19",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Plan de Ensayos - Hormigón y Armaduras",
+          "ruta": "registros/02_Plan_Ensayos/2025-09-20_plan-ensayos-hormigon.html",
+          "tags": ["ensayos", "hormigón", "armaduras", "control"],
+          "fecha": "2025-09-20",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Plan de Ensayos - Materiales de Construcción",
+          "ruta": "registros/02_Plan_Ensayos/2025-09-21_plan-ensayos-materiales.html",
+          "tags": ["ensayos", "materiales", "construcción", "control"],
+          "fecha": "2025-09-21",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Protocolo de Ensayos Destructivos",
+          "ruta": "registros/02_Plan_Ensayos/2025-09-22_protocolo-ensayos-destructivos.html",
+          "tags": ["protocolo", "ensayos", "destructivos", "calidad"],
+          "fecha": "2025-09-22",
           "estado": "Aprobado"
         }
       ]
@@ -88,6 +144,20 @@
           "ruta": "registros/06_PPI/2025-09-20_PPI-hormigonado_PK-18750.html",
           "tags": ["PPI", "hormigonado", "control", "calidad"],
           "fecha": "2025-09-20",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "PPI - Control de armaduras PK 15+200",
+          "ruta": "docs/06_PPI/2025-09-26_PPI-control-armaduras-PK-15200.html",
+          "tags": ["PPI", "armaduras", "control", "PK"],
+          "fecha": "2025-09-26",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Planificación Semanal PPIs - Semana 31",
+          "ruta": "docs/06_PPI/2025-07-25_planificacion-semanal-ppis.html",
+          "tags": ["PPI", "planificación", "semanal", "estructuras", "coordinación"],
+          "fecha": "2025-07-25",
           "estado": "Aprobado"
         }
       ]

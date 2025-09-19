@@ -1,0 +1,13 @@
+{
+  "name": "portal-calidad-asch-ohla",
+  "version": "1.0.0",
+  "description": "Portal de Gestão de Qualidade - UTE A11 LANGA-ARANDA",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'Static site - no build needed'",
+    "start": "echo 'Static site - serve index.html'"
+  },
+  "keywords": ["calidad", "construccion", "a11", "asch", "ohla"],
+  "author": "José Antunes",
+  "license": "MIT"
+}
