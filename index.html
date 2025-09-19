@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Calidad ASCH - A-11 (Langa - Aranda)</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏗️</text></svg>">
+</head>
+<body>
+    <!-- Header Principal -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo">🏗️</div>
+                <div class="title-section">
+                    <h1>Portal de Calidad ASCH</h1>
+                    <p class="subtitle">A-11 • Langa de Duero - Aranda de Duero</p>
+                    <div class="status-badge">
+                        <span class="status-dot"></span>
+                        Sistema Activo
+                    </div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="themeToggle" class="theme-toggle" title="Cambiar tema">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Buscar documentos, tags o PK..." class="search-input">
+                    <button id="searchBtn" class="search-btn">🔍</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Layout Principal -->
+    <div class="main-layout">
+        <!-- Sidebar de Navegación -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>Capítulos de Calidad</h2>
+                <div class="chapter-count" id="totalDocs">0 documentos</div>
+            </div>
+            
+            <div class="chapters-list" id="chaptersList">
+                <!-- Los capítulos se cargarán dinámicamente -->
+            </div>
+            
+            <div class="sidebar-footer">
+                <div class="quick-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalChapters">21</span>
+                        <span class="stat-label">Capítulos</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="activeDocs">0</span>
+                        <span class="stat-label">Activos</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Contenido Principal -->
+        <main class="main-content">
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb" id="breadcrumb">
+                <span class="breadcrumb-item active">Inicio</span>
+            </nav>
+
+            <!-- Filtros y Controles -->
+            <div class="content-header">
+                <div class="filters-section">
+                    <div class="filter-group">
+                        <label for="statusFilter">Estado:</label>
+                        <select id="statusFilter" class="filter-select">
+                            <option value="">Todos</option>
+                            <option value="Aprobado">Aprobado</option>
+                            <option value="Borrador">Borrador</option>
+                            <option value="Obsoleto">Obsoleto</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="dateFilter">Fecha:</label>
+                        <select id="dateFilter" class="filter-select">
+                            <option value="">Todas</option>
+                            <option value="today">Hoy</option>
+                            <option value="week">Esta semana</option>
+                            <option value="month">Este mes</option>
+                        </select>
+                    </div>
+                    <button id="clearFilters" class="clear-filters-btn">Limpiar filtros</button>
+                </div>
+                
+                <div class="view-controls">
+                    <button id="gridView" class="view-btn active" title="Vista de tarjetas">⊞</button>
+                    <button id="listView" class="view-btn" title="Vista de lista">☰</button>
+                </div>
+            </div>
+
+            <!-- Área de Contenido -->
+            <div class="content-area">
+                <!-- Mensaje de bienvenida -->
+                <div id="welcomeMessage" class="welcome-section">
+                    <div class="welcome-content">
+                        <h2>Bienvenido al Portal de Calidad</h2>
+                        <p>Seleccione un capítulo del menú lateral para explorar los documentos de calidad de la obra A-11.</p>
+                        <div class="welcome-features">
+                            <div class="feature-item">
+                                <span class="feature-icon">🔍</span>
+                                <span>Búsqueda avanzada por texto y tags</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📁</span>
+                                <span>21 capítulos organizados por ISO</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📱</span>
+                                <span>Acceso desde cualquier dispositivo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lista de documentos -->
+                <div id="documentsContainer" class="documents-container hidden">
+                    <div class="section-header">
+                        <h2 id="sectionTitle">Documentos</h2>
+                        <div class="section-info">
+                            <span id="sectionCode" class="section-code"></span>
+                            <span id="docCount" class="doc-count">0 documentos</span>
+                        </div>
+                    </div>
+                    <div id="documentsList" class="documents-list">
+                        <!-- Los documentos se cargarán dinámicamente -->
+                    </div>
+                </div>
+
+                <!-- Mensaje de búsqueda sin resultados -->
+                <div id="noResults" class="no-results hidden">
+                    <div class="no-results-content">
+                        <span class="no-results-icon">🔍</span>
+                        <h3>No se encontraron documentos</h3>
+                        <p>Intente ajustar los filtros o términos de búsqueda.</p>
+                        <button id="resetSearch" class="reset-search-btn">Limpiar búsqueda</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de Documento -->
+    <div id="documentModal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Documento</h3>
+                <div class="modal-actions">
+                    <button id="downloadDoc" class="modal-btn download-btn" title="Descargar">
+                        📥
+                    </button>
+                    <button id="printDoc" class="modal-btn print-btn" title="Imprimir">
+                        🖨️
+                    </button>
+                    <button id="closeModal" class="modal-btn close-btn" title="Cerrar">
+                        ✕
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <iframe id="documentFrame" src="" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner hidden">
+        <div class="spinner"></div>
+        <p>Cargando documentos...</p>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="assets/app.js"></script>
+</body>
+</html>
