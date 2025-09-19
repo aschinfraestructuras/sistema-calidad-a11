@@ -1,0 +1,375 @@
+{
+  "secciones": [
+    {
+      "codigo": "01",
+      "titulo": "Sistema de Gestión de Documentos",
+      "items": [
+        {
+          "titulo": "Manual de Usuario - Portal de Calidad",
+          "ruta": "registros/01_PAC/2025-09-19_manual-usuario-portal.html",
+          "tags": ["manual", "usuario", "portal", "calidad"],
+          "fecha": "2025-09-19",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Procedimiento de Subida de Documentos",
+          "ruta": "registros/01_PAC/01_Procedimientos_Calidad/02.01_Procedimentos_Ejecucion/2025-09-20_procedimiento-subida-documentos.html",
+          "tags": ["procedimiento", "subida", "documentos", "calidad"],
+          "fecha": "2025-09-20",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Normas de Nomenclatura de Archivos",
+          "ruta": "registros/01_PAC/01_Procedimientos_Calidad/02.02_Procedimentos_Generales/2025-09-21_normas-nomenclatura-archivos.html",
+          "tags": ["normas", "nomenclatura", "archivos", "organización"],
+          "fecha": "2025-09-21",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Sistema de Versiones - Control de Cambios",
+          "ruta": "registros/01_PAC/02_PAC_Revisiones/PAC_Rev00/2025-09-15_sistema-versiones-control.html",
+          "tags": ["versiones", "control", "cambios", "trazabilidad"],
+          "fecha": "2025-09-15",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Actualización del Sistema - Septiembre 2025",
+          "ruta": "registros/01_PAC/02_PAC_Revisiones/PAC_Rev01/2025-09-25_actualizacion-sistema-septiembre.html",
+          "tags": ["actualización", "sistema", "septiembre", "mejoras"],
+          "fecha": "2025-09-25",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Estructura Organizacional - Gestión Digital",
+          "ruta": "registros/01_PAC/03_Organigrama_Obra/2025-09-18_estructura-gestion-digital.html",
+          "tags": ["estructura", "organizacional", "gestión", "digital"],
+          "fecha": "2025-09-18",
+          "estado": "Aprobado"
+        }
+      ]
+    },
+    {
+      "codigo": "02",
+      "titulo": "Plan de Ensayos y Controles",
+      "items": [
+        {
+          "titulo": "Plan de Ensayos - Suelos y Cimentaciones",
+          "ruta": "registros/02_Plan_Ensayos/2025-09-19_plan-ensayos-suelos.html",
+          "tags": ["ensayos", "suelos", "cimentación", "control"],
+          "fecha": "2025-09-19",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Plan de Ensayos - Hormigón y Armaduras",
+          "ruta": "registros/02_Plan_Ensayos/2025-09-20_plan-ensayos-hormigon.html",
+          "tags": ["ensayos", "hormigón", "armaduras", "control"],
+          "fecha": "2025-09-20",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Plan de Ensayos - Materiales de Construcción",
+          "ruta": "registros/02_Plan_Ensayos/2025-09-21_plan-ensayos-materiales.html",
+          "tags": ["ensayos", "materiales", "construcción", "control"],
+          "fecha": "2025-09-21",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Protocolo de Ensayos Destructivos",
+          "ruta": "registros/02_Plan_Ensayos/2025-09-22_protocolo-ensayos-destructivos.html",
+          "tags": ["protocolo", "ensayos", "destructivos", "calidad"],
+          "fecha": "2025-09-22",
+          "estado": "Aprobado"
+        }
+      ]
+    },
+    {
+      "codigo": "03",
+      "titulo": "Objetivos y Política de Calidad",
+      "items": [
+        {
+          "titulo": "Política de Calidad ASCH - A-11",
+          "ruta": "registros/03_Objetivos_Calidad/2025-09-19_politica-calidad.html",
+          "tags": ["política", "objetivos", "calidad", "ASCH"],
+          "fecha": "2025-09-19",
+          "estado": "Aprobado"
+        }
+      ]
+    },
+    {
+      "codigo": "04",
+      "titulo": "Programación y Comunicaciones de Obra",
+      "items": [
+        {
+          "titulo": "Solicitud de apertura de tajo – PI 26+950",
+          "ruta": "registros/04_Programacion_y_Comunicaciones/2025-09-19_apertura-tajo_PI-26950.html",
+          "tags": ["PPI", "apertura", "obra", "tajo"],
+          "fecha": "2025-09-19",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Comunicación de inicio de actividad - PK 15+200",
+          "ruta": "registros/04_Programacion_y_Comunicaciones/2025-09-20_comunicacion-inicio_PK-15200.html",
+          "tags": ["comunicación", "inicio", "actividad", "PK"],
+          "fecha": "2025-09-20",
+          "estado": "Aprobado"
+        }
+      ]
+    },
+    {
+      "codigo": "05",
+      "titulo": "Trazabilidad de Materiales",
+      "items": [
+        {
+          "titulo": "Registro de trazabilidad - Hormigón PK 12+500",
+          "ruta": "registros/05_Trazabilidad/2025-09-19_trazabilidad-hormigon_PK-12500.html",
+          "tags": ["trazabilidad", "hormigón", "materiales", "registro"],
+          "fecha": "2025-09-19",
+          "estado": "Aprobado"
+        }
+      ]
+    },
+    {
+      "codigo": "06",
+      "titulo": "Puntos de Inspección y Control (PPI)",
+      "items": [
+        {
+          "titulo": "PPI - Control de armaduras PI 23+280",
+          "ruta": "registros/06_PPI/2025-09-18_PPI-armaduras_PI-23280.html",
+          "tags": ["PPI", "armaduras", "control", "inspección"],
+          "fecha": "2025-09-18",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "PPI - Control de hormigonado PK 18+750",
+          "ruta": "registros/06_PPI/2025-09-20_PPI-hormigonado_PK-18750.html",
+          "tags": ["PPI", "hormigonado", "control", "calidad"],
+          "fecha": "2025-09-20",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "PPI - Control de armaduras PK 15+200",
+          "ruta": "docs/06_PPI/2025-09-26_PPI-control-armaduras-PK-15200.html",
+          "tags": ["PPI", "armaduras", "control", "PK"],
+          "fecha": "2025-09-26",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Planificación Semanal PPIs - Semana 31",
+          "ruta": "docs/06_PPI/2025-07-25_planificacion-semanal-ppis.html",
+          "tags": ["PPI", "planificación", "semanal", "estructuras", "coordinación"],
+          "fecha": "2025-07-25",
+          "estado": "Aprobado"
+        }
+      ]
+    },
+    {
+      "codigo": "07",
+      "titulo": "Equipos, Maquinaria y Tajos",
+      "items": [
+        {
+          "titulo": "Registro de equipos - Excavadora CAT 320",
+          "ruta": "registros/07_Equipos_Maquinaria_Tajos/2025-09-19_registro-equipos_CAT-320.html",
+          "tags": ["equipos", "maquinaria", "excavadora", "registro"],
+          "fecha": "2025-09-19",
+          "estado": "Aprobado"
+        }
+      ]
+    },
+    {
+      "codigo": "08",
+      "titulo": "Calibración de Equipos",
+      "items": [
+        {
+          "titulo": "Certificado de calibración - Balanza digital",
+          "ruta": "registros/08_Calibracion/2025-09-15_calibracion-balanza-digital.html",
+          "tags": ["calibración", "balanza", "certificado", "equipos"],
+          "fecha": "2025-09-15",
+          "estado": "Aprobado"
+        }
+      ]
+    },
+    {
+      "codigo": "09",
+      "titulo": "Certificados y Materiales",
+      "items": [
+        {
+          "titulo": "Nafuflex Basic 1 – Presentación y DOP",
+          "ruta": "registros/09_Certificados_y_Materiales/2025-09-19_presentacion-nafuflex.html",
+          "tags": ["material", "impermeabilización", "DOP", "SDS", "TDS"],
+          "fecha": "2025-09-19",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Certificado de conformidad - Acero B500S",
+          "ruta": "registros/09_Certificados_y_Materiales/2025-09-18_certificado-acero-B500S.html",
+          "tags": ["certificado", "acero", "B500S", "conformidad"],
+          "fecha": "2025-09-18",
+          "estado": "Aprobado"
+        }
+      ]
+    },
+    {
+      "codigo": "10",
+      "titulo": "No Conformidades y Acciones Correctivas",
+      "items": [
+        {
+          "titulo": "No conformidad - Defecto en armadura PK 14+300",
+          "ruta": "registros/10_No_Conformidades/2025-09-17_no-conformidad-armadura_PK-14300.html",
+          "tags": ["no conformidad", "armadura", "defecto", "correctiva"],
+          "fecha": "2025-09-17",
+          "estado": "Aprobado"
+        }
+      ]
+    },
+    {
+      "codigo": "11",
+      "titulo": "Control de Calidad y Asistencia Técnica",
+      "items": [
+        {
+          "titulo": "Informe de asistencia técnica - Cimentación PI 25+100",
+          "ruta": "registros/11_Control_Calidad_Asistencia/2025-09-16_asistencia-cimentacion_PI-25100.html",
+          "tags": ["asistencia", "técnica", "cimentación", "control"],
+          "fecha": "2025-09-16",
+          "estado": "Aprobado"
+        }
+      ]
+    },
+    {
+      "codigo": "12",
+      "titulo": "Cálculos y Notas Técnicas",
+      "items": [
+        {
+          "titulo": "Cálculo de cimentación - Viaducto PK 20+500",
+          "ruta": "registros/12_Calculos_y_Notas_Tecnicas/2025-09-15_calculo-cimentacion-viaducto_PK-20500.html",
+          "tags": ["cálculo", "cimentación", "viaducto", "técnico"],
+          "fecha": "2025-09-15",
+          "estado": "Aprobado"
+        }
+      ]
+    },
+    {
+      "codigo": "13",
+      "titulo": "Control Geométrico",
+      "items": [
+        {
+          "titulo": "Levantamiento topográfico - PK 16+000 a PK 18+000",
+          "ruta": "registros/13_Control_Geometrico/2025-09-14_levantamiento-topografico_PK-16000-18000.html",
+          "tags": ["topografía", "levantamiento", "geométrico", "control"],
+          "fecha": "2025-09-14",
+          "estado": "Aprobado"
+        }
+      ]
+    },
+    {
+      "codigo": "14",
+      "titulo": "Control de Planos",
+      "items": [
+        {
+          "titulo": "Revisión de planos - Estructura PI 22+150",
+          "ruta": "registros/14_Control_Planos/2025-09-13_revision-planos-estructura_PI-22150.html",
+          "tags": ["planos", "revisión", "estructura", "control"],
+          "fecha": "2025-09-13",
+          "estado": "Aprobado"
+        }
+      ]
+    },
+    {
+      "codigo": "15",
+      "titulo": "Laboratorio y Ensayos",
+      "items": [
+        {
+          "titulo": "PI 23+280 – Ensayo de placa y coeficiente k",
+          "ruta": "registros/15_Laboratorio/2025-09-18_PI-23280_placa-k.html",
+          "tags": ["placa", "k", "cimentación", "ensayo"],
+          "fecha": "2025-09-18",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Ensayo de compactación - Suelo PK 17+500",
+          "ruta": "registros/15_Laboratorio/2025-09-17_ensayo-compactacion-suelo_PK-17500.html",
+          "tags": ["compactación", "suelo", "ensayo", "laboratorio"],
+          "fecha": "2025-09-17",
+          "estado": "Aprobado"
+        }
+      ]
+    },
+    {
+      "codigo": "16",
+      "titulo": "Documentación General",
+      "items": [
+        {
+          "titulo": "Manual de procedimientos de calidad",
+          "ruta": "registros/16_Documentacion_General/2025-09-12_manual-procedimientos-calidad.html",
+          "tags": ["manual", "procedimientos", "calidad", "documentación"],
+          "fecha": "2025-09-12",
+          "estado": "Aprobado"
+        }
+      ]
+    },
+    {
+      "codigo": "17",
+      "titulo": "Control Económico de Calidad",
+      "items": [
+        {
+          "titulo": "Análisis de costes de calidad - Septiembre 2025",
+          "ruta": "registros/17_Control_Economico_Calidad_Obra/2025-09-30_analisis-costes-calidad-septiembre.html",
+          "tags": ["costes", "calidad", "análisis", "económico"],
+          "fecha": "2025-09-30",
+          "estado": "Borrador"
+        }
+      ]
+    },
+    {
+      "codigo": "18",
+      "titulo": "Normativas y Reglamentos",
+      "items": [
+        {
+          "titulo": "Normativa EHE-08 - Instrucción de Hormigón Estructural",
+          "ruta": "registros/18_Normativas/2025-09-10_normativa-EHE-08.html",
+          "tags": ["normativa", "EHE-08", "hormigón", "estructural"],
+          "fecha": "2025-09-10",
+          "estado": "Aprobado"
+        }
+      ]
+    },
+    {
+      "codigo": "19",
+      "titulo": "Pruebas Finales",
+      "items": [
+        {
+          "titulo": "Prueba de carga - Viaducto PK 20+500",
+          "ruta": "registros/19_Pruebas_Finales/2025-09-25_prueba-carga-viaducto_PK-20500.html",
+          "tags": ["prueba", "carga", "viaducto", "final"],
+          "fecha": "2025-09-25",
+          "estado": "Borrador"
+        }
+      ]
+    },
+    {
+      "codigo": "20",
+      "titulo": "Auditorías de Calidad",
+      "items": [
+        {
+          "titulo": "Auditoría interna de calidad - Q3 2025",
+          "ruta": "registros/20_Auditorias/2025-09-28_auditoria-interna-Q3-2025.html",
+          "tags": ["auditoría", "interna", "calidad", "Q3"],
+          "fecha": "2025-09-28",
+          "estado": "Borrador"
+        }
+      ]
+    },
+    {
+      "codigo": "21",
+      "titulo": "Informes Mensuales",
+      "items": [
+        {
+          "titulo": "Informe mensual de calidad - Septiembre 2025",
+          "ruta": "registros/21_Informes_Mensuales/2025-09-30_informe-mensual-septiembre.html",
+          "tags": ["informe", "mensual", "calidad", "septiembre"],
+          "fecha": "2025-09-30",
+          "estado": "Borrador"
+        }
+      ]
+    }
+  ]
+}
