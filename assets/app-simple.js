@@ -1173,22 +1173,25 @@ class PortalCalidad {
         const startDate = new Date('2025-02-01');
         const currentDate = new Date();
         
-        // Calcular meses decorridos
+        // Calcular meses decorridos (mais preciso)
         const monthsElapsed = this.getMonthsDifference(startDate, currentDate);
         
-        // Duração prevista: 37 meses (até 50 meses)
-        const plannedDuration = 37;
+        // Duração legal: 37 meses, Prática: até 50 meses
+        const legalDuration = 37;
         const maxDuration = 50;
         
-        // Calcular progresso baseado na duração prevista
-        const progressPercentage = Math.min(Math.round((monthsElapsed / plannedDuration) * 100), 100);
+        // Calcular progresso baseado na duração legal (37 meses)
+        const progressPercentage = Math.min(Math.round((monthsElapsed / legalDuration) * 100), 100);
         
-        // Data estimada de finalização
+        // Data estimada de finalização (baseada nos 37 meses legais)
         const estimatedEndDate = new Date(startDate);
-        estimatedEndDate.setMonth(estimatedEndDate.getMonth() + plannedDuration);
+        estimatedEndDate.setMonth(estimatedEndDate.getMonth() + legalDuration);
+        
+        // Verificar se passou do prazo legal
+        const isOverLegalTime = monthsElapsed > legalDuration;
         
         // Atualizar elementos da interface
-        this.updateTimelineElements(monthsElapsed, progressPercentage, estimatedEndDate);
+        this.updateTimelineElements(monthsElapsed, progressPercentage, estimatedEndDate, isOverLegalTime, legalDuration, maxDuration);
     }
 
     getMonthsDifference(startDate, endDate) {
@@ -1197,7 +1200,7 @@ class PortalCalidad {
         return yearDiff * 12 + monthDiff;
     }
 
-    updateTimelineElements(monthsElapsed, progressPercentage, estimatedEndDate) {
+    updateTimelineElements(monthsElapsed, progressPercentage, estimatedEndDate, isOverLegalTime, legalDuration, maxDuration) {
         // Atualizar data atual
         const currentDateElement = document.getElementById('currentDate');
         if (currentDateElement) {
@@ -1222,21 +1225,61 @@ class PortalCalidad {
         const progressPercentageElement = document.getElementById('progressPercentage');
         if (progressPercentageElement) {
             progressPercentageElement.textContent = progressPercentage + '%';
+            
+            // Mudar cor se passou do prazo legal
+            if (isOverLegalTime) {
+                progressPercentageElement.style.color = 'var(--error)';
+                progressPercentageElement.style.fontWeight = '700';
+            } else {
+                progressPercentageElement.style.color = 'var(--primary)';
+                progressPercentageElement.style.fontWeight = '600';
+            }
         }
 
         // Atualizar barra de progresso
         const progressFillElement = document.getElementById('progressFill');
         if (progressFillElement) {
             progressFillElement.style.width = progressPercentage + '%';
+            
+            // Mudar cor da barra se passou do prazo legal
+            if (isOverLegalTime) {
+                progressFillElement.style.background = 'var(--gradient-error)';
+            } else {
+                progressFillElement.style.background = 'var(--gradient-primary)';
+            }
         }
 
-        // Atualizar meses decorridos
+        // Atualizar meses decorridos com informação mais detalhada
         const monthsElapsedElement = document.getElementById('monthsElapsed');
         if (monthsElapsedElement) {
-            monthsElapsedElement.textContent = monthsElapsed + ' meses';
+            let statusText = '';
+            if (isOverLegalTime) {
+                const monthsOver = monthsElapsed - legalDuration;
+                statusText = `${monthsElapsed} meses (${monthsOver} meses sobre prazo legal)`;
+                monthsElapsedElement.style.color = 'var(--error)';
+                monthsElapsedElement.style.fontWeight = '700';
+            } else {
+                const monthsRemaining = legalDuration - monthsElapsed;
+                statusText = `${monthsElapsed} meses (${monthsRemaining} meses restantes)`;
+                monthsElapsedElement.style.color = 'var(--primary)';
+                monthsElapsedElement.style.fontWeight = '600';
+            }
+            monthsElapsedElement.textContent = statusText;
         }
 
-        console.log(`📊 Progresso: ${monthsElapsed} meses de 37-50 (${progressPercentage}%)`);
+        // Atualizar texto de referência
+        const progressDetails = document.querySelector('.progress-details span:last-child');
+        if (progressDetails) {
+            if (isOverLegalTime) {
+                progressDetails.textContent = `transcurridos de ${legalDuration} meses legales (máx. ${maxDuration})`;
+                progressDetails.style.color = 'var(--error)';
+            } else {
+                progressDetails.textContent = `transcurridos de ${legalDuration} meses legales (máx. ${maxDuration})`;
+                progressDetails.style.color = 'var(--gray-600)';
+            }
+        }
+
+        console.log(`📊 Progresso: ${monthsElapsed} meses de ${legalDuration} legales (${progressPercentage}%) - ${isOverLegalTime ? 'SOBRE PRAZO' : 'DENTRO DO PRAZO'}`);
     }
 
     updateRecentDocumentsList() {
