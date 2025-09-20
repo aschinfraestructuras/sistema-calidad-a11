@@ -1387,15 +1387,204 @@ body {
     box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
 }
 
-/* Cronograma del Proyecto */
-.project-timeline-section {
+/* Cronograma del Proyecto - Compacto */
+.project-timeline-compact {
     background: var(--gradient-card);
-    border-radius: var(--radius-2xl);
-    padding: var(--spacing-xl);
-    margin-bottom: var(--spacing-xl);
-    box-shadow: var(--shadow-lg);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.timeline-header {
+    margin-bottom: var(--spacing-md);
+}
+
+.timeline-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.timeline-title h3 {
+    margin: 0;
+    color: var(--gray-800);
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.timeline-horizontal {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    align-items: center;
+}
+
+.timeline-milestones {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: var(--spacing-md) 0;
+}
+
+.timeline-milestones::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gray-300);
+    z-index: 1;
+}
+
+.milestone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    background: var(--white);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    min-width: 80px;
+}
+
+.milestone.current {
+    background: var(--gradient-primary);
+    color: white;
+    transform: scale(1.1);
+}
+
+.milestone-icon {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.milestone-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.milestone-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.milestone-date {
+    font-size: 0.7rem;
+    font-weight: 500;
+    opacity: 0.8;
+}
+
+.progress-compact {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.progress-label {
+    font-weight: 600;
+    color: var(--gray-800);
+    font-size: 0.9rem;
+}
+
+.progress-percentage {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 1.1rem;
+}
+
+.progress-bar-compact {
+    width: 100%;
+    height: 8px;
+    background: var(--gray-200);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    margin-bottom: var(--spacing-sm);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.progress-fill-compact {
+    height: 100%;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-full);
+    transition: width 1s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill-compact::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 2s infinite;
+}
+
+.progress-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+}
+
+.progress-stats span:first-child {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.progress-reference {
+    color: var(--gray-600);
+    font-size: 0.75rem;
+}
+
+/* Responsive para cronograma compacto */
+@media (max-width: 768px) {
+    .timeline-horizontal {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+    
+    .timeline-milestones {
+        justify-content: space-around;
+        padding: var(--spacing-sm) 0;
+    }
+    
+    .milestone {
+        min-width: 60px;
+        padding: var(--spacing-xs);
+    }
+    
+    .milestone-icon {
+        font-size: 1.2rem;
+    }
+    
+    .milestone-label {
+        font-size: 0.7rem;
+    }
+    
+    .milestone-date {
+        font-size: 0.65rem;
+    }
 }
 
 .section-header {

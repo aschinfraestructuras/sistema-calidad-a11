@@ -1236,7 +1236,7 @@ class PortalCalidad {
             }
         }
 
-        // Atualizar barra de progresso
+        // Atualizar barra de progresso (compacta)
         const progressFillElement = document.getElementById('progressFill');
         if (progressFillElement) {
             progressFillElement.style.width = progressPercentage + '%';
@@ -1247,6 +1247,14 @@ class PortalCalidad {
             } else {
                 progressFillElement.style.background = 'var(--gradient-primary)';
             }
+        }
+
+        // Atualizar mês atual no milestone
+        const currentMonthElement = document.getElementById('currentMonth');
+        if (currentMonthElement) {
+            const now = new Date();
+            const options = { year: 'numeric', month: 'short' };
+            currentMonthElement.textContent = now.toLocaleDateString('es-ES', options);
         }
 
         // Atualizar meses decorridos com informação mais detalhada

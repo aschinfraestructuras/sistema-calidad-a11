@@ -121,47 +121,53 @@
                         </div>
                     </div>
 
-                    <!-- Cronograma del Proyecto -->
-                    <div class="project-timeline-section">
-                        <div class="section-header">
-                            <h3>📅 Cronograma del Proyecto</h3>
-                            <div class="current-date" id="currentDate"></div>
+                    <!-- Cronograma del Proyecto - Compacto -->
+                    <div class="project-timeline-compact">
+                        <div class="timeline-header">
+                            <div class="timeline-title">
+                                <h3>📅 Cronograma del Proyecto</h3>
+                                <div class="current-date" id="currentDate"></div>
+                            </div>
                         </div>
-                        <div class="timeline-container">
-                            <div class="timeline-info">
-                                <div class="timeline-item">
-                                    <div class="timeline-icon">🚀</div>
-                                    <div class="timeline-content">
-                                        <h4>Inicio de Obra</h4>
-                                        <p>Febrero 2025</p>
+                        
+                        <div class="timeline-horizontal">
+                            <div class="timeline-milestones">
+                                <div class="milestone">
+                                    <div class="milestone-icon">🚀</div>
+                                    <div class="milestone-text">
+                                        <span class="milestone-label">Inicio</span>
+                                        <span class="milestone-date">Feb 2025</span>
                                     </div>
                                 </div>
-                                <div class="timeline-item">
-                                    <div class="timeline-icon">📊</div>
-                                    <div class="timeline-content">
-                                        <h4>Duración del Proyecto</h4>
-                                        <p>37 meses legales (máx. 50 meses)</p>
+                                
+                                <div class="milestone current">
+                                    <div class="milestone-icon">📍</div>
+                                    <div class="milestone-text">
+                                        <span class="milestone-label">Actual</span>
+                                        <span class="milestone-date" id="currentMonth">Sep 2025</span>
                                     </div>
                                 </div>
-                                <div class="timeline-item">
-                                    <div class="timeline-icon">🏁</div>
-                                    <div class="timeline-content">
-                                        <h4>Finalización Estimada</h4>
-                                        <p id="estimatedEnd">Marzo 2028</p>
+                                
+                                <div class="milestone">
+                                    <div class="milestone-icon">🏁</div>
+                                    <div class="milestone-text">
+                                        <span class="milestone-label">Final</span>
+                                        <span class="milestone-date" id="estimatedEnd">Mar 2028</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="progress-container">
-                                <div class="progress-header">
-                                    <span>Progreso de la Obra</span>
-                                    <span id="progressPercentage">0%</span>
+                            
+                            <div class="progress-compact">
+                                <div class="progress-info">
+                                    <span class="progress-label">Progreso</span>
+                                    <span class="progress-percentage" id="progressPercentage">0%</span>
                                 </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" id="progressFill"></div>
+                                <div class="progress-bar-compact">
+                                    <div class="progress-fill-compact" id="progressFill"></div>
                                 </div>
-                                <div class="progress-details">
+                                <div class="progress-stats">
                                     <span id="monthsElapsed">0 meses</span>
-                                    <span>transcurridos de 37-50 meses</span>
+                                    <span class="progress-reference">de 37 legales (máx. 50)</span>
                                 </div>
                             </div>
                         </div>
