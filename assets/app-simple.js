@@ -6,11 +6,29 @@ class PortalCalidad {
         this.manifest = null;
         this.currentChapter = null;
         this.uploadedDocuments = [];
+        
+        // Sistema de autenticação
+        this.validPasswords = [
+            'asch2025',
+            'ohlaasch2025', 
+            'calidadA11_2025'
+        ];
+        this.isAuthenticated = false;
+        
         this.init();
     }
 
     async init() {
         console.log('🚀 Iniciando Portal...');
+        
+        // Verificar se já está autenticado
+        this.checkAuthentication();
+        
+        if (!this.isAuthenticated) {
+            this.showLoginModal();
+            return;
+        }
+        
         try {
             await this.loadManifest();
             this.setupEvents();
@@ -1015,6 +1033,7 @@ class PortalCalidad {
             this.showToast('Documento subido correctamente', 'success');
             this.hideUpload();
             this.updateStats();
+            this.renderRecentDocuments();
 
             if (this.currentChapter && this.currentChapter.codigo === chapterValue) {
                 this.renderDocuments();
@@ -1265,46 +1284,17 @@ class PortalCalidad {
                     frame.src = this.currentDocument.ruta;
                 }
             }
-            // Para PDFs, tentar visualizar diretamente
+            // Para PDFs, usar PDF.js para melhor visualização
             else if (fileExt === 'pdf') {
-                if (this.currentDocument.fileData) {
-                    try {
-                        // Verificar se fileData já é uma data URL
-                        if (this.currentDocument.fileData.startsWith('data:application/pdf')) {
-                            frame.src = this.currentDocument.fileData;
-                        } else {
-                            // Se não for data URL, assumir que é base64 e converter
-                            const base64Data = this.currentDocument.fileData.replace(/^data:application\/pdf;base64,/, '');
-                            const binaryData = atob(base64Data);
-                            const bytes = new Uint8Array(binaryData.length);
-                            for (let i = 0; i < binaryData.length; i++) {
-                                bytes[i] = binaryData.charCodeAt(i);
-                            }
-                            const blob = new Blob([bytes], { type: 'application/pdf' });
-                            frame.src = URL.createObjectURL(blob);
-                        }
-                    } catch (error) {
-                        console.error('Erro ao processar PDF:', error);
-                        // Fallback: mostrar mensagem de erro
-                        frame.src = 'about:blank';
-                        frame.onload = () => {
-                            frame.contentDocument.body.innerHTML = `
-                                <div style="padding: 20px; text-align: center; font-family: Arial, sans-serif;">
-                                    <h2>❌ Erro ao carregar PDF</h2>
-                                    <p>Não foi possível visualizar este documento PDF.</p>
-                                    <p>Use o botão "Descargar" para baixar o arquivo.</p>
-                                    <div style="margin-top: 20px;">
-                                        <button onclick="portal.downloadDoc()" style="background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
-                                            📥 Descargar PDF
-                                        </button>
-                                    </div>
-                                </div>
-                            `;
-                        };
-                    }
-                } else if (this.currentDocument.ruta) {
-                    frame.src = this.currentDocument.ruta;
-                }
+                this.renderPDF();
+            }
+            // Para Excel
+            else if (['xls', 'xlsx'].includes(fileExt)) {
+                this.renderExcel();
+            }
+            // Para Word
+            else if (['doc', 'docx'].includes(fileExt)) {
+                this.renderWord();
             }
             // Para outros tipos, mostrar mensagem informativa
             else {
@@ -1572,13 +1562,92 @@ class PortalCalidad {
             if (saved) {
                 this.uploadedDocuments = JSON.parse(saved);
                 console.log('✅ Documentos carregados:', this.uploadedDocuments.length);
+                this.renderRecentDocuments();
             } else {
                 console.log('📁 Nenhum documento salvo encontrado');
                 this.uploadedDocuments = [];
+                this.renderRecentDocuments();
             }
         } catch (error) {
             console.error('❌ Erro ao carregar documentos:', error);
             this.uploadedDocuments = [];
+            this.renderRecentDocuments();
+        }
+    }
+
+    renderRecentDocuments() {
+        const container = document.getElementById('recentDocsList');
+        if (!container) return;
+
+        const recentDocs = this.uploadedDocuments
+            .sort((a, b) => new Date(b.uploadDate) - new Date(a.uploadDate))
+            .slice(0, 6); // Mostrar apenas os 6 mais recentes
+
+        if (recentDocs.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon">📁</div>
+                    <p>No hay documentos recientes</p>
+                    <small>Los documentos subidos aparecerán aquí</small>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = recentDocs.map(doc => this.createRecentDocCard(doc)).join('');
+    }
+
+    createRecentDocCard(doc) {
+        const fileExt = this.getFileExtension(doc.fileName);
+        const fileIcon = this.getFileIcon(doc.fileName);
+        const uploadDate = new Date(doc.uploadDate);
+        const formattedDate = uploadDate.toLocaleDateString('es-ES', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+        const formattedTime = uploadDate.toLocaleTimeString('es-ES', {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+
+        return `
+            <div class="recent-doc-card">
+                <div class="recent-doc-header">
+                    <div class="recent-doc-icon">${fileIcon}</div>
+                    <div class="recent-doc-info">
+                        <div class="recent-doc-title">${doc.titulo}</div>
+                        <div class="recent-doc-meta">
+                            <span>📅 ${formattedDate}</span>
+                            <span>🕒 ${formattedTime}</span>
+                            <span>📂 Cap. ${doc.chapter}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="recent-doc-actions">
+                    <button class="btn-view" onclick="portal.viewDocument('${doc.id}')" title="Ver documento">
+                        <span>👁️</span>
+                        <span>Ver</span>
+                    </button>
+                    <button class="btn-delete" onclick="portal.deleteDocument('${doc.id}')" title="Eliminar">
+                        <span>🗑️</span>
+                        <span>Eliminar</span>
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    refreshRecentDocuments() {
+        this.renderRecentDocuments();
+        this.showToast('Documentos recientes actualizados', 'success');
+    }
+
+    viewDocument(docId) {
+        const doc = this.uploadedDocuments.find(d => d.id === docId);
+        if (doc) {
+            this.currentDocument = doc;
+            this.showViewerModal();
         }
     }
 
@@ -1874,6 +1943,355 @@ class PortalCalidad {
         }
         
         return true;
+    }
+
+    // ===== SISTEMA DE AUTENTICAÇÃO =====
+    
+    checkAuthentication() {
+        // Verificar se há sessão ativa
+        const sessionAuth = sessionStorage.getItem('portal_authenticated');
+        if (sessionAuth === 'true') {
+            this.isAuthenticated = true;
+            console.log('✅ Usuário já autenticado');
+        }
+    }
+
+    showLoginModal() {
+        console.log('🔐 Mostrando modal de login');
+        document.body.classList.add('login-active');
+        const modal = document.getElementById('loginModal');
+        if (modal) {
+            modal.style.display = 'flex';
+            
+            // Focar no campo de senha
+            setTimeout(() => {
+                const passwordInput = document.getElementById('passwordInput');
+                if (passwordInput) {
+                    passwordInput.focus();
+                }
+            }, 100);
+            
+            // Permitir login com Enter
+            const passwordInput = document.getElementById('passwordInput');
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.handleLogin();
+                    }
+                });
+            }
+        }
+    }
+
+    hideLoginModal() {
+        console.log('✅ Escondendo modal de login');
+        document.body.classList.remove('login-active');
+        const modal = document.getElementById('loginModal');
+        if (modal) {
+            modal.style.display = 'none';
+        }
+    }
+
+    handleLogin() {
+        const passwordInput = document.getElementById('passwordInput');
+        const errorDiv = document.getElementById('loginError');
+        
+        if (!passwordInput) return;
+        
+        const password = passwordInput.value.trim();
+        
+        if (this.validPasswords.includes(password)) {
+            // Senha correta
+            this.isAuthenticated = true;
+            sessionStorage.setItem('portal_authenticated', 'true');
+            
+            // Esconder erro se existir
+            if (errorDiv) {
+                errorDiv.style.display = 'none';
+            }
+            
+            // Esconder modal e inicializar sistema
+            this.hideLoginModal();
+            this.initializeAfterLogin();
+            
+            console.log('✅ Login bem-sucedido');
+        } else {
+            // Senha incorreta
+            if (errorDiv) {
+                errorDiv.style.display = 'flex';
+            }
+            
+            // Limpar campo e focar novamente
+            passwordInput.value = '';
+            passwordInput.focus();
+            
+            console.log('❌ Senha incorreta');
+        }
+    }
+
+    async initializeAfterLogin() {
+        try {
+            await this.loadManifest();
+            this.setupEvents();
+            this.renderChapters();
+            this.updateStats();
+            this.loadUploadedDocuments();
+            console.log('✅ Sistema inicializado após login');
+        } catch (error) {
+            console.error('❌ Erro ao inicializar após login:', error);
+            this.showToast('Erro ao carregar sistema', 'error');
+        }
+    }
+
+    togglePassword() {
+        const passwordInput = document.getElementById('passwordInput');
+        const toggleIcon = document.querySelector('.toggle-icon');
+        
+        if (passwordInput && toggleIcon) {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.textContent = '👁️';
+            }
+        }
+    }
+
+    logout() {
+        this.isAuthenticated = false;
+        sessionStorage.removeItem('portal_authenticated');
+        this.showLoginModal();
+        console.log('🚪 Logout realizado');
+    }
+
+    async renderPDF() {
+        const frame = document.getElementById('documentFrame');
+        
+        try {
+            // Configurar PDF.js
+            if (typeof pdfjsLib !== 'undefined') {
+                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+                
+                let pdfData;
+                if (this.currentDocument.fileData.startsWith('data:application/pdf')) {
+                    pdfData = this.currentDocument.fileData;
+                } else {
+                    // Converter Base64 para Uint8Array
+                    const base64Data = this.currentDocument.fileData.replace(/^data:application\/pdf;base64,/, '');
+                    const binaryData = atob(base64Data);
+                    const bytes = new Uint8Array(binaryData.length);
+                    for (let i = 0; i < binaryData.length; i++) {
+                        bytes[i] = binaryData.charCodeAt(i);
+                    }
+                    pdfData = bytes;
+                }
+                
+                const pdf = await pdfjsLib.getDocument(pdfData).promise;
+                const numPages = pdf.numPages;
+                
+                // Renderizar primeira página
+                const page = await pdf.getPage(1);
+                const scale = 1.5;
+                const viewport = page.getViewport({ scale });
+                
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                
+                const renderContext = {
+                    canvasContext: context,
+                    viewport: viewport
+                };
+                
+                await page.render(renderContext).promise;
+                
+                frame.src = 'about:blank';
+                frame.onload = () => {
+                    frame.contentDocument.body.innerHTML = `
+                        <div style="padding: 20px; font-family: Arial, sans-serif;">
+                            <h2 style="color: #dc3545; margin-bottom: 20px;">📄 ${this.currentDocument.titulo}</h2>
+                            <div style="text-align: center; margin-bottom: 15px;">
+                                <span style="background: #f8f9fa; padding: 5px 10px; border-radius: 15px; font-size: 0.9em; color: #6c757d;">
+                                    Página 1 de ${numPages}
+                                </span>
+                            </div>
+                            <div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 100%;">
+                                ${canvas.outerHTML}
+                            </div>
+                            <div style="margin-top: 15px; text-align: center;">
+                                <button onclick="portal.downloadDoc()" style="padding: 10px 20px; background: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px;">
+                                    📥 Baixar PDF
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                };
+            } else {
+                // Fallback para visualização nativa do navegador
+                if (this.currentDocument.fileData.startsWith('data:application/pdf')) {
+                    frame.src = this.currentDocument.fileData;
+                } else {
+                    const base64Data = this.currentDocument.fileData.replace(/^data:application\/pdf;base64,/, '');
+                    const binaryData = atob(base64Data);
+                    const bytes = new Uint8Array(binaryData.length);
+                    for (let i = 0; i < binaryData.length; i++) {
+                        bytes[i] = binaryData.charCodeAt(i);
+                    }
+                    const blob = new Blob([bytes], { type: 'application/pdf' });
+                    frame.src = URL.createObjectURL(blob);
+                }
+            }
+        } catch (error) {
+            console.error('Erro ao renderizar PDF:', error);
+            frame.src = 'about:blank';
+            frame.onload = () => {
+                frame.contentDocument.body.innerHTML = `
+                    <div style="padding: 20px; text-align: center; font-family: Arial, sans-serif;">
+                        <h2>❌ Erro ao carregar PDF</h2>
+                        <p>Não foi possível visualizar este documento PDF.</p>
+                        <button onclick="portal.downloadDoc()" style="padding: 10px 20px; background: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                            📥 Baixar PDF
+                        </button>
+                    </div>
+                `;
+            };
+        }
+    }
+
+    async renderExcel() {
+        const frame = document.getElementById('documentFrame');
+        
+        try {
+            if (typeof XLSX !== 'undefined') {
+                let workbook;
+                
+                if (this.currentDocument.fileData.startsWith('data:')) {
+                    // Se for data URL, converter para ArrayBuffer
+                    const base64Data = this.currentDocument.fileData.split(',')[1];
+                    const binaryData = atob(base64Data);
+                    const bytes = new Uint8Array(binaryData.length);
+                    for (let i = 0; i < binaryData.length; i++) {
+                        bytes[i] = binaryData.charCodeAt(i);
+                    }
+                    workbook = XLSX.read(bytes, { type: 'array' });
+                } else {
+                    workbook = XLSX.read(this.currentDocument.fileData, { type: 'binary' });
+                }
+                
+                const firstSheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[firstSheetName];
+                const html = XLSX.utils.sheet_to_html(worksheet);
+                
+                frame.src = 'about:blank';
+                frame.onload = () => {
+                    frame.contentDocument.body.innerHTML = `
+                        <div style="padding: 20px; font-family: Arial, sans-serif;">
+                            <h2 style="color: #28a745; margin-bottom: 20px;">📊 ${this.currentDocument.titulo}</h2>
+                            <div style="background: white; border-radius: 8px; overflow: auto; max-height: 80vh; border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                                ${html}
+                            </div>
+                            <div style="margin-top: 15px; text-align: center;">
+                                <button onclick="portal.downloadDoc()" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px;">
+                                    📥 Baixar Excel
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                };
+            } else {
+                throw new Error('XLSX não carregado');
+            }
+        } catch (error) {
+            console.error('Erro ao renderizar Excel:', error);
+            frame.src = 'about:blank';
+            frame.onload = () => {
+                frame.contentDocument.body.innerHTML = `
+                    <div style="padding: 20px; text-align: center; font-family: Arial, sans-serif;">
+                        <h2>❌ Erro ao carregar Excel</h2>
+                        <p>Não foi possível visualizar este arquivo Excel.</p>
+                        <button onclick="portal.downloadDoc()" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                            📥 Baixar Arquivo
+                        </button>
+                    </div>
+                `;
+            };
+        }
+    }
+
+    async renderWord() {
+        const frame = document.getElementById('documentFrame');
+        
+        try {
+            if (typeof mammoth !== 'undefined') {
+                let arrayBuffer;
+                
+                if (this.currentDocument.fileData.startsWith('data:')) {
+                    // Converter data URL para ArrayBuffer
+                    const base64Data = this.currentDocument.fileData.split(',')[1];
+                    const binaryData = atob(base64Data);
+                    const bytes = new Uint8Array(binaryData.length);
+                    for (let i = 0; i < binaryData.length; i++) {
+                        bytes[i] = binaryData.charCodeAt(i);
+                    }
+                    arrayBuffer = bytes.buffer;
+                } else {
+                    // Converter string para ArrayBuffer
+                    const binaryData = atob(this.currentDocument.fileData);
+                    const bytes = new Uint8Array(binaryData.length);
+                    for (let i = 0; i < binaryData.length; i++) {
+                        bytes[i] = binaryData.charCodeAt(i);
+                    }
+                    arrayBuffer = bytes.buffer;
+                }
+                
+                const result = await mammoth.convertToHtml({ arrayBuffer: arrayBuffer });
+                const html = result.value;
+                const messages = result.messages;
+                
+                frame.src = 'about:blank';
+                frame.onload = () => {
+                    frame.contentDocument.body.innerHTML = `
+                        <div style="padding: 20px; font-family: Arial, sans-serif;">
+                            <h2 style="color: #007bff; margin-bottom: 20px;">📝 ${this.currentDocument.titulo}</h2>
+                            ${messages.length > 0 ? `
+                                <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 5px; padding: 10px; margin-bottom: 15px;">
+                                    <strong>⚠️ Avisos:</strong>
+                                    <ul style="margin: 5px 0;">
+                                        ${messages.map(msg => `<li>${msg.message}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            ` : ''}
+                            <div style="background: white; border-radius: 8px; padding: 20px; border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0,0,0,0.1); line-height: 1.6;">
+                                ${html}
+                            </div>
+                            <div style="margin-top: 15px; text-align: center;">
+                                <button onclick="portal.downloadDoc()" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px;">
+                                    📥 Baixar Word
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                };
+            } else {
+                throw new Error('Mammoth não carregado');
+            }
+        } catch (error) {
+            console.error('Erro ao renderizar Word:', error);
+            frame.src = 'about:blank';
+            frame.onload = () => {
+                frame.contentDocument.body.innerHTML = `
+                    <div style="padding: 20px; text-align: center; font-family: Arial, sans-serif;">
+                        <h2>❌ Erro ao carregar Word</h2>
+                        <p>Não foi possível visualizar este arquivo Word.</p>
+                        <button onclick="portal.downloadDoc()" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                            📥 Baixar Arquivo
+                        </button>
+                    </div>
+                `;
+            };
+        }
     }
 }
 

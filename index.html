@@ -8,6 +8,79 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏗️</text></svg>">
 </head>
 <body>
+    <!-- Login Modal -->
+    <div id="loginModal" class="login-modal">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="login-logo">
+                    <svg width="120" height="60" viewBox="0 0 250 60" xmlns="http://www.w3.org/2000/svg">
+                        <!-- OHLA Logo -->
+                        <g transform="translate(0, 0)">
+                            <!-- OHLA Buildings -->
+                            <rect x="5" y="25" width="3" height="20" fill="#1E3A8A"/>
+                            <rect x="9" y="20" width="3" height="25" fill="#1E3A8A"/>
+                            <rect x="13" y="15" width="3" height="30" fill="#1E3A8A"/>
+                            <rect x="17" y="10" width="3" height="35" fill="#1E3A8A"/>
+                            <rect x="21" y="5" width="3" height="40" fill="#1E3A8A"/>
+                            
+                            <rect x="30" y="20" width="3" height="25" fill="#0EA5E9"/>
+                            <rect x="34" y="15" width="3" height="30" fill="#0EA5E9"/>
+                            <rect x="38" y="10" width="3" height="35" fill="#0EA5E9"/>
+                            <rect x="42" y="5" width="3" height="40" fill="#0EA5E9"/>
+                            
+                            <!-- OHLA Text -->
+                            <text x="50" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1E3A8A">OHLA</text>
+                            <text x="50" y="40" font-family="Arial, sans-serif" font-size="8" fill="#0EA5E9">Progress Enablers</text>
+                        </g>
+                        
+                        <!-- ASCH Logo -->
+                        <g transform="translate(120, 0)">
+                            <!-- ASCH Text -->
+                            <text x="0" y="20" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#000000">A</text>
+                            
+                            <!-- ASCH S (Red Wave) - Smaller and positioned better -->
+                            <path d="M 12 8 Q 16 8, 20 12 Q 24 16, 20 20 Q 16 24, 12 24 Q 8 24, 6 20 Q 4 16, 8 12 Q 12 8, 16 8" 
+                                  fill="#DC2626" stroke="none"/>
+                            
+                            <text x="22" y="20" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#000000">CH</text>
+                            
+                            <!-- ASCH Tagline -->
+                            <text x="0" y="40" font-family="Arial, sans-serif" font-size="6" fill="#374151">INFRAESTRUCTURAS Y SERVICIOS</text>
+                        </g>
+                    </svg>
+                </div>
+                <h2 class="login-title">Portal de Calidad ASCH-OHLA</h2>
+                <p class="login-subtitle">Obra A-11 • Sistema de Gestión de Documentos</p>
+            </div>
+            
+            <div class="login-form">
+                <div class="form-group">
+                    <label for="passwordInput" class="form-label">Contraseña de Acceso</label>
+                    <div class="input-container">
+                        <input type="password" id="passwordInput" class="form-input" placeholder="Ingrese la contraseña" autocomplete="current-password">
+                        <div class="password-toggle" onclick="portal.togglePassword()">
+                            <span class="toggle-icon">👁️</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="login-btn" onclick="portal.handleLogin()">
+                    <span class="btn-icon">🔐</span>
+                    <span class="btn-text">Acceder al Sistema</span>
+                </button>
+                
+                <div class="login-error" id="loginError" style="display: none;">
+                    <span class="error-icon">❌</span>
+                    <span class="error-text">Contraseña incorrecta. Intente nuevamente.</span>
+                </div>
+            </div>
+            
+            <div class="login-footer">
+                <p class="footer-text">Sistema de Gestión de Calidad • ASCH-OHLA</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Header -->
     <header class="header">
         <div class="header-container">
@@ -67,6 +140,10 @@
                 <button id="dashboardBtn" class="dashboard-btn">
                     <span class="btn-icon">📊</span>
                     <span class="btn-text">Dashboard</span>
+                </button>
+                <button id="logoutBtn" class="logout-btn" onclick="portal.logout()" title="Cerrar Sesión">
+                    <span class="btn-icon">🚪</span>
+                    <span class="btn-text">Salir</span>
                 </button>
             </div>
         </div>
@@ -246,13 +323,22 @@
                     <!-- Documentos Subidos Recentemente -->
                     <div class="recent-documents">
                         <div class="recent-docs-header">
-                            <h3>Documentos Subidos Recientemente</h3>
-                            <button class="btn-danger" onclick="portal.clearAllUploadedDocuments()" title="Eliminar todos los documentos subidos">
-                                🗑️ Limpiar Todo
-                            </button>
+                            <h3>📤 Documentos Recientes</h3>
+                            <div class="recent-actions">
+                                <button class="btn-refresh" onclick="portal.refreshRecentDocuments()" title="Actualizar">
+                                    <span class="btn-icon">🔄</span>
+                                </button>
+                                <button class="btn-clear" onclick="portal.clearAllUploadedDocuments()" title="Limpiar Todo">
+                                    <span class="btn-icon">🗑️</span>
+                                </button>
+                            </div>
                         </div>
-                        <div class="recent-docs-list" id="recentDocsList">
-                            <p class="text-muted">No hay documentos subidos recientemente</p>
+                        <div class="recent-docs-grid" id="recentDocsList">
+                            <div class="empty-state">
+                                <div class="empty-icon">📁</div>
+                                <p>No hay documentos recientes</p>
+                                <small>Los documentos subidos aparecerán aquí</small>
+                            </div>
                         </div>
                     </div>
 
@@ -429,6 +515,11 @@
     </div>
 
     <!-- Scripts -->
+    <!-- Bibliotecas para visualização de documentos -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.21/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    
     <script src="assets/app-simple.js"></script>
 </body>
 </html>
