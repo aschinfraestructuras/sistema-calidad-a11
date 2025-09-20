@@ -1197,7 +1197,15 @@ class PortalCalidad {
     getMonthsDifference(startDate, endDate) {
         const yearDiff = endDate.getFullYear() - startDate.getFullYear();
         const monthDiff = endDate.getMonth() - startDate.getMonth();
-        return yearDiff * 12 + monthDiff;
+        const dayDiff = endDate.getDate() - startDate.getDate();
+        
+        // Calcular meses mais precisos considerando os dias
+        let months = yearDiff * 12 + monthDiff;
+        if (dayDiff > 0) {
+            months += 0.5; // Se passou mais da metade do mês, conta meio mês
+        }
+        
+        return Math.round(months * 10) / 10; // Arredondar para 1 casa decimal
     }
 
     updateTimelineElements(monthsElapsed, progressPercentage, estimatedEndDate, isOverLegalTime, legalDuration, maxDuration) {
