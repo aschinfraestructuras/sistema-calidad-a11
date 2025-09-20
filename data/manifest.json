@@ -350,6 +350,140 @@
       ]
     },
     {
+      "codigo": "15",
+      "titulo": "Laboratorio",
+      "items": [
+        {
+          "titulo": "🔬 Aceros - Ensayos de Tracción y Soldadura",
+          "ruta": "registros/15_Laboratorio/Aceros/",
+          "tipo": "separador",
+          "tags": ["aceros", "tracción", "soldadura", "ensayos"],
+          "fecha": "2025-09-20",
+          "estado": "Activo"
+        },
+        {
+          "titulo": "🛣️ Aglomerado - Ensayos de Carreteras",
+          "ruta": "registros/15_Laboratorio/Aglomerado/",
+          "tipo": "separador",
+          "tags": ["aglomerado", "carreteras", "asfalto", "ensayos"],
+          "fecha": "2025-09-20",
+          "estado": "Activo"
+        },
+        {
+          "titulo": "📊 CRT - Control de Resistencia y Tracción",
+          "ruta": "registros/15_Laboratorio/CRT/",
+          "tipo": "separador",
+          "tags": ["crt", "resistencia", "tracción", "control"],
+          "fecha": "2025-09-20",
+          "estado": "Activo"
+        },
+        {
+          "titulo": "📏 Deflexiones IRI - Medición de Rugosidad",
+          "ruta": "registros/15_Laboratorio/Deflexiones-IRI/",
+          "tipo": "separador",
+          "tags": ["deflexiones", "iri", "rugosidad", "medición"],
+          "fecha": "2025-09-20",
+          "estado": "Activo"
+        },
+        {
+          "titulo": "⚖️ Densidades - Ensayos Proctor y Campo",
+          "ruta": "registros/15_Laboratorio/Densidades/",
+          "tipo": "separador",
+          "tags": ["densidades", "proctor", "campo", "suelos"],
+          "fecha": "2025-09-20",
+          "estado": "Activo"
+        },
+        {
+          "titulo": "🏗️ Hormigón - Resistencia y Consistencia",
+          "ruta": "registros/15_Laboratorio/Hormigon/",
+          "tipo": "separador",
+          "tags": ["hormigón", "resistencia", "consistencia", "lotes"],
+          "fecha": "2025-09-20",
+          "estado": "Activo"
+        },
+        {
+          "titulo": "📋 Lotificación - Control de Lotes",
+          "ruta": "registros/15_Laboratorio/Lotificacion/",
+          "tipo": "separador",
+          "tags": ["lotificación", "lotes", "control", "trazabilidad"],
+          "fecha": "2025-09-20",
+          "estado": "Activo"
+        },
+        {
+          "titulo": "🔧 Placas de Carga - Módulos de Elasticidad",
+          "ruta": "registros/15_Laboratorio/Placas-de-Carga/",
+          "tipo": "separador",
+          "tags": ["placas", "carga", "elasticidad", "módulos"],
+          "fecha": "2025-09-20",
+          "estado": "Activo"
+        },
+        {
+          "titulo": "🏗️ Préstamos - Materiales de Préstamo",
+          "ruta": "registros/15_Laboratorio/Prestamos/",
+          "tipo": "separador",
+          "tags": ["préstamos", "materiales", "extracción", "calidad"],
+          "fecha": "2025-09-20",
+          "estado": "Activo"
+        },
+        {
+          "titulo": "🔍 Sondeos - Investigación del Terreno",
+          "ruta": "registros/15_Laboratorio/Sondeos/",
+          "tipo": "separador",
+          "tags": ["sondeos", "terreno", "investigación", "geotecnia"],
+          "fecha": "2025-09-20",
+          "estado": "Activo"
+        },
+        {
+          "titulo": "🧱 Suelo Cemento - Estabilización",
+          "ruta": "registros/15_Laboratorio/Suelo-Cemento/",
+          "tipo": "separador",
+          "tags": ["suelo", "cemento", "estabilización", "mezclas"],
+          "fecha": "2025-09-20",
+          "estado": "Activo"
+        },
+        {
+          "titulo": "🛠️ Suelo Estabilizado - Tratamientos",
+          "ruta": "registros/15_Laboratorio/Suelo-Estabilizado/",
+          "tipo": "separador",
+          "tags": ["suelo", "estabilizado", "tratamientos", "mejorado"],
+          "fecha": "2025-09-20",
+          "estado": "Activo"
+        },
+        {
+          "titulo": "🌍 Suelos - Caracterización Geotécnica",
+          "ruta": "registros/15_Laboratorio/Suelos/",
+          "tipo": "separador",
+          "tags": ["suelos", "geotécnica", "caracterización", "propiedades"],
+          "fecha": "2025-09-20",
+          "estado": "Activo"
+        },
+        {
+          "titulo": "🔬 Testigos - Muestras de Hormigón",
+          "ruta": "registros/15_Laboratorio/Testigos/",
+          "tipo": "separador",
+          "tags": ["testigos", "muestras", "hormigón", "extracción"],
+          "fecha": "2025-09-20",
+          "estado": "Activo"
+        },
+        {
+          "titulo": "🪨 Zahorras - Materiales Granulares",
+          "ruta": "registros/15_Laboratorio/Zahorras/",
+          "tipo": "separador",
+          "tags": ["zahorras", "granulares", "materiales", "base"],
+          "fecha": "2025-09-20",
+          "estado": "Activo"
+        },
+        {
+          "titulo": "📎 Anexos - Documentación Complementaria",
+          "ruta": "registros/15_Laboratorio/Anexos/",
+          "tipo": "separador",
+          "tags": ["anexos", "documentación", "complementaria", "referencias"],
+          "fecha": "2025-09-20",
+          "estado": "Activo"
+        }
+      ]
+    },
+    {
       "codigo": "20",
       "titulo": "Auditorías de Calidad",
       "items": [

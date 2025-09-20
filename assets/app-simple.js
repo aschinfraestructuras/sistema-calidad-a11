@@ -839,8 +839,67 @@ class PortalCalidad {
             return;
         }
 
+        // Verificar se é um separador (pasta)
+        if (doc.tipo === 'separador') {
+            this.showFolderContents(doc);
+            return;
+        }
+
         this.currentDocument = doc;
         this.showViewerModal();
+    }
+
+    showFolderContents(folderDoc) {
+        // Para separadores, mostrar conteúdo da pasta
+        const modal = document.getElementById('viewerModal');
+        const title = document.getElementById('viewerTitle');
+        const frame = document.getElementById('documentFrame');
+
+        if (modal && title && frame) {
+            title.textContent = folderDoc.titulo;
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+
+            // Criar interface para mostrar conteúdo da pasta
+            frame.src = 'about:blank';
+            frame.onload = () => {
+                const iframeDoc = frame.contentDocument || frame.contentWindow.document;
+                if (iframeDoc) {
+                    iframeDoc.body.innerHTML = `
+                        <div style="padding: 40px; text-align: center; font-family: Arial, sans-serif; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                            <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); max-width: 600px; width: 100%;">
+                                <div style="font-size: 4rem; margin-bottom: 20px;">📁</div>
+                                <h2 style="color: #1e3a8a; margin-bottom: 16px; font-size: 1.8rem;">${folderDoc.titulo}</h2>
+                                <p style="color: #64748b; margin-bottom: 24px; line-height: 1.6;">
+                                    Esta pasta está preparada para armazenar os ensaios de laboratório correspondentes.
+                                </p>
+                                <div style="background: #f1f5f9; padding: 20px; border-radius: 8px; border-left: 4px solid #3b82f6; margin-bottom: 24px;">
+                                    <p style="margin: 0; color: #475569; font-size: 0.9rem;">
+                                        <strong>💡 Como usar:</strong><br>
+                                        1. Coloque os arquivos numerados nesta pasta<br>
+                                        2. Use nomenclatura: 001_ensaio_tipo.pdf<br>
+                                        3. Os documentos aparecerão automaticamente aqui
+                                    </p>
+                                </div>
+                                <div style="background: #fef3c7; padding: 16px; border-radius: 8px; border-left: 4px solid #f59e0b;">
+                                    <p style="margin: 0; color: #92400e; font-size: 0.9rem;">
+                                        <strong>📂 Pasta:</strong> ${folderDoc.ruta}
+                                    </p>
+                                </div>
+                                ${folderDoc.tags ? `
+                                    <div style="margin-top: 24px;">
+                                        <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 8px;">Tags:</p>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
+                                            ${folderDoc.tags.map(tag => `<span style="background: #e2e8f0; color: #475569; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem;">${tag}</span>`).join('')}
+                                        </div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
+                }
+            };
+        }
     }
 
     showViewerModal() {
