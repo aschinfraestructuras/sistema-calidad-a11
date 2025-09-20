@@ -12,6 +12,16 @@
           "estado": "Aprobado"
         },
         {
+          "titulo": "PAC Completo - Documento Pesado (200MB)",
+          "ruta": "https://drive.google.com/file/d/1ABC123XYZ/view?usp=sharing",
+          "tipo": "externo",
+          "tamaño": "200MB",
+          "tags": ["pac", "completo", "pesado", "externo"],
+          "fecha": "2025-09-20",
+          "estado": "Aprobado",
+          "descripcion": "Documento PAC completo com todos os anexos. Armazenado externamente devido ao tamanho."
+        },
+        {
           "titulo": "Procedimiento de Subida de Documentos",
           "ruta": "registros/01_PAC/01_Procedimientos_Calidad/02.01_Procedimentos_Ejecucion/2025-09-20_procedimiento-subida-documentos.html",
           "tags": ["procedimiento", "subida", "documentos", "calidad"],

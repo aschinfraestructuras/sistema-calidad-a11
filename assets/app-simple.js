@@ -358,12 +358,13 @@ class PortalCalidad {
 
     createDocumentCard(doc) {
         const isUploaded = doc.id && doc.id.startsWith('uploaded_');
+        const isExternal = doc.tipo === 'externo' || this.isExternalUrl(doc.ruta);
         const status = (doc.estado || 'Aprobado').toLowerCase();
         const ext = this.getFileExtension(doc.ruta || doc.fileName);
         const tags = doc.tags || [];
         
         return `
-            <div class="document-card">
+            <div class="document-card ${isExternal ? 'external-document' : ''}">
                 <div class="document-header">
                     <div class="document-title">${doc.titulo}</div>
                     <div class="document-status ${status}">${doc.estado || 'Aprobado'}</div>
@@ -373,9 +374,16 @@ class PortalCalidad {
                         <span>📅</span>
                         <span>${this.formatDate(doc.fecha || doc.uploadDate)}</span>
                     </div>
-                    <div class="document-type">${ext.toUpperCase()}</div>
+                    <div class="document-type">${isExternal ? 'EXTERNO' : ext.toUpperCase()}</div>
+                    ${doc.tamaño ? `<div class="document-size">📊 ${doc.tamaño}</div>` : ''}
                     ${isUploaded ? '<div class="uploaded-badge">📤 Subido</div>' : ''}
+                    ${isExternal ? '<div class="external-badge">🌐 Externo</div>' : ''}
                 </div>
+                ${doc.descripcion ? `
+                    <div class="document-description">
+                        <p>${doc.descripcion}</p>
+                    </div>
+                ` : ''}
                 ${tags.length > 0 ? `
                     <div class="document-tags">
                         ${tags.map(tag => `<span class="document-tag">#${tag}</span>`).join('')}
@@ -383,8 +391,8 @@ class PortalCalidad {
                 ` : ''}
                 <div class="document-actions">
                     <button class="btn-primary" onclick="portal.viewDocument('${doc.id || 'manifest_' + doc.titulo}')">
-                        <span class="btn-icon">👁️</span>
-                        <span class="btn-text">Ver Documento</span>
+                        <span class="btn-icon">${isExternal ? '🔗' : '👁️'}</span>
+                        <span class="btn-text">${isExternal ? 'Abrir Externo' : 'Ver Documento'}</span>
                     </button>
                     <button class="btn-secondary" onclick="portal.editDocument('${doc.id || 'manifest_' + doc.titulo}')" title="Editar">
                         <span class="btn-icon">✏️</span>
@@ -399,6 +407,55 @@ class PortalCalidad {
 
     getFileExtension(fileName) {
         return fileName ? fileName.split('.').pop().toLowerCase() : 'html';
+    }
+
+    isExternalUrl(url) {
+        if (!url) return false;
+        return url.startsWith('http://') || url.startsWith('https://') || url.startsWith('//');
+    }
+
+    showExternalDocument() {
+        const frame = document.getElementById('documentFrame');
+        if (!frame) return;
+
+        const doc = this.currentDocument;
+        
+        // Criar interface para documento externo
+        frame.src = 'about:blank';
+        frame.onload = () => {
+            const iframeDoc = frame.contentDocument || frame.contentWindow.document;
+            if (iframeDoc) {
+                iframeDoc.body.innerHTML = `
+                    <div style="padding: 40px; text-align: center; font-family: Arial, sans-serif; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); max-width: 600px; width: 100%;">
+                            <div style="font-size: 4rem; margin-bottom: 20px;">📁</div>
+                            <h2 style="color: #1e3a8a; margin-bottom: 16px; font-size: 1.8rem;">${doc.titulo}</h2>
+                            ${doc.descripcion ? `<p style="color: #64748b; margin-bottom: 24px; line-height: 1.6;">${doc.descripcion}</p>` : ''}
+                            ${doc.tamaño ? `<p style="color: #f59e0b; font-weight: 600; margin-bottom: 24px;">📊 Tamaño: ${doc.tamaño}</p>` : ''}
+                            <div style="margin-bottom: 32px;">
+                                <a href="${doc.ruta}" target="_blank" style="display: inline-block; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1.1rem; box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3); transition: all 0.3s ease;">
+                                    🔗 Abrir Documento Externo
+                                </a>
+                            </div>
+                            <div style="background: #f1f5f9; padding: 20px; border-radius: 8px; border-left: 4px solid #3b82f6;">
+                                <p style="margin: 0; color: #475569; font-size: 0.9rem;">
+                                    <strong>💡 Dica:</strong> Este documento está armazenado externamente debido ao seu tamaño. 
+                                    Clique no botão acima para abri-lo em uma nova aba.
+                                </p>
+                            </div>
+                            ${doc.tags ? `
+                                <div style="margin-top: 24px;">
+                                    <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 8px;">Tags:</p>
+                                    <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
+                                        ${doc.tags.map(tag => `<span style="background: #e2e8f0; color: #475569; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem;">${tag}</span>`).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+        };
     }
 
     formatDate(dateString) {
@@ -795,6 +852,12 @@ class PortalCalidad {
             title.textContent = this.currentDocument.titulo;
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
+
+            // Verificar se é documento externo
+            if (this.currentDocument.tipo === 'externo' || this.isExternalUrl(this.currentDocument.ruta)) {
+                this.showExternalDocument();
+                return;
+            }
 
             const fileExt = this.getFileExtension(this.currentDocument.fileName || this.currentDocument.ruta);
             
