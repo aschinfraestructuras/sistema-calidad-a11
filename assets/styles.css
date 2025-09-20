@@ -254,16 +254,28 @@ body {
 }
 
 .logo {
-    font-size: 3rem;
     background: var(--white);
-    color: var(--asch-blue);
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 70px;
     border-radius: var(--radius-xl);
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: var(--shadow-md);
+    padding: var(--spacing-sm);
+    transition: all var(--transition-normal);
+}
+
+.logo:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-lg);
+}
+
+.logo svg {
+    width: 100%;
+    height: 100%;
+    max-width: 90px;
+    max-height: 60px;
 }
 
 .title-section h1 {
@@ -1831,6 +1843,16 @@ body {
 }
 
 @media (max-width: 480px) {
+    .logo {
+        width: 80px;
+        height: 60px;
+    }
+    
+    .logo svg {
+        max-width: 70px;
+        max-height: 50px;
+    }
+    
     .title-section h1 {
         font-size: 1.5rem;
     }
