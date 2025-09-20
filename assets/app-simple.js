@@ -297,11 +297,16 @@ class PortalCalidad {
 
     updateBreadcrumb(section) {
         const breadcrumb = document.getElementById('breadcrumb');
+        const currentSection = document.getElementById('currentSection');
         if (breadcrumb) {
             breadcrumb.innerHTML = `
-                <span class="breadcrumb-item">Inicio</span>
-                <span class="breadcrumb-item active">${section.codigo} - ${section.titulo}</span>
+                <span class="breadcrumb-item" onclick="portal.showDashboard()" style="cursor: pointer; color: var(--primary); text-decoration: underline;">🏠 Dashboard</span>
+                <span class="breadcrumb-separator">›</span>
+                <span class="breadcrumb-item active" id="currentSection">${section.codigo} - ${section.titulo}</span>
             `;
+        }
+        if (currentSection) {
+            currentSection.textContent = `${section.codigo} - ${section.titulo}`;
         }
     }
 

@@ -285,7 +285,9 @@
             <div id="documentsSection" class="documents-section hidden">
                 <div class="section-header">
                     <div class="breadcrumb" id="breadcrumb">
-                        <span class="breadcrumb-item">Inicio</span>
+                        <span class="breadcrumb-item" onclick="portal.showDashboard()" style="cursor: pointer; color: var(--primary); text-decoration: underline;">🏠 Dashboard</span>
+                        <span class="breadcrumb-separator">›</span>
+                        <span class="breadcrumb-item active" id="currentSection">Capítulo</span>
                     </div>
                     <div class="section-title">
                         <h2 id="sectionTitle">Documentos</h2>
@@ -396,7 +398,12 @@
         <div class="modal-overlay"></div>
         <div class="modal-content viewer-content">
             <div class="modal-header">
-                <h3 id="viewerTitle">Documento</h3>
+                <div class="viewer-header-left">
+                    <button class="btn-back-dashboard" onclick="portal.showDashboard()" title="Voltar ao Dashboard">
+                        🏠 Dashboard
+                    </button>
+                    <h3 id="viewerTitle">Documento</h3>
+                </div>
                 <div class="viewer-actions">
                     <button class="btn-secondary" id="printBtn">🖨️ Imprimir</button>
                     <button class="btn-secondary" id="downloadBtn">📥 Descargar</button>
