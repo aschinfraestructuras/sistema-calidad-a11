@@ -522,7 +522,16 @@ class PortalCalidad {
         const documentsGrid = document.getElementById('documentsGrid');
         if (!documentsGrid) return;
         
-        // Por enquanto, mostrar interface para adicionar documentos
+        // Buscar documentos subidos para este subcapítulo
+        const subchapterName = subchapter.titulo.split(' - ')[0].replace('🔬 ', '').replace('🛣️ ', '').replace('🏗️ ', '').replace('📊 ', '').replace('🧪 ', '').replace('📎 ', '');
+        const uploadedDocs = this.uploadedDocuments.filter(doc => 
+            doc.chapter === '15' && 
+            doc.titulo.toLowerCase().includes(subchapterName.toLowerCase())
+        );
+        
+        console.log(`🔍 Buscando documentos para subcapítulo: ${subchapterName}`);
+        console.log(`📄 Documentos encontrados: ${uploadedDocs.length}`);
+        
         documentsGrid.innerHTML = `
             <div class="subchapter-documents">
                 <div class="subchapter-info">
@@ -535,24 +544,30 @@ class PortalCalidad {
                 </div>
                 
                 <div class="documents-list">
-                    <div class="empty-state">
-                        <div class="empty-icon">📭</div>
-                        <h3>Nenhum documento encontrado</h3>
-                        <p>Adicione documentos PDF nesta pasta para vê-los aqui</p>
-                        <div class="add-document-instructions">
-                            <h4>💡 Como adicionar documentos:</h4>
-                            <ol>
-                                <li>Vá para a pasta: <code>${subchapter.ruta}</code></li>
-                                <li>Coloque os arquivos PDF numerados</li>
-                                <li>Use nomenclatura: <code>001_ensaio_tipo.pdf</code></li>
-                                <li>Os documentos aparecerão automaticamente</li>
-                            </ol>
+                    ${uploadedDocs.length > 0 ? `
+                        <div class="documents-grid">
+                            ${uploadedDocs.map(doc => this.createDocumentCard(doc)).join('')}
                         </div>
-                    </div>
+                    ` : `
+                        <div class="empty-state">
+                            <div class="empty-icon">📭</div>
+                            <h3>Nenhum documento encontrado</h3>
+                            <p>Adicione documentos PDF nesta pasta para vê-los aqui</p>
+                            <div class="add-document-instructions">
+                                <h4>💡 Como adicionar documentos:</h4>
+                                <ol>
+                                    <li>Use o botão "Subir Documento" abaixo</li>
+                                    <li>Selecione o Capítulo 15</li>
+                                    <li>Inclua "${subchapterName}" no título do documento</li>
+                                    <li>Os documentos aparecerão automaticamente aqui</li>
+                                </ol>
+                            </div>
+                        </div>
+                    `}
                 </div>
                 
                 <div class="subchapter-actions">
-                    <button class="btn-primary" onclick="portal.showUpload()">
+                    <button class="btn-primary" onclick="portal.showUploadForSubchapter('${subchapterName}')">
                         <span class="btn-icon">📤</span>
                         <span class="btn-text">Subir Documento</span>
                     </button>
@@ -1152,6 +1167,28 @@ class PortalCalidad {
         return [];
     }
 
+    showUploadForSubchapter(subchapterName) {
+        // Abrir o modal de upload com o capítulo 15 pré-selecionado
+        this.showUpload();
+        
+        // Pré-preencher o título com o nome do subcapítulo
+        setTimeout(() => {
+            const titleInput = document.getElementById('documentTitle');
+            if (titleInput) {
+                titleInput.value = `${subchapterName} - `;
+                titleInput.focus();
+                // Posicionar o cursor no final
+                titleInput.setSelectionRange(titleInput.value.length, titleInput.value.length);
+            }
+            
+            // Garantir que o capítulo 15 está selecionado
+            const chapterSelect = document.getElementById('documentChapter');
+            if (chapterSelect) {
+                chapterSelect.value = '15';
+            }
+        }, 100);
+    }
+
     showViewerModal() {
         const modal = document.getElementById('viewerModal');
         const title = document.getElementById('viewerTitle');
@@ -1223,6 +1260,47 @@ class PortalCalidad {
                         // Fallback: criar blob com charset UTF-8
                         const blob = new Blob([this.currentDocument.fileData], { type: 'text/html; charset=utf-8' });
                         frame.src = URL.createObjectURL(blob);
+                    }
+                } else if (this.currentDocument.ruta) {
+                    frame.src = this.currentDocument.ruta;
+                }
+            }
+            // Para PDFs, tentar visualizar diretamente
+            else if (fileExt === 'pdf') {
+                if (this.currentDocument.fileData) {
+                    try {
+                        // Verificar se fileData já é uma data URL
+                        if (this.currentDocument.fileData.startsWith('data:application/pdf')) {
+                            frame.src = this.currentDocument.fileData;
+                        } else {
+                            // Se não for data URL, assumir que é base64 e converter
+                            const base64Data = this.currentDocument.fileData.replace(/^data:application\/pdf;base64,/, '');
+                            const binaryData = atob(base64Data);
+                            const bytes = new Uint8Array(binaryData.length);
+                            for (let i = 0; i < binaryData.length; i++) {
+                                bytes[i] = binaryData.charCodeAt(i);
+                            }
+                            const blob = new Blob([bytes], { type: 'application/pdf' });
+                            frame.src = URL.createObjectURL(blob);
+                        }
+                    } catch (error) {
+                        console.error('Erro ao processar PDF:', error);
+                        // Fallback: mostrar mensagem de erro
+                        frame.src = 'about:blank';
+                        frame.onload = () => {
+                            frame.contentDocument.body.innerHTML = `
+                                <div style="padding: 20px; text-align: center; font-family: Arial, sans-serif;">
+                                    <h2>❌ Erro ao carregar PDF</h2>
+                                    <p>Não foi possível visualizar este documento PDF.</p>
+                                    <p>Use o botão "Descargar" para baixar o arquivo.</p>
+                                    <div style="margin-top: 20px;">
+                                        <button onclick="portal.downloadDoc()" style="background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                                            📥 Descargar PDF
+                                        </button>
+                                    </div>
+                                </div>
+                            `;
+                        };
                     }
                 } else if (this.currentDocument.ruta) {
                     frame.src = this.currentDocument.ruta;
