@@ -1173,8 +1173,12 @@ class PortalCalidad {
         const startDate = new Date('2025-02-01');
         const currentDate = new Date();
         
+        console.log('📅 Data início:', startDate.toLocaleDateString());
+        console.log('📅 Data atual:', currentDate.toLocaleDateString());
+        
         // Calcular meses decorridos (mais preciso)
         const monthsElapsed = this.getMonthsDifference(startDate, currentDate);
+        console.log('📅 Meses decorridos:', monthsElapsed);
         
         // Duração legal: 37 meses, Prática: até 50 meses
         const legalDuration = 37;
@@ -1182,6 +1186,7 @@ class PortalCalidad {
         
         // Calcular progresso baseado na duração legal (37 meses)
         const progressPercentage = Math.min(Math.round((monthsElapsed / legalDuration) * 100), 100);
+        console.log('📅 Progresso calculado:', progressPercentage + '%');
         
         // Data estimada de finalização (baseada nos 37 meses legais)
         const estimatedEndDate = new Date(startDate);
@@ -1189,6 +1194,8 @@ class PortalCalidad {
         
         // Verificar se passou do prazo legal
         const isOverLegalTime = monthsElapsed > legalDuration;
+        
+        console.log('📅 Passou do prazo legal:', isOverLegalTime);
         
         // Atualizar elementos da interface
         this.updateTimelineElements(monthsElapsed, progressPercentage, estimatedEndDate, isOverLegalTime, legalDuration, maxDuration);
@@ -1284,13 +1291,13 @@ class PortalCalidad {
         }
 
         // Atualizar texto de referência
-        const progressDetails = document.querySelector('.progress-details span:last-child');
+        const progressDetails = document.querySelector('.progress-stats .progress-reference');
         if (progressDetails) {
             if (isOverLegalTime) {
-                progressDetails.textContent = `transcurridos de ${legalDuration} meses legales (máx. ${maxDuration})`;
+                progressDetails.textContent = `de ${legalDuration} legales (máx. ${maxDuration})`;
                 progressDetails.style.color = 'var(--error)';
             } else {
-                progressDetails.textContent = `transcurridos de ${legalDuration} meses legales (máx. ${maxDuration})`;
+                progressDetails.textContent = `de ${legalDuration} legales (máx. ${maxDuration})`;
                 progressDetails.style.color = 'var(--gray-600)';
             }
         }
