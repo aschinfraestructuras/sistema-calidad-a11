@@ -564,8 +564,6 @@ class PortalCalidad {
             </div>
         `;
     }
-        console.log('✅ Documentos renderizados');
-    }
 
     createDocumentCard(doc) {
         const isUploaded = doc.id && doc.id.startsWith('uploaded_');
