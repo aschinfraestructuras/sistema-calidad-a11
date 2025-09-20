@@ -15,6 +15,17 @@ class PortalCalidad {
         ];
         this.isAuthenticated = false;
         
+        // Cache inteligente para performance
+        this.cache = {
+            documents: new Map(),
+            chapters: new Map(),
+            searchResults: new Map(),
+            lastUpdate: Date.now()
+        };
+        
+        // Debounce para busca
+        this.searchTimeout = null;
+        
         this.init();
     }
 
@@ -59,13 +70,13 @@ class PortalCalidad {
             console.log('✅ Campo de pesquisa encontrado');
             searchInput.addEventListener('input', (e) => {
                 console.log('🔍 Pesquisa digitada:', e.target.value);
-                this.searchDocuments(e.target.value);
+                this.debouncedSearch(e.target.value);
             });
             
             searchInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
                     console.log('🔍 Pesquisa com Enter:', e.target.value);
-                    this.searchDocuments(e.target.value);
+                    this.debouncedSearch(e.target.value);
                 }
             });
         } else {
@@ -388,6 +399,14 @@ class PortalCalidad {
             return;
         }
         
+        // Verificar cache primeiro
+        const cachedData = this.getCachedDocuments(this.currentChapter.codigo);
+        if (cachedData) {
+            console.log('📦 Usando dados em cache para renderização');
+            this.renderDocumentsFromCache(cachedData, documentsGrid, sectionTitle, sectionCode, documentCount);
+            return;
+        }
+        
         // Filtrar apenas documentos normais (não separadores)
         const manifestDocs = (this.currentChapter.items || []).filter(doc => doc.tipo !== 'separador');
         const uploadedDocs = this.uploadedDocuments.filter(doc => doc.chapter === this.currentChapter.codigo);
@@ -416,8 +435,49 @@ class PortalCalidad {
             return;
         }
         
-        documentsGrid.innerHTML = allDocs.map(doc => this.createDocumentCard(doc)).join('');
+        // Salvar no cache para próximas renderizações
+        this.setCachedDocuments(this.currentChapter.codigo, {
+            manifestDocs,
+            uploadedDocs,
+            allDocs
+        });
+        
+        // Usar batch DOM updates para melhor performance
+        this.batchDOMUpdates([
+            () => {
+                documentsGrid.innerHTML = allDocs.map(doc => this.createDocumentCard(doc)).join('');
+            }
+        ]);
+        
         console.log('✅ Documentos renderizados');
+    }
+    
+    renderDocumentsFromCache(cachedData, documentsGrid, sectionTitle, sectionCode, documentCount) {
+        const { manifestDocs, uploadedDocs, allDocs } = cachedData;
+        
+        // Atualizar elementos da interface
+        if (sectionTitle) sectionTitle.textContent = this.currentChapter.titulo;
+        if (sectionCode) sectionCode.textContent = this.currentChapter.codigo;
+        if (documentCount) documentCount.textContent = `${allDocs.length} documento${allDocs.length !== 1 ? 's' : ''}`;
+        
+        if (allDocs.length === 0) {
+            documentsGrid.innerHTML = `
+                <div class="no-documents">
+                    <div class="no-documents-icon">📁</div>
+                    <h3>No hay documentos</h3>
+                    <p>Esta sección no contiene documentos aún.</p>
+                    <button class="btn-primary" onclick="portal.showUpload()">
+                        <span class="btn-icon">➕</span>
+                        <span class="btn-text">Añadir Primer Documento</span>
+                    </button>
+                </div>
+            `;
+            return;
+        }
+        
+        // Renderizar usando cache
+        documentsGrid.innerHTML = allDocs.map(doc => this.createDocumentCard(doc)).join('');
+        console.log('✅ Documentos renderizados do cache');
     }
 
     renderSubchapters() {
@@ -748,6 +808,107 @@ class PortalCalidad {
         return new Date(dateString).toLocaleDateString('es-ES');
     }
 
+    // ===== OTIMIZAÇÕES DE PERFORMANCE =====
+    
+    debouncedSearch(query) {
+        // Limpar timeout anterior
+        if (this.searchTimeout) {
+            clearTimeout(this.searchTimeout);
+        }
+        
+        // Se query vazia, limpar resultados imediatamente
+        if (!query.trim()) {
+            this.clearSearchResults();
+            return;
+        }
+        
+        // Debounce de 300ms para evitar buscas excessivas
+        this.searchTimeout = setTimeout(() => {
+            this.searchDocuments(query);
+        }, 300);
+    }
+    
+    clearSearchResults() {
+        // Limpar resultados de busca e mostrar dashboard
+        this.showDashboard();
+    }
+    
+    // Cache inteligente para documentos
+    getCachedDocuments(chapterCode) {
+        const cacheKey = `chapter_${chapterCode}`;
+        const cached = this.cache.documents.get(cacheKey);
+        
+        if (cached && (Date.now() - cached.timestamp < 300000)) { // 5 minutos
+            console.log('📦 Usando cache para capítulo:', chapterCode);
+            return cached.data;
+        }
+        
+        return null;
+    }
+    
+    setCachedDocuments(chapterCode, data) {
+        const cacheKey = `chapter_${chapterCode}`;
+        this.cache.documents.set(cacheKey, {
+            data: data,
+            timestamp: Date.now()
+        });
+        console.log('💾 Cache salvo para capítulo:', chapterCode);
+    }
+    
+    // Otimização de DOM - batch updates
+    batchDOMUpdates(updates) {
+        // Usar requestAnimationFrame para otimizar renderização
+        requestAnimationFrame(() => {
+            updates.forEach(update => update());
+        });
+    }
+    
+    // Compressão de imagens para melhor performance
+    compressImage(file, maxWidth = 800, quality = 0.8) {
+        return new Promise((resolve) => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            
+            img.onload = () => {
+                // Calcular novas dimensões mantendo proporção
+                let { width, height } = img;
+                if (width > maxWidth) {
+                    height = (height * maxWidth) / width;
+                    width = maxWidth;
+                }
+                
+                canvas.width = width;
+                canvas.height = height;
+                
+                // Desenhar imagem redimensionada
+                ctx.drawImage(img, 0, 0, width, height);
+                
+                // Converter para blob com compressão
+                canvas.toBlob(resolve, 'image/jpeg', quality);
+            };
+            
+            img.src = URL.createObjectURL(file);
+        });
+    }
+    
+    // Lazy loading para imagens
+    setupLazyLoading() {
+        const images = document.querySelectorAll('img[data-src]');
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.removeAttribute('data-src');
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+        
+        images.forEach(img => imageObserver.observe(img));
+    }
+
     searchDocuments(term) {
         console.log('🔍 Função searchDocuments chamada com:', term);
         
@@ -927,7 +1088,7 @@ class PortalCalidad {
         this.removeSelectedFile();
     }
 
-    handleFile(file) {
+    async handleFile(file) {
         if (!file) return;
         
         console.log('📁 Arquivo selecionado:', file.name);
@@ -964,7 +1125,20 @@ class PortalCalidad {
             return;
         }
         
-        this.showFilePreview(file);
+        // Comprimir imagens para melhor performance
+        let processedFile = file;
+        if (file.type.startsWith('image/') && file.size > 1024 * 1024) { // > 1MB
+            console.log('🖼️ Comprimindo imagem...');
+            try {
+                processedFile = await this.compressImage(file);
+                console.log('✅ Imagem comprimida:', file.size, '->', processedFile.size);
+            } catch (error) {
+                console.warn('⚠️ Erro na compressão, usando arquivo original:', error);
+                processedFile = file;
+            }
+        }
+        
+        this.showFilePreview(processedFile);
     }
 
     showFilePreview(file) {
@@ -2118,9 +2292,21 @@ class PortalCalidad {
         }
         
         container.appendChild(toast);
+        
+        // Adicionar animação de entrada
+        setTimeout(() => {
+            toast.classList.add('show');
+            toast.classList.add('bounce');
+        }, 100);
+        
+        // Remover bounce após animação
+        setTimeout(() => toast.classList.remove('bounce'), 1000);
 
         setTimeout(() => {
-            if (toast.parentNode) toast.remove();
+            if (toast.parentNode) {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }
         }, 5000);
     }
 
@@ -2251,6 +2437,7 @@ class PortalCalidad {
             this.updateStats();
             this.loadUploadedDocuments();
             this.renderFavorites();
+            this.setupLazyLoading(); // Inicializar lazy loading
             console.log('✅ Sistema inicializado após login');
         } catch (error) {
             console.error('❌ Erro ao inicializar após login:', error);
