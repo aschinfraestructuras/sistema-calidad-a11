@@ -100,18 +100,12 @@
       "titulo": "Programación y Comunicaciones de Obra",
       "items": [
         {
-          "titulo": "Solicitud de apertura de tajo – PI 26+950",
-          "ruta": "registros/04_Programacion_y_Comunicaciones/2025-09-19_apertura-tajo_PI-26950.html",
-          "tags": ["PPI", "apertura", "obra", "tajo"],
-          "fecha": "2025-09-19",
-          "estado": "Aprobado"
-        },
-        {
-          "titulo": "Comunicación de inicio de actividad - PK 15+200",
-          "ruta": "registros/04_Programacion_y_Comunicaciones/2025-09-20_comunicacion-inicio_PK-15200.html",
-          "tags": ["comunicación", "inicio", "actividad", "PK"],
-          "fecha": "2025-09-20",
-          "estado": "Aprobado"
+          "titulo": "Teste de Visualização em Tela Cheia",
+          "ruta": "test-fullscreen.html",
+          "tags": ["teste", "tela-cheia", "visualização", "fullscreen"],
+          "fecha": "2025-09-26",
+          "estado": "Aprobado",
+          "descripcion": "Arquivo de teste para verificar se a visualização em tela cheia está funcionando corretamente, ocupando toda a extensão da página."
         }
       ]
     },

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Visualização em Tela Cheia</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0;
+            background: white;
+            padding: 30px;
+            border-radius: 0;
+            box-shadow: none;
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #1e3a8a;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #1e3a8a;
+            margin: 0;
+            font-size: 2.5em;
+        }
+        
+        .test-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 5px solid #1e3a8a;
+        }
+        
+        .test-section h3 {
+            color: #1e3a8a;
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+        
+        .full-width-test {
+            background: #e3f2fd;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        .character-test {
+            font-size: 18px;
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        
+        .footer {
+            margin-top: 50px;
+            padding: 20px;
+            background: #1e3a8a;
+            color: white;
+            text-align: center;
+            border-radius: 8px;
+        }
+        
+        .status-indicator {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="status-indicator">
+        ✅ TELA CHEIA ATIVA
+    </div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>Teste de Visualização em Tela Cheia</h1>
+            <p>Portal de Calidad ASCH-OHLA - Sistema de Gestión de Calidad</p>
+        </div>
+
+        <div class="full-width-test">
+            🎯 ESTE DOCUMENTO DEVE OCUPAR TODA A TELA<br>
+            Desde o topo até embaixo, sem margens ou bordas
+        </div>
+
+        <div class="test-section">
+            <h3>Teste de Largura Completa</h3>
+            <div class="character-test">
+                Este documento deve ocupar toda a largura da tela (100vw) e toda a altura (100vh).
+                Não deve haver margens, bordas ou espaços em branco nas laterais.
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>Caracteres Especiais Portugueses</h3>
+            <div class="character-test">Acentos: á, à, â, ã, é, ê, í, ó, ô, õ, ú, ç</div>
+            <div class="character-test">Maiúsculas: Á, À, Â, Ã, É, Ê, Í, Ó, Ô, Õ, Ú, Ç</div>
+        </div>
+
+        <div class="test-section">
+            <h3>Caracteres Especiais Espanhóis</h3>
+            <div class="character-test">Acentos: á, é, í, ó, ú, ñ</div>
+            <div class="character-test">Maiúsculas: Á, É, Í, Ó, Ú, Ñ</div>
+        </div>
+
+        <div class="test-section">
+            <h3>Texto de Exemplo da Obra</h3>
+            <div class="character-test">
+                <strong>Projeto A-11:</strong> Autovía A-11 - Variante de Langa de Duero a Aranda de Duero<br>
+                <strong>Contratista:</strong> UTE A11 LANGA-ARANDA (OHLA - ASCH)<br>
+                <strong>Responsável:</strong> José Antunes - Técnico de Calidad<br>
+                <strong>Localização:</strong> PK 15+200, PI 23+280, Estructura nº 3<br>
+                <strong>Materiais:</strong> Hormigón C25/30, Acero B500S, Nafuflex Basic 1<br>
+                <strong>Ensaios:</strong> Compacção, Placa de carga, Coeficiente k, Trazabilidade<br>
+                <strong>Controlo:</strong> PPI, Auditorías, No conformidades, Certificados
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>Teste de Scroll</h3>
+            <div class="character-test">
+                Este documento deve permitir scroll vertical para ver todo o conteúdo.
+                O header com os botões (Imprimir, Descargar, Editar, X) deve ficar fixo no topo.
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>Conteúdo Adicional para Teste de Scroll</h3>
+            <div class="character-test">Linha 1: Teste de scroll vertical</div>
+            <div class="character-test">Linha 2: Verificando se o conteúdo se estende</div>
+            <div class="character-test">Linha 3: Até o final da página</div>
+            <div class="character-test">Linha 4: Sem cortes ou problemas de visualização</div>
+            <div class="character-test">Linha 5: Header fixo no topo</div>
+            <div class="character-test">Linha 6: Conteúdo fluindo naturalmente</div>
+            <div class="character-test">Linha 7: Teste de caracteres especiais: ção, ñ, á, é, í, ó, ú</div>
+            <div class="character-test">Linha 8: Símbolos técnicos: °, ±, ×, ÷, ≤, ≥, ≠, ≈, ∞, ∑, ∆, π</div>
+            <div class="character-test">Linha 9: Unidades: m², m³, kg/m³, N/mm², MPa, kN, °C, °F, %, €, $, £, ¥</div>
+            <div class="character-test">Linha 10: Final do teste de scroll</div>
+        </div>
+
+        <div class="footer">
+            <h3>✅ Teste de Visualização em Tela Cheia Concluído</h3>
+            <p>Se você consegue ver este rodapé e todo o conteúdo acima, a visualização em tela cheia está funcionando corretamente!</p>
+            <p><strong>Data:</strong> 26 de Setembro de 2025 | <strong>Hora:</strong> 19:30</p>
+        </div>
+    </div>
+</body>
+</html>

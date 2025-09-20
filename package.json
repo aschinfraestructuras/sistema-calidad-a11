@@ -7,7 +7,16 @@
     "build": "echo 'Static site - no build needed'",
     "start": "echo 'Static site - serve index.html'"
   },
-  "keywords": ["calidad", "construccion", "a11", "asch", "ohla"],
+  "keywords": [
+    "calidad",
+    "construccion",
+    "a11",
+    "asch",
+    "ohla"
+  ],
   "author": "José Antunes",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
 }
