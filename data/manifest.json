@@ -282,78 +282,6 @@
       "titulo": "Laboratorio y Ensayos",
       "items": [
         {
-          "titulo": "PI 23+280 – Ensayo de placa y coeficiente k",
-          "ruta": "registros/15_Laboratorio/2025-09-18_PI-23280_placa-k.html",
-          "tags": ["placa", "k", "cimentación", "ensayo"],
-          "fecha": "2025-09-18",
-          "estado": "Aprobado"
-        },
-        {
-          "titulo": "Ensayo de compactación - Suelo PK 17+500",
-          "ruta": "registros/15_Laboratorio/2025-09-17_ensayo-compactacion-suelo_PK-17500.html",
-          "tags": ["compactación", "suelo", "ensayo", "laboratorio"],
-          "fecha": "2025-09-17",
-          "estado": "Aprobado"
-        }
-      ]
-    },
-    {
-      "codigo": "16",
-      "titulo": "Documentación General",
-      "items": [
-        {
-          "titulo": "Manual de procedimientos de calidad",
-          "ruta": "registros/16_Documentacion_General/2025-09-12_manual-procedimientos-calidad.html",
-          "tags": ["manual", "procedimientos", "calidad", "documentación"],
-          "fecha": "2025-09-12",
-          "estado": "Aprobado"
-        }
-      ]
-    },
-    {
-      "codigo": "17",
-      "titulo": "Control Económico de Calidad",
-      "items": [
-        {
-          "titulo": "Análisis de costes de calidad - Septiembre 2025",
-          "ruta": "registros/17_Control_Economico_Calidad_Obra/2025-09-30_analisis-costes-calidad-septiembre.html",
-          "tags": ["costes", "calidad", "análisis", "económico"],
-          "fecha": "2025-09-30",
-          "estado": "Borrador"
-        }
-      ]
-    },
-    {
-      "codigo": "18",
-      "titulo": "Normativas y Reglamentos",
-      "items": [
-        {
-          "titulo": "Normativa EHE-08 - Instrucción de Hormigón Estructural",
-          "ruta": "registros/18_Normativas/2025-09-10_normativa-EHE-08.html",
-          "tags": ["normativa", "EHE-08", "hormigón", "estructural"],
-          "fecha": "2025-09-10",
-          "estado": "Aprobado"
-        }
-      ]
-    },
-    {
-      "codigo": "19",
-      "titulo": "Pruebas Finales",
-      "items": [
-        {
-          "titulo": "Prueba de carga - Viaducto PK 20+500",
-          "ruta": "registros/19_Pruebas_Finales/2025-09-25_prueba-carga-viaducto_PK-20500.html",
-          "tags": ["prueba", "carga", "viaducto", "final"],
-          "fecha": "2025-09-25",
-          "estado": "Borrador"
-        }
-      ]
-    },
-    {
-      "codigo": "15",
-      "titulo": "Laboratorio",
-      "items": [
-        {
           "titulo": "🔬 Aceros - Ensayos de Tracción y Soldadura",
           "ruta": "registros/15_Laboratorio/Aceros/",
           "tipo": "separador",
@@ -480,6 +408,72 @@
           "tags": ["anexos", "documentación", "complementaria", "referencias"],
           "fecha": "2025-09-20",
           "estado": "Activo"
+        },
+        {
+          "titulo": "PI 23+280 – Ensayo de placa y coeficiente k",
+          "ruta": "registros/15_Laboratorio/2025-09-18_PI-23280_placa-k.html",
+          "tags": ["placa", "k", "cimentación", "ensayo"],
+          "fecha": "2025-09-18",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Ensayo de compactación - Suelo PK 17+500",
+          "ruta": "registros/15_Laboratorio/2025-09-17_ensayo-compactacion-suelo_PK-17500.html",
+          "tags": ["compactación", "suelo", "ensayo", "laboratorio"],
+          "fecha": "2025-09-17",
+          "estado": "Aprobado"
+        }
+      ]
+    },
+    {
+      "codigo": "16",
+      "titulo": "Documentación General",
+      "items": [
+        {
+          "titulo": "Manual de procedimientos de calidad",
+          "ruta": "registros/16_Documentacion_General/2025-09-12_manual-procedimientos-calidad.html",
+          "tags": ["manual", "procedimientos", "calidad", "documentación"],
+          "fecha": "2025-09-12",
+          "estado": "Aprobado"
+        }
+      ]
+    },
+    {
+      "codigo": "17",
+      "titulo": "Control Económico de Calidad",
+      "items": [
+        {
+          "titulo": "Análisis de costes de calidad - Septiembre 2025",
+          "ruta": "registros/17_Control_Economico_Calidad_Obra/2025-09-30_analisis-costes-calidad-septiembre.html",
+          "tags": ["costes", "calidad", "análisis", "económico"],
+          "fecha": "2025-09-30",
+          "estado": "Borrador"
+        }
+      ]
+    },
+    {
+      "codigo": "18",
+      "titulo": "Normativas y Reglamentos",
+      "items": [
+        {
+          "titulo": "Normativa EHE-08 - Instrucción de Hormigón Estructural",
+          "ruta": "registros/18_Normativas/2025-09-10_normativa-EHE-08.html",
+          "tags": ["normativa", "EHE-08", "hormigón", "estructural"],
+          "fecha": "2025-09-10",
+          "estado": "Aprobado"
+        }
+      ]
+    },
+    {
+      "codigo": "19",
+      "titulo": "Pruebas Finales",
+      "items": [
+        {
+          "titulo": "Prueba de carga - Viaducto PK 20+500",
+          "ruta": "registros/19_Pruebas_Finales/2025-09-25_prueba-carga-viaducto_PK-20500.html",
+          "tags": ["prueba", "carga", "viaducto", "final"],
+          "fecha": "2025-09-25",
+          "estado": "Borrador"
         }
       ]
     },

@@ -865,31 +865,65 @@ class PortalCalidad {
             frame.onload = () => {
                 const iframeDoc = frame.contentDocument || frame.contentWindow.document;
                 if (iframeDoc) {
+                    // Buscar arquivos nesta pasta
+                    const folderFiles = this.getFilesInFolder(folderDoc.ruta);
+                    
                     iframeDoc.body.innerHTML = `
-                        <div style="padding: 40px; text-align: center; font-family: Arial, sans-serif; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                            <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); max-width: 600px; width: 100%;">
-                                <div style="font-size: 4rem; margin-bottom: 20px;">📁</div>
-                                <h2 style="color: #1e3a8a; margin-bottom: 16px; font-size: 1.8rem;">${folderDoc.titulo}</h2>
-                                <p style="color: #64748b; margin-bottom: 24px; line-height: 1.6;">
-                                    Esta pasta está preparada para armazenar os ensaios de laboratório correspondentes.
-                                </p>
-                                <div style="background: #f1f5f9; padding: 20px; border-radius: 8px; border-left: 4px solid #3b82f6; margin-bottom: 24px;">
+                        <div style="padding: 20px; font-family: Arial, sans-serif; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); min-height: 100vh;">
+                            <div style="background: white; padding: 30px; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); max-width: 1000px; margin: 0 auto;">
+                                <div style="text-align: center; margin-bottom: 30px;">
+                                    <div style="font-size: 3rem; margin-bottom: 15px;">📁</div>
+                                    <h2 style="color: #1e3a8a; margin-bottom: 10px; font-size: 1.8rem;">${folderDoc.titulo}</h2>
+                                    <p style="color: #64748b; margin-bottom: 20px;">
+                                        Pasta para armazenar ensaios de laboratório
+                                    </p>
+                                </div>
+                                
+                                <div style="background: #f1f5f9; padding: 20px; border-radius: 8px; border-left: 4px solid #3b82f6; margin-bottom: 30px;">
                                     <p style="margin: 0; color: #475569; font-size: 0.9rem;">
                                         <strong>💡 Como usar:</strong><br>
-                                        1. Coloque os arquivos numerados nesta pasta<br>
+                                        1. Coloque os arquivos PDF numerados nesta pasta<br>
                                         2. Use nomenclatura: 001_ensaio_tipo.pdf<br>
                                         3. Os documentos aparecerão automaticamente aqui
                                     </p>
                                 </div>
-                                <div style="background: #fef3c7; padding: 16px; border-radius: 8px; border-left: 4px solid #f59e0b;">
+
+                                <div style="background: #fef3c7; padding: 16px; border-radius: 8px; border-left: 4px solid #f59e0b; margin-bottom: 30px;">
                                     <p style="margin: 0; color: #92400e; font-size: 0.9rem;">
                                         <strong>📂 Pasta:</strong> ${folderDoc.ruta}
                                     </p>
                                 </div>
+
+                                <div style="margin-bottom: 30px;">
+                                    <h3 style="color: #1e3a8a; margin-bottom: 15px; font-size: 1.2rem;">📄 Arquivos na Pasta (${folderFiles.length})</h3>
+                                    ${folderFiles.length > 0 ? `
+                                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px;">
+                                            ${folderFiles.map(file => `
+                                                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; display: flex; align-items: center; gap: 12px;">
+                                                    <div style="font-size: 1.5rem;">📄</div>
+                                                    <div style="flex: 1;">
+                                                        <div style="font-weight: 600; color: #1e3a8a; margin-bottom: 4px;">${file.name}</div>
+                                                        <div style="font-size: 0.8rem; color: #64748b;">${file.size || 'Tamanho não disponível'}</div>
+                                                    </div>
+                                                    <button onclick="window.open('${file.url}', '_blank')" style="background: #3b82f6; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem;">
+                                                        Abrir
+                                                    </button>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    ` : `
+                                        <div style="text-align: center; padding: 40px; background: #f8fafc; border-radius: 8px; border: 2px dashed #cbd5e1;">
+                                            <div style="font-size: 2rem; margin-bottom: 10px;">📭</div>
+                                            <p style="color: #64748b; margin: 0;">Nenhum arquivo encontrado nesta pasta</p>
+                                            <p style="color: #94a3b8; font-size: 0.9rem; margin: 5px 0 0 0;">Adicione arquivos PDF para vê-los aqui</p>
+                                        </div>
+                                    `}
+                                </div>
+
                                 ${folderDoc.tags ? `
-                                    <div style="margin-top: 24px;">
+                                    <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
                                         <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 8px;">Tags:</p>
-                                        <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
+                                        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
                                             ${folderDoc.tags.map(tag => `<span style="background: #e2e8f0; color: #475569; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem;">${tag}</span>`).join('')}
                                         </div>
                                     </div>
@@ -900,6 +934,13 @@ class PortalCalidad {
                 }
             };
         }
+    }
+
+    getFilesInFolder(folderPath) {
+        // Esta função simula a busca de arquivos na pasta
+        // Em um sistema real, faria uma requisição ao servidor
+        // Por agora, retorna uma lista vazia
+        return [];
     }
 
     showViewerModal() {
