@@ -27,8 +27,7 @@ class PortalCalidad {
     async loadManifest() {
         console.log('📋 Carregando manifest...');
         const response = await fetch('data/manifest.json');
-        const text = await response.text();
-        this.manifest = JSON.parse(text);
+        this.manifest = await response.json();
         console.log('✅ Manifest carregado:', this.manifest.secciones.length, 'capítulos');
     }
 
@@ -38,20 +37,9 @@ class PortalCalidad {
         // Busca
         const searchInput = document.getElementById('searchInput');
         if (searchInput) {
-            console.log('✅ Campo de pesquisa encontrado');
             searchInput.addEventListener('input', (e) => {
-                console.log('🔍 Pesquisa digitada:', e.target.value);
                 this.searchDocuments(e.target.value);
             });
-            
-            searchInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    console.log('🔍 Pesquisa com Enter:', e.target.value);
-                    this.searchDocuments(e.target.value);
-                }
-            });
-        } else {
-            console.error('❌ Campo de pesquisa não encontrado!');
         }
 
         // Botões principais
@@ -158,11 +146,6 @@ class PortalCalidad {
         const downloadBtn = document.getElementById('downloadBtn');
         if (downloadBtn) {
             downloadBtn.addEventListener('click', () => this.downloadDoc());
-        }
-
-        const editBtn = document.getElementById('editBtn');
-        if (editBtn) {
-            editBtn.addEventListener('click', () => this.editDocument());
         }
 
         // Fechar modal do viewer clicando no overlay
@@ -381,12 +364,11 @@ class PortalCalidad {
                         <span class="btn-icon">👁️</span>
                         <span class="btn-text">Ver Documento</span>
                     </button>
-                    <button class="btn-secondary" onclick="portal.editDocument('${doc.id || 'manifest_' + doc.titulo}')" title="Editar">
-                        <span class="btn-icon">✏️</span>
-                    </button>
-                    <button class="btn-danger btn-icon-only" onclick="portal.deleteDocument('${doc.id || 'manifest_' + doc.titulo}')" title="Eliminar">
-                        <span class="btn-icon">🗑️</span>
-                    </button>
+                    ${isUploaded ? `
+                        <button class="btn-secondary" onclick="portal.deleteDocument('${doc.id}')" title="Eliminar">
+                            🗑️
+                        </button>
+                    ` : ''}
                 </div>
             </div>
         `;
@@ -402,152 +384,8 @@ class PortalCalidad {
     }
 
     searchDocuments(term) {
-        console.log('🔍 Função searchDocuments chamada com:', term);
-        
-        if (!term || term.trim() === '') {
-            console.log('🔍 Termo vazio, mostrando dashboard');
-            // Se não há termo de busca, mostrar dashboard
-            this.showDashboard();
-            return;
-        }
-        
-        const searchTerm = term.toLowerCase().trim();
-        const results = [];
-        
-        // Buscar nos documentos do manifest
-        if (this.manifest) {
-            this.manifest.secciones.forEach(seccion => {
-                if (seccion.items && seccion.items.length > 0) {
-                    seccion.items.forEach(doc => {
-                        const titulo = doc.titulo ? doc.titulo.toLowerCase() : '';
-                        const descripcion = doc.descripcion ? doc.descripcion.toLowerCase() : '';
-                        const tags = doc.tags ? doc.tags.join(' ').toLowerCase() : '';
-                        const codigo = doc.codigo ? doc.codigo.toLowerCase() : '';
-                        
-                        if (titulo.includes(searchTerm) || 
-                            descripcion.includes(searchTerm) || 
-                            tags.includes(searchTerm) || 
-                            codigo.includes(searchTerm)) {
-                            results.push({
-                                ...doc,
-                                seccion: seccion.titulo,
-                                tipo: 'manifest'
-                            });
-                        }
-                    });
-                }
-            });
-        }
-        
-        // Buscar nos documentos subidos
-        this.uploadedDocuments.forEach(doc => {
-            const titulo = doc.titulo ? doc.titulo.toLowerCase() : '';
-            const descripcion = doc.descripcion ? doc.descripcion.toLowerCase() : '';
-            const tags = doc.tags ? doc.tags.join(' ').toLowerCase() : '';
-            const codigo = doc.codigo ? doc.codigo.toLowerCase() : '';
-            
-            if (titulo.includes(searchTerm) || 
-                descripcion.includes(searchTerm) || 
-                tags.includes(searchTerm) || 
-                codigo.includes(searchTerm)) {
-                results.push({
-                    ...doc,
-                    seccion: doc.chapter,
-                    tipo: 'uploaded'
-                });
-            }
-        });
-        
-        // Mostrar resultados
-        this.showSearchResults(results, searchTerm);
-    }
-    
-    showSearchResults(results, searchTerm) {
-        console.log('📋 Mostrando resultados:', results.length);
-        
-        // Esconder dashboard e mostrar seção de documentos
-        const welcomeSection = document.getElementById('welcomeSection');
-        const documentsSection = document.getElementById('documentsSection');
-        
-        if (welcomeSection) welcomeSection.classList.add('hidden');
-        if (documentsSection) documentsSection.classList.remove('hidden');
-        
-        // Atualizar título e breadcrumb
-        const sectionTitle = document.getElementById('sectionTitle');
-        const breadcrumb = document.getElementById('breadcrumb');
-        const documentCount = document.getElementById('documentCount');
-        
-        if (sectionTitle) {
-            sectionTitle.textContent = `Resultados de búsqueda: "${searchTerm}"`;
-        }
-        
-        if (breadcrumb) {
-            breadcrumb.innerHTML = `
-                <span class="breadcrumb-item" onclick="portal.showDashboard()" style="cursor: pointer;">Inicio</span>
-                <span class="breadcrumb-separator">›</span>
-                <span class="breadcrumb-item">Búsqueda</span>
-            `;
-        }
-        
-        if (documentCount) {
-            documentCount.textContent = `${results.length} resultado${results.length !== 1 ? 's' : ''}`;
-        }
-        
-        // Renderizar resultados
-        this.renderSearchResults(results);
-    }
-    
-    renderSearchResults(results) {
-        const documentsGrid = document.getElementById('documentsGrid');
-        if (!documentsGrid) return;
-        
-        if (results.length === 0) {
-            documentsGrid.innerHTML = `
-                <div class="no-results">
-                    <div class="no-results-icon">🔍</div>
-                    <h3>No se encontraron resultados</h3>
-                    <p>Intenta con otros términos de búsqueda</p>
-                </div>
-            `;
-            return;
-        }
-        
-        documentsGrid.innerHTML = results.map(doc => `
-            <div class="document-card" onclick="portal.viewDocument('${doc.id || doc.titulo}')">
-                <div class="document-header">
-                    <div class="document-icon">${this.getFileIcon(doc.fileName || doc.ruta)}</div>
-                    <div class="document-badge ${doc.tipo === 'uploaded' ? 'uploaded' : 'system'}">
-                        ${doc.tipo === 'uploaded' ? '📤 Subido' : '📋 Sistema'}
-                    </div>
-                </div>
-                <div class="document-content">
-                    <h3 class="document-title">${doc.titulo}</h3>
-                    <p class="document-description">${doc.descripcion || 'Sin descripción'}</p>
-                    <div class="document-meta">
-                        <span class="document-section">${doc.seccion}</span>
-                        ${doc.codigo ? `<span class="document-code">${doc.codigo}</span>` : ''}
-                    </div>
-                    ${doc.tags ? `
-                        <div class="document-tags">
-                            ${doc.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                        </div>
-                    ` : ''}
-                </div>
-                <div class="document-actions">
-                    <button class="action-btn view-btn" onclick="event.stopPropagation(); portal.viewDocument('${doc.id || doc.titulo}')" title="Ver documento">
-                        👁️ Ver
-                    </button>
-                    <button class="action-btn download-btn" onclick="event.stopPropagation(); portal.downloadDoc('${doc.id || doc.titulo}')" title="Descargar">
-                        📥 Descargar
-                    </button>
-                    ${doc.tipo === 'uploaded' ? `
-                        <button class="action-btn delete-btn" onclick="event.stopPropagation(); portal.deleteDocument('${doc.id}')" title="Eliminar">
-                            🗑️ Eliminar
-                        </button>
-                    ` : ''}
-                </div>
-            </div>
-        `).join('');
+        console.log('🔍 Buscando:', term);
+        // Implementar busca simples
     }
 
     // Upload
@@ -707,9 +545,6 @@ class PortalCalidad {
         try {
             this.showLoading(true);
             
-            const fileExt = file.name.split('.').pop().toLowerCase();
-            const isHtmlFile = ['html', 'htm'].includes(fileExt);
-            
             const doc = {
                 id: 'uploaded_' + Date.now(),
                 titulo: titleValue,
@@ -720,8 +555,7 @@ class PortalCalidad {
                 fileType: file.type,
                 uploadDate: new Date().toISOString(),
                 estado: 'Aprobado',
-                fileData: await this.fileToBase64(file),
-                isHtmlFile: isHtmlFile
+                fileData: await this.fileToBase64(file)
             };
 
             this.uploadedDocuments.push(doc);
@@ -748,12 +582,7 @@ class PortalCalidad {
             const reader = new FileReader();
             reader.onload = () => resolve(reader.result);
             reader.onerror = reject;
-            // Para arquivos HTML, usar readAsText com UTF-8 para preservar acentos
-            if (file.type === 'text/html' || file.name.toLowerCase().endsWith('.html') || file.name.toLowerCase().endsWith('.htm')) {
-                reader.readAsText(file, 'UTF-8');
-            } else {
-                reader.readAsDataURL(file);
-            }
+            reader.readAsDataURL(file);
         });
     }
 
@@ -804,49 +633,7 @@ class PortalCalidad {
             // Para HTML, mostrar no iframe
             else if (['html', 'htm'].includes(fileExt)) {
                 if (this.currentDocument.fileData) {
-                    // Se é um arquivo HTML subido, processar adequadamente
-                    if (this.currentDocument.isHtmlFile) {
-                        // Para arquivos HTML subidos, criar blob com charset UTF-8
-                        const blob = new Blob([this.currentDocument.fileData], { type: 'text/html; charset=utf-8' });
-                        frame.src = URL.createObjectURL(blob);
-                        
-                        // Garantir que o iframe ocupe toda a tela
-                        frame.onload = () => {
-                            try {
-                                const iframeDoc = frame.contentDocument || frame.contentWindow.document;
-                                if (iframeDoc) {
-                                    // Adicionar CSS para otimizar visualização no iframe
-                                    const style = iframeDoc.createElement('style');
-                                    style.textContent = `
-                                        body {
-                                            margin: 0 !important;
-                                            padding: 10px !important;
-                                            width: 100% !important;
-                                            height: 100% !important;
-                                            overflow-x: hidden !important;
-                                            box-sizing: border-box !important;
-                                        }
-                                        .container, .main-content, .document-content {
-                                            max-width: 100% !important;
-                                            width: 100% !important;
-                                            margin: 0 !important;
-                                            padding: 10px !important;
-                                            box-sizing: border-box !important;
-                                        }
-                                    `;
-                                    iframeDoc.head.appendChild(style);
-                                }
-                            } catch (e) {
-                                console.log('Não foi possível modificar o conteúdo do iframe (normal para cross-origin)');
-                            }
-                        };
-                    } else if (this.currentDocument.fileData.startsWith('data:text/html')) {
-                        frame.src = this.currentDocument.fileData;
-                    } else {
-                        // Fallback: criar blob com charset UTF-8
-                        const blob = new Blob([this.currentDocument.fileData], { type: 'text/html; charset=utf-8' });
-                        frame.src = URL.createObjectURL(blob);
-                    }
+                    frame.src = this.currentDocument.fileData;
                 } else if (this.currentDocument.ruta) {
                     frame.src = this.currentDocument.ruta;
                 }
@@ -882,13 +669,6 @@ class PortalCalidad {
         if (modal) {
             modal.classList.add('hidden');
             document.body.style.overflow = '';
-            
-            // Limpar URL de blob se existir
-            const frame = document.getElementById('documentFrame');
-            if (frame && frame.src && frame.src.startsWith('blob:')) {
-                URL.revokeObjectURL(frame.src);
-            }
-            
             this.currentDocument = null;
         }
     }
@@ -917,95 +697,9 @@ class PortalCalidad {
         }
     }
 
-    editDocument() {
-        if (!this.currentDocument) return;
-        
-        // Para documentos subidos, permitir edição
-        if (this.currentDocument.id && this.currentDocument.id.startsWith('uploaded_')) {
-            this.showEditModal();
-        } else {
-            // Para documentos do manifest, mostrar opções
-            this.showEditOptions();
-        }
-    }
-
-    showEditModal() {
-        const newTitle = prompt('Editar título do documento:', this.currentDocument.titulo);
-        if (newTitle && newTitle.trim() !== '') {
-            const newTags = prompt('Editar tags (separadas por vírgula):', this.currentDocument.tags ? this.currentDocument.tags.join(', ') : '');
-            
-            // Atualizar documento
-            this.currentDocument.titulo = newTitle.trim();
-            this.currentDocument.tags = newTags ? newTags.split(',').map(t => t.trim()) : [];
-            
-            // Salvar alterações
-            this.saveUploadedDocuments();
-            this.showToast('Documento editado com sucesso!', 'success');
-            
-            // Recarregar vista se necessário
-            if (this.currentChapter) {
-                this.renderDocuments();
-            }
-        }
-    }
-
-    showEditOptions() {
-        const options = [
-            '📝 Editar título e tags',
-            '📁 Mover para outro capítulo',
-            '🗑️ Excluir documento',
-            '❌ Cancelar'
-        ];
-        
-        const choice = prompt(`Opções para "${this.currentDocument.titulo}":\n\n${options.map((opt, i) => `${i + 1}. ${opt}`).join('\n')}\n\nDigite o número da opção:`);
-        
-        switch(choice) {
-            case '1':
-                this.editManifestDocument();
-                break;
-            case '2':
-                this.moveDocument();
-                break;
-            case '3':
-                this.deleteManifestDocument();
-                break;
-            default:
-                break;
-        }
-    }
-
-    editManifestDocument() {
-        const newTitle = prompt('Editar título:', this.currentDocument.titulo);
-        if (newTitle && newTitle.trim() !== '') {
-            this.currentDocument.titulo = newTitle.trim();
-            this.showToast('Título editado! (Alteração temporária - faça commit para salvar)', 'info');
-        }
-    }
-
-    moveDocument() {
-        this.showToast('Funcionalidade de mover documento será implementada em breve', 'info');
-    }
-
-    deleteManifestDocument() {
-        this.showToast('Para excluir documentos do manifest, edite o arquivo data/manifest.json', 'info');
-    }
-
     deleteDocument(docId) {
-        let doc = null;
-        let isUploaded = false;
-        
-        // Verificar se é documento subido
-        if (docId.startsWith('uploaded_')) {
-            doc = this.uploadedDocuments.find(d => d.id === docId);
-            isUploaded = true;
-        } else {
-            // É documento do manifest
-            const manifestId = docId.replace('manifest_', '');
-            if (this.currentChapter) {
-                doc = this.currentChapter.items.find(d => d.titulo === manifestId);
-            }
-        }
-        
+        // Encontrar o documento
+        const doc = this.uploadedDocuments.find(d => d.id === docId);
         if (!doc) {
             this.showToast('Documento não encontrado', 'error');
             return;
@@ -1014,8 +708,8 @@ class PortalCalidad {
         // Confirmação mais detalhada
         const confirmMessage = `Tem certeza que quer eliminar este documento?\n\n` +
                               `Título: ${doc.titulo}\n` +
-                              `Tipo: ${isUploaded ? 'Documento subido' : 'Documento do sistema'}\n` +
-                              `${isUploaded ? `Data: ${this.formatDate(doc.uploadDate)}` : `Caminho: ${doc.ruta}`}\n\n` +
+                              `Capítulo: ${doc.chapter}\n` +
+                              `Data: ${this.formatDate(doc.uploadDate)}\n\n` +
                               `Esta ação é IRREVERSÍVEL!`;
         
         if (!confirm(confirmMessage)) {
@@ -1024,27 +718,20 @@ class PortalCalidad {
         }
         
         try {
-            if (isUploaded) {
-                // Eliminar documento subido
-                const index = this.uploadedDocuments.findIndex(d => d.id === docId);
-                if (index !== -1) {
-                    this.uploadedDocuments.splice(index, 1);
-                    this.saveUploadedDocuments();
-                    this.showToast(`Documento "${doc.titulo}" eliminado permanentemente!`, 'success');
-                    this.updateStats();
+            const index = this.uploadedDocuments.findIndex(d => d.id === docId);
+            if (index !== -1) {
+                this.uploadedDocuments.splice(index, 1);
+                this.saveUploadedDocuments();
+                this.showToast(`Documento "${doc.titulo}" eliminado permanentemente!`, 'success');
+                this.updateStats();
+                
+                // Recarregar a vista atual
+                if (this.currentChapter) {
+                    this.renderDocuments();
                 }
-            } else {
-                // Para documentos do manifest, mostrar instruções
-                this.showToast('Para eliminar documentos do sistema, edite o arquivo data/manifest.json', 'info');
-                return;
+                
+                console.log('✅ Documento eliminado:', doc.titulo);
             }
-            
-            // Recarregar a vista atual
-            if (this.currentChapter) {
-                this.renderDocuments();
-            }
-            
-            console.log('✅ Documento eliminado:', doc.titulo);
         } catch (error) {
             console.error('❌ Erro ao eliminar documento:', error);
             this.showToast('Erro ao eliminar documento: ' + error.message, 'error');
@@ -1089,40 +776,18 @@ class PortalCalidad {
 
     // Storage
     saveUploadedDocuments() {
-        try {
-            localStorage.setItem('uploadedDocuments', JSON.stringify(this.uploadedDocuments));
-            console.log('💾 Documentos salvos no localStorage:', this.uploadedDocuments.length);
-            
-            // Também salvar no sessionStorage como backup
-            sessionStorage.setItem('uploadedDocuments', JSON.stringify(this.uploadedDocuments));
-            console.log('💾 Backup salvo no sessionStorage');
-        } catch (error) {
-            console.error('❌ Erro ao salvar documentos:', error);
-        }
+        localStorage.setItem('uploadedDocuments', JSON.stringify(this.uploadedDocuments));
     }
 
     loadUploadedDocuments() {
         try {
-            // Tentar carregar do localStorage primeiro
-            let saved = localStorage.getItem('uploadedDocuments');
-            
-            // Se não encontrar, tentar do sessionStorage
-            if (!saved) {
-                saved = sessionStorage.getItem('uploadedDocuments');
-                console.log('📁 Carregando do sessionStorage (backup)');
-            } else {
-                console.log('📁 Carregando do localStorage');
-            }
-            
+            const saved = localStorage.getItem('uploadedDocuments');
             if (saved) {
                 this.uploadedDocuments = JSON.parse(saved);
-                console.log('✅ Documentos carregados:', this.uploadedDocuments.length);
-            } else {
-                console.log('📁 Nenhum documento salvo encontrado');
-                this.uploadedDocuments = [];
+                console.log('📁 Documentos carregados:', this.uploadedDocuments.length);
             }
         } catch (error) {
-            console.error('❌ Erro ao carregar documentos:', error);
+            console.error('❌ Erro ao carregar:', error);
             this.uploadedDocuments = [];
         }
     }
@@ -1137,8 +802,6 @@ class PortalCalidad {
         const recentDocuments = document.getElementById('recentDocuments');
         const totalDocs = document.getElementById('totalDocs');
         const uploadedDocs = document.getElementById('uploadedDocs');
-        const filledChapters = document.getElementById('filledChapters');
-        const completionRate = document.getElementById('completionRate');
 
         if (totalDocuments) totalDocuments.textContent = total;
         if (uploadedDocuments) uploadedDocuments.textContent = uploaded;
@@ -1146,97 +809,8 @@ class PortalCalidad {
         if (totalDocs) totalDocs.textContent = total;
         if (uploadedDocs) uploadedDocs.textContent = uploaded;
 
-        // Novos indicadores
-        if (filledChapters) {
-            const filled = this.manifest ? this.manifest.secciones.filter(sec => sec.documentos.length > 0).length : 0;
-            filledChapters.textContent = filled;
-        }
-        
-        if (completionRate) {
-            const totalChapters = this.manifest ? this.manifest.secciones.length : 21;
-            const filled = this.manifest ? this.manifest.secciones.filter(sec => sec.documentos.length > 0).length : 0;
-            const rate = totalChapters > 0 ? Math.round((filled / totalChapters) * 100) : 0;
-            completionRate.textContent = rate + '%';
-        }
-
-        // Atualizar cronograma do projeto
-        this.updateProjectTimeline();
-
         // Atualizar lista de documentos recentes
         this.updateRecentDocumentsList();
-    }
-
-    updateProjectTimeline() {
-        console.log('📅 Atualizando cronograma do projeto...');
-        
-        // Data de início: Fevereiro 2025
-        const startDate = new Date('2025-02-01');
-        const currentDate = new Date();
-        
-        // Calcular meses decorridos
-        const monthsElapsed = this.getMonthsDifference(startDate, currentDate);
-        
-        // Duração prevista: 37 meses (até 50 meses)
-        const plannedDuration = 37;
-        const maxDuration = 50;
-        
-        // Calcular progresso baseado na duração prevista
-        const progressPercentage = Math.min(Math.round((monthsElapsed / plannedDuration) * 100), 100);
-        
-        // Data estimada de finalização
-        const estimatedEndDate = new Date(startDate);
-        estimatedEndDate.setMonth(estimatedEndDate.getMonth() + plannedDuration);
-        
-        // Atualizar elementos da interface
-        this.updateTimelineElements(monthsElapsed, progressPercentage, estimatedEndDate);
-    }
-
-    getMonthsDifference(startDate, endDate) {
-        const yearDiff = endDate.getFullYear() - startDate.getFullYear();
-        const monthDiff = endDate.getMonth() - startDate.getMonth();
-        return yearDiff * 12 + monthDiff;
-    }
-
-    updateTimelineElements(monthsElapsed, progressPercentage, estimatedEndDate) {
-        // Atualizar data atual
-        const currentDateElement = document.getElementById('currentDate');
-        if (currentDateElement) {
-            const now = new Date();
-            const options = { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric',
-                weekday: 'long'
-            };
-            currentDateElement.textContent = now.toLocaleDateString('es-ES', options);
-        }
-
-        // Atualizar data estimada de finalização
-        const estimatedEndElement = document.getElementById('estimatedEnd');
-        if (estimatedEndElement) {
-            const options = { year: 'numeric', month: 'long' };
-            estimatedEndElement.textContent = estimatedEndDate.toLocaleDateString('es-ES', options);
-        }
-
-        // Atualizar porcentagem de progresso
-        const progressPercentageElement = document.getElementById('progressPercentage');
-        if (progressPercentageElement) {
-            progressPercentageElement.textContent = progressPercentage + '%';
-        }
-
-        // Atualizar barra de progresso
-        const progressFillElement = document.getElementById('progressFill');
-        if (progressFillElement) {
-            progressFillElement.style.width = progressPercentage + '%';
-        }
-
-        // Atualizar meses decorridos
-        const monthsElapsedElement = document.getElementById('monthsElapsed');
-        if (monthsElapsedElement) {
-            monthsElapsedElement.textContent = monthsElapsed + ' meses';
-        }
-
-        console.log(`📊 Progresso: ${monthsElapsed} meses de 37-50 (${progressPercentage}%)`);
     }
 
     updateRecentDocumentsList() {
@@ -1318,41 +892,6 @@ class PortalCalidad {
         setTimeout(() => {
             if (toast.parentNode) toast.remove();
         }, 5000);
-    }
-
-    // Função para adicionar novo arquivo HTML ao manifest (para desenvolvedores)
-    addHtmlToManifest(chapterCode, title, filePath, tags = [], description = '') {
-        console.log(`📝 Adicionando arquivo HTML ao capítulo ${chapterCode}:`, title);
-        
-        if (!this.manifest) {
-            console.error('❌ Manifest não carregado');
-            return false;
-        }
-        
-        const chapter = this.manifest.secciones.find(sec => sec.codigo === chapterCode);
-        if (!chapter) {
-            console.error(`❌ Capítulo ${chapterCode} não encontrado`);
-            return false;
-        }
-        
-        const newItem = {
-            titulo: title,
-            ruta: filePath,
-            tags: tags,
-            fecha: new Date().toISOString().split('T')[0],
-            estado: 'Aprobado',
-            descripcion: description
-        };
-        
-        chapter.items.push(newItem);
-        console.log('✅ Arquivo adicionado ao manifest:', newItem);
-        
-        // Recarregar a vista se estivermos no capítulo correto
-        if (this.currentChapter && this.currentChapter.codigo === chapterCode) {
-            this.renderDocuments();
-        }
-        
-        return true;
     }
 }
 

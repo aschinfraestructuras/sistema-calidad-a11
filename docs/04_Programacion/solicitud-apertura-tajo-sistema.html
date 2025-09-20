@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Control de Actividades - Solicitud de Apertura de Tajo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #1e3a8a;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .logo-space {
+            width: 150px;
+            height: 80px;
+            border: 2px dashed #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .logo-space img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .logo-space.with-image {
+            border: none;
+            background: white;
+        }
+        
+        .logo-upload {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 2px 4px;
+            font-size: 8px;
+            border-radius: 2px;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        
+        .logo-upload:hover {
+            opacity: 1;
+        }
+        
+        .header-content {
+            text-align: center;
+            flex: 1;
+            margin: 0 20px;
+        }
+        
+        .header-content h1 {
+            margin: 0;
+            font-size: 18px;
+            color: #1e3a8a;
+        }
+        
+        .header-info {
+            text-align: right;
+            font-size: 12px;
+        }
+        
+        .obra-info {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            background: #1e3a8a;
+            color: white;
+            padding: 10px 15px;
+            margin: 0 0 15px 0;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 4px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            font-size: 12px;
+            color: #374151;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 12px;
+            font-family: inherit;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+        
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #059669;
+        }
+        
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+        
+        .btn-small {
+            padding: 4px 8px;
+            font-size: 10px;
+        }
+        
+        .alert {
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 12px;
+        }
+        
+        .alert-info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #93c5fd;
+        }
+        
+        .alert-warning {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fbbf24;
+        }
+        
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #6ee7b7;
+        }
+        
+        .code-display {
+            background: #f3f4f6;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            margin-top: 10px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .history-item {
+            background: #f9fafb;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            font-size: 11px;
+            border-left: 3px solid #3b82f6;
+        }
+        
+        .history-date {
+            font-weight: 600;
+            color: #374151;
+        }
+        
+        .history-code {
+            font-family: 'Courier New', monospace;
+            background: #e5e7eb;
+            padding: 2px 4px;
+            border-radius: 2px;
+            margin: 0 5px;
+        }
+        
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #1e3a8a;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 1000;
+        }
+        
+        .print-button:hover {
+            background: #1e40af;
+        }
+        
+        @media print {
+            .print-button {
+                display: none;
+            }
+            
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        .advanced-section {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .resource-item {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-pending {
+            background: #fbbf24;
+        }
+        
+        .status-approved {
+            background: #10b981;
+        }
+        
+        .status-rejected {
+            background: #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button" onclick="window.print()">Imprimir</button>
+    
+    <div class="container">
+        <div class="header">
+            <div class="logo-space" id="logoSpace">
+                <span>LOGOTIPO</span>
+                <button class="logo-upload" onclick="document.getElementById('logoInput').click()">+</button>
+                <input type="file" id="logoInput" accept="image/*" style="display: none;" onchange="uploadLogo(this)">
+            </div>
+            
+            <div class="header-content">
+                <h1>INFORME DE INICIO DE ACTIVIDAD</h1>
+                <h2 style="margin: 5px 0; font-size: 14px; color: #6b7280;">SOLICITUD DE APERTURA DE TAJO</h2>
+            </div>
+            
+            <div class="header-info">
+                <div>REVISION Nº: 01</div>
+                <div>HOJA: 1 DE 1</div>
+                <div>CODIGO: SOL-TAJ-001</div>
+            </div>
+        </div>
+        
+        <div class="obra-info">
+            <strong>OBRA:</strong> AUTOVIA DEL DUERO (A-11). TRAMO: VARIANTE DE LANGA DE DUERO – VARIANTE DE ARANDA DE DUERO. CLAVE: 12-BU-4690
+        </div>
+        
+        <div class="alert alert-info">
+            <strong>SISTEMA DE CODIFICACION:</strong> Este documento implementa el sistema de control de actividades por tajos segun la estructura organizativa de la obra. Complete todos los campos y seleccione la codificacion apropiada.
+        </div>
+        
+        <div class="section">
+            <div class="section-title">1. INFORMACION BASICA DEL TAJO</div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="contratista">CONTRATISTA:</label>
+                    <input type="text" id="contratista" value="UTE A-11 LANGA-ARANDA" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="fechaSolicitud">FECHA SOLICITUD:</label>
+                    <input type="date" id="fechaSolicitud" value="2025-09-20">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="codigoTajo">CODIGO DE TAJO:</label>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <input type="text" id="codigoTajo" placeholder="Introducir codigo manual" style="flex: 1;">
+                    <button class="btn btn-primary btn-small" onclick="generarCodigo()">Auto</button>
+                    <button class="btn btn-success btn-small" onclick="validarCodigo()">OK</button>
+                </div>
+                <div id="codigoDisplay" class="code-display hidden"></div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nombreTajo">NOMBRE DEL TAJO:</label>
+                    <input type="text" id="nombreTajo" placeholder="Ej: Excavacion PK 15+200">
+                </div>
+                <div class="form-group">
+                    <label for="ubicacion">UBICACION (PK):</label>
+                    <input type="text" id="ubicacion" placeholder="Ej: PK 15+200">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="descripcionTrabajo">DESCRIPCION DEL TRABAJO:</label>
+                <textarea id="descripcionTrabajo" rows="3" placeholder="Describir detalladamente el trabajo a realizar..."></textarea>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">2. RECURSOS ASIGNADOS</div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="jefeTajo">JEFE DE TAJO:</label>
+                    <input type="text" id="jefeTajo" placeholder="Nombre del responsable">
+                </div>
+                <div class="form-group">
+                    <label for="operarios">NUMERO DE OPERARIOS:</label>
+                    <input type="number" id="operarios" min="1" value="1">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="maquinaria">MAQUINARIA:</label>
+                    <input type="text" id="maquinaria" placeholder="Ej: Excavadora, Dumper">
+                </div>
+                <div class="form-group">
+                    <label for="fechaInicio">FECHA PREVISTA INICIO:</label>
+                    <input type="date" id="fechaInicio">
+                </div>
+            </div>
+            
+            <div class="advanced-section">
+                <h4 style="margin-top: 0; color: #1e3a8a;">RECURSOS DETALLADOS</h4>
+                <div class="resource-grid">
+                    <div class="resource-item">
+                        <label>MATERIALES PRINCIPALES:</label>
+                        <textarea id="materiales" rows="3" placeholder="Listar materiales necesarios..."></textarea>
+                    </div>
+                    <div class="resource-item">
+                        <label>SUBCONTRATISTAS:</label>
+                        <textarea id="subcontratistas" rows="3" placeholder="Si aplica, listar subcontratistas..."></textarea>
+                    </div>
+                    <div class="resource-item">
+                        <label>EQUIPOS DE SEGURIDAD:</label>
+                        <textarea id="equiposSeguridad" rows="3" placeholder="EPIs y equipos de seguridad..."></textarea>
+                    </div>
+                    <div class="resource-item">
+                        <label>HORARIO DE TRABAJO:</label>
+                        <input type="text" id="horarioTrabajo" placeholder="Ej: 08:00 - 18:00">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">3. MEDIDAS DE SEGURIDAD Y CALIDAD</div>
+            
+            <div class="form-group">
+                <label for="medidasSeguridad">MEDIDAS DE SEGURIDAD IMPLEMENTADAS:</label>
+                <textarea id="medidasSeguridad" rows="4" placeholder="Describir las medidas de seguridad...">- Senalizacion de la zona de trabajo
+- Uso obligatorio de EPIs
+- Control de acceso a la obra
+- Protocolo de emergencias activado
+- Coordinacion con trafico</textarea>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="coordinadorSeguridad">COORDINADOR DE SEGURIDAD:</label>
+                    <input type="text" id="coordinadorSeguridad" placeholder="Nombre del coordinador">
+                </div>
+                <div class="form-group">
+                    <label for="fechaRevisionSeguridad">FECHA ULTIMA REVISION SEGURIDAD:</label>
+                    <input type="date" id="fechaRevisionSeguridad" value="2025-09-19">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="controlCalidad">CONTROL DE CALIDAD:</label>
+                <textarea id="controlCalidad" rows="3" placeholder="Describir controles de calidad..."></textarea>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">4. HISTORIAL DE CODIGOS GENERADOS</div>
+            <div id="historialCodigos">
+                <div class="alert alert-info">No hay codigos generados aun.</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">5. ESTADO Y APROBACIONES</div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="estadoSolicitud">ESTADO DE LA SOLICITUD:</label>
+                    <select id="estadoSolicitud">
+                        <option value="pendiente">Pendiente</option>
+                        <option value="en_revision">En Revision</option>
+                        <option value="aprobado">Aprobado</option>
+                        <option value="rechazado">Rechazado</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="prioridad">PRIORIDAD:</label>
+                    <select id="prioridad">
+                        <option value="baja">Baja</option>
+                        <option value="media">Media</option>
+                        <option value="alta">Alta</option>
+                        <option value="critica">Critica</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="observacionesAprobacion">OBSERVACIONES DE APROBACION:</label>
+                <textarea id="observacionesAprobacion" rows="3" placeholder="Observaciones del responsable de aprobacion..."></textarea>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">6. OBSERVACIONES GENERALES</div>
+            <div class="form-group">
+                <textarea id="observaciones" rows="4" placeholder="Observaciones adicionales, incidencias, o informacion relevante..."></textarea>
+            </div>
+        </div>
+        
+        <div class="button-group" style="justify-content: center; margin-top: 30px;">
+            <button class="btn btn-primary" onclick="guardarSolicitud()">Guardar Solicitud</button>
+            <button class="btn btn-success" onclick="enviarParaAprobacion()">Enviar para Aprobacion</button>
+            <button class="btn btn-secondary" onclick="limpiarFormulario()">Limpiar</button>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let codigoActual = '';
+        let historialCodigos = JSON.parse(localStorage.getItem('historialCodigos') || '[]');
+        
+        // Inicializar fecha actual
+        document.addEventListener('DOMContentLoaded', function() {
+            const hoy = new Date().toISOString().split('T')[0];
+            document.getElementById('fechaSolicitud').value = hoy;
+            document.getElementById('fechaInicio').value = hoy;
+            document.getElementById('fechaRevisionSeguridad').value = hoy;
+            
+            mostrarHistorial();
+            actualizarEstadoVisual();
+        });
+        
+        // Generar codigo automatico
+        function generarCodigo() {
+            const fecha = new Date();
+            const año = fecha.getFullYear().toString().slice(-2);
+            const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+            const dia = fecha.getDate().toString().padStart(2, '0');
+            const hora = fecha.getHours().toString().padStart(2, '0');
+            const minuto = fecha.getMinutes().toString().padStart(2, '0');
+            
+            // Generar numero secuencial
+            const secuencial = (historialCodigos.length + 1).toString().padStart(3, '0');
+            
+            codigoActual = `TAJ-${año}${mes}${dia}-${hora}${minuto}-${secuencial}`;
+            
+            document.getElementById('codigoTajo').value = codigoActual;
+            document.getElementById('codigoDisplay').textContent = `Codigo generado: ${codigoActual}`;
+            document.getElementById('codigoDisplay').classList.remove('hidden');
+            
+            // Agregar al historial
+            const entrada = {
+                fecha: fecha.toLocaleString('es-ES'),
+                codigo: codigoActual,
+                tajo: document.getElementById('nombreTajo').value || 'Sin nombre'
+            };
+            
+            historialCodigos.unshift(entrada);
+            if (historialCodigos.length > 10) {
+                historialCodigos = historialCodigos.slice(0, 10);
+            }
+            
+            localStorage.setItem('historialCodigos', JSON.stringify(historialCodigos));
+            mostrarHistorial();
+        }
+        
+        // Validar codigo
+        function validarCodigo() {
+            const codigo = document.getElementById('codigoTajo').value;
+            if (!codigo) {
+                alert('Por favor, introduzca un codigo de tajo.');
+                return;
+            }
+            
+            // Verificar formato basico
+            if (codigo.length < 5) {
+                alert('El codigo debe tener al menos 5 caracteres.');
+                return;
+            }
+            
+            document.getElementById('codigoDisplay').textContent = `Codigo validado: ${codigo}`;
+            document.getElementById('codigoDisplay').classList.remove('hidden');
+            
+            // Agregar al historial si no existe
+            const existe = historialCodigos.some(h => h.codigo === codigo);
+            if (!existe) {
+                const entrada = {
+                    fecha: new Date().toLocaleString('es-ES'),
+                    codigo: codigo,
+                    tajo: document.getElementById('nombreTajo').value || 'Sin nombre'
+                };
+                historialCodigos.unshift(entrada);
+                localStorage.setItem('historialCodigos', JSON.stringify(historialCodigos));
+                mostrarHistorial();
+            }
+        }
+        
+        // Mostrar historial
+        function mostrarHistorial() {
+            const container = document.getElementById('historialCodigos');
+            
+            if (historialCodigos.length === 0) {
+                container.innerHTML = '<div class="alert alert-info">No hay codigos generados aun.</div>';
+                return;
+            }
+            
+            container.innerHTML = historialCodigos.map(entrada => `
+                <div class="history-item">
+                    <span class="history-date">${entrada.fecha}</span>
+                    <span class="history-code">${entrada.codigo}</span>
+                    <span>${entrada.tajo}</span>
+                </div>
+            `).join('');
+        }
+        
+        // Subir logo
+        function uploadLogo(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const logoSpace = document.getElementById('logoSpace');
+                    logoSpace.innerHTML = `<img src="${e.target.result}" alt="Logo">`;
+                    logoSpace.classList.add('with-image');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+        // Guardar solicitud
+        function guardarSolicitud() {
+            const datos = {
+                contratista: document.getElementById('contratista').value,
+                fechaSolicitud: document.getElementById('fechaSolicitud').value,
+                codigoTajo: document.getElementById('codigoTajo').value,
+                nombreTajo: document.getElementById('nombreTajo').value,
+                ubicacion: document.getElementById('ubicacion').value,
+                descripcionTrabajo: document.getElementById('descripcionTrabajo').value,
+                jefeTajo: document.getElementById('jefeTajo').value,
+                operarios: document.getElementById('operarios').value,
+                maquinaria: document.getElementById('maquinaria').value,
+                fechaInicio: document.getElementById('fechaInicio').value,
+                materiales: document.getElementById('materiales').value,
+                subcontratistas: document.getElementById('subcontratistas').value,
+                equiposSeguridad: document.getElementById('equiposSeguridad').value,
+                horarioTrabajo: document.getElementById('horarioTrabajo').value,
+                medidasSeguridad: document.getElementById('medidasSeguridad').value,
+                coordinadorSeguridad: document.getElementById('coordinadorSeguridad').value,
+                fechaRevisionSeguridad: document.getElementById('fechaRevisionSeguridad').value,
+                controlCalidad: document.getElementById('controlCalidad').value,
+                estadoSolicitud: document.getElementById('estadoSolicitud').value,
+                prioridad: document.getElementById('prioridad').value,
+                observacionesAprobacion: document.getElementById('observacionesAprobacion').value,
+                observaciones: document.getElementById('observaciones').value,
+                fechaCreacion: new Date().toISOString()
+            };
+            
+            // Validar campos obligatorios
+            if (!datos.codigoTajo || !datos.nombreTajo || !datos.ubicacion) {
+                alert('Por favor, complete los campos obligatorios: Codigo de Tajo, Nombre del Tajo y Ubicacion.');
+                return;
+            }
+            
+            // Guardar en localStorage
+            const solicitudes = JSON.parse(localStorage.getItem('solicitudesTajo') || '[]');
+            solicitudes.push(datos);
+            localStorage.setItem('solicitudesTajo', JSON.stringify(solicitudes));
+            
+            alert('Solicitud guardada correctamente.');
+            actualizarEstadoVisual();
+        }
+        
+        // Enviar para aprobacion
+        function enviarParaAprobacion() {
+            const codigo = document.getElementById('codigoTajo').value;
+            if (!codigo) {
+                alert('Por favor, genere o introduzca un codigo de tajo antes de enviar para aprobacion.');
+                return;
+            }
+            
+            document.getElementById('estadoSolicitud').value = 'en_revision';
+            guardarSolicitud();
+            alert('Solicitud enviada para aprobacion.');
+            actualizarEstadoVisual();
+        }
+        
+        // Limpiar formulario
+        function limpiarFormulario() {
+            if (confirm('¿Esta seguro de que desea limpiar el formulario?')) {
+                document.getElementById('codigoTajo').value = '';
+                document.getElementById('nombreTajo').value = '';
+                document.getElementById('ubicacion').value = '';
+                document.getElementById('descripcionTrabajo').value = '';
+                document.getElementById('jefeTajo').value = '';
+                document.getElementById('operarios').value = '1';
+                document.getElementById('maquinaria').value = '';
+                document.getElementById('materiales').value = '';
+                document.getElementById('subcontratistas').value = '';
+                document.getElementById('equiposSeguridad').value = '';
+                document.getElementById('horarioTrabajo').value = '';
+                document.getElementById('medidasSeguridad').value = '';
+                document.getElementById('coordinadorSeguridad').value = '';
+                document.getElementById('controlCalidad').value = '';
+                document.getElementById('estadoSolicitud').value = 'pendiente';
+                document.getElementById('prioridad').value = 'media';
+                document.getElementById('observacionesAprobacion').value = '';
+                document.getElementById('observaciones').value = '';
+                document.getElementById('codigoDisplay').classList.add('hidden');
+                actualizarEstadoVisual();
+            }
+        }
+        
+        // Actualizar estado visual
+        function actualizarEstadoVisual() {
+            const estado = document.getElementById('estadoSolicitud').value;
+            const estadoElement = document.getElementById('estadoSolicitud');
+            
+            // Remover clases anteriores
+            estadoElement.classList.remove('status-pending', 'status-approved', 'status-rejected');
+            
+            // Agregar clase correspondiente
+            switch(estado) {
+                case 'pendiente':
+                case 'en_revision':
+                    estadoElement.classList.add('status-pending');
+                    break;
+                case 'aprobado':
+                    estadoElement.classList.add('status-approved');
+                    break;
+                case 'rechazado':
+                    estadoElement.classList.add('status-rejected');
+                    break;
+            }
+        }
+        
+        // Funciones de impresion
+        function imprimirDocumento() {
+            window.print();
+        }
+        
+        // Funciones de descarga
+        function descargarPDF() {
+            alert('Funcion de descarga PDF en desarrollo.');
+        }
+        
+        // Funciones de edicion
+        function editarDocumento() {
+            alert('Funcion de edicion en desarrollo.');
+        }
+    </script>
+</body>
+</html>
