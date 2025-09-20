@@ -1148,13 +1148,13 @@ class PortalCalidad {
 
         // Novos indicadores
         if (filledChapters) {
-            const filled = this.manifest ? this.manifest.secciones.filter(sec => sec.documentos.length > 0).length : 0;
+            const filled = this.manifest ? this.manifest.secciones.filter(sec => sec.documentos && sec.documentos.length > 0).length : 0;
             filledChapters.textContent = filled;
         }
         
         if (completionRate) {
             const totalChapters = this.manifest ? this.manifest.secciones.length : 21;
-            const filled = this.manifest ? this.manifest.secciones.filter(sec => sec.documentos.length > 0).length : 0;
+            const filled = this.manifest ? this.manifest.secciones.filter(sec => sec.documentos && sec.documentos.length > 0).length : 0;
             const rate = totalChapters > 0 ? Math.round((filled / totalChapters) * 100) : 0;
             completionRate.textContent = rate + '%';
         }
