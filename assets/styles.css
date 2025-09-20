@@ -528,8 +528,8 @@ body {
 .main-content {
     flex: 1;
     background: var(--gradient-card);
-    border-radius: var(--radius-2xl);
-    box-shadow: var(--shadow-xl);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
     overflow: hidden;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -537,7 +537,7 @@ body {
 
 /* Seção de boas-vindas */
 .welcome-section {
-    padding: var(--spacing-lg);
+    padding: var(--spacing-md);
     text-align: center;
     background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%);
 }
@@ -563,19 +563,19 @@ body {
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-md);
+    gap: var(--spacing-sm);
     max-width: 100%;
-    margin: var(--spacing-lg) 0;
+    margin: var(--spacing-md) 0;
 }
 
 .stat-card {
     background: var(--gradient-card);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
-    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: all var(--transition-normal);
-    min-height: 100px;
+    min-height: 80px;
     backdrop-filter: blur(10px);
 }
 
@@ -1404,16 +1404,16 @@ body {
 /* Cronograma del Proyecto - Compacto */
 .project-timeline-compact {
     background: var(--gradient-card);
-    border-radius: var(--radius-xl);
-    padding: var(--spacing-lg);
-    margin-bottom: var(--spacing-lg);
-    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .timeline-header {
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
 }
 
 .timeline-title {
@@ -1425,14 +1425,14 @@ body {
 .timeline-title h3 {
     margin: 0;
     color: var(--gray-800);
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     font-weight: 700;
 }
 
 .timeline-horizontal {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-lg);
+    gap: var(--spacing-md);
     align-items: center;
 }
 
@@ -2013,13 +2013,13 @@ body {
 .work-info-card {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
-    padding: 1.5rem;
+    gap: 1rem;
+    padding: 1rem;
     background: var(--bg-primary);
     border-radius: var(--border-radius);
     border: 1px solid var(--border-light);
     transition: transform 0.2s, box-shadow 0.2s;
-    min-height: 100px;
+    min-height: 70px;
 }
 
 .work-info-card:hover {
@@ -2028,21 +2028,21 @@ body {
 }
 
 .work-info-card .info-icon {
-    font-size: 3rem;
+    font-size: 2rem;
     flex-shrink: 0;
 }
 
 .work-info-card .info-content h4 {
     margin: 0 0 0.25rem 0;
     color: var(--text-primary);
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 600;
 }
 
 .work-info-card .info-content p {
     margin: 0;
     color: var(--text-secondary);
-    font-size: 1rem;
+    font-size: 0.9rem;
 }
 
 /* Quick Actions */
