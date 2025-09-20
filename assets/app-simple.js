@@ -333,11 +333,14 @@ class PortalCalidad {
             return;
         }
         
-        const manifestDocs = this.currentChapter.items || [];
+        // Filtrar apenas documentos normais (não separadores)
+        const manifestDocs = (this.currentChapter.items || []).filter(doc => doc.tipo !== 'separador');
         const uploadedDocs = this.uploadedDocuments.filter(doc => doc.chapter === this.currentChapter.codigo);
         const allDocs = [...manifestDocs, ...uploadedDocs];
         
         console.log('📄 Documentos encontrados:', allDocs.length);
+        console.log('📄 Manifest docs:', manifestDocs.length);
+        console.log('📄 Uploaded docs:', uploadedDocs.length);
         
         if (sectionTitle) sectionTitle.textContent = this.currentChapter.titulo;
         if (sectionCode) sectionCode.textContent = this.currentChapter.codigo;
@@ -359,6 +362,7 @@ class PortalCalidad {
         }
         
         documentsGrid.innerHTML = allDocs.map(doc => this.createDocumentCard(doc)).join('');
+        console.log('✅ Documentos renderizados');
     }
 
     renderLaboratorySubchapters() {
