@@ -130,8 +130,11 @@
             </div>
             <div class="header-actions">
                 <div class="search-container">
-                    <input type="text" id="searchInput" placeholder="Buscar documentos, tags o códigos..." class="search-input">
-                    <button class="search-btn" id="searchBtn">🔍</button>
+                    <div class="search-input-wrapper">
+                        <input type="text" id="searchInput" placeholder="Buscar documentos, tags o códigos..." class="search-input">
+                        <button class="search-btn" id="searchBtn">🔍</button>
+                        <button class="advanced-search-btn" id="advancedSearchBtn" title="Búsqueda Avanzada">⚙️</button>
+                    </div>
                 </div>
                 <button id="uploadBtn" class="upload-btn">
                     <span class="btn-icon">📤</span>
@@ -140,6 +143,10 @@
                 <button id="dashboardBtn" class="dashboard-btn">
                     <span class="btn-icon">📊</span>
                     <span class="btn-text">Dashboard</span>
+                </button>
+                <button id="themeToggleBtn" class="theme-toggle-btn" onclick="portal.toggleTheme()" title="Cambiar Tema">
+                    <span class="btn-icon">🌙</span>
+                    <span class="btn-text">Tema</span>
                 </button>
                 <button id="logoutBtn" class="logout-btn" onclick="portal.logout()" title="Cerrar Sesión">
                     <span class="btn-icon">🚪</span>
@@ -320,24 +327,46 @@
                         </div>
                     </div>
                     
-                    <!-- Documentos Subidos Recentemente -->
+                    <!-- Documentos Favoritos -->
+                    <div class="favorite-documents">
+                        <div class="favorite-docs-header">
+                            <h3>⭐ Documentos Favoritos</h3>
+                            <div class="favorite-actions">
+                                <button class="btn-refresh" onclick="portal.refreshFavorites()" title="Actualizar">
+                                    <span class="btn-icon">🔄</span>
+                                </button>
+                                <button class="btn-clear" onclick="portal.clearAllFavorites()" title="Limpiar Favoritos">
+                                    <span class="btn-icon">🗑️</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="favorite-docs-grid" id="favoriteDocsList">
+                            <div class="empty-state">
+                                <div class="empty-icon">⭐</div>
+                                <p>No hay documentos favoritos</p>
+                                <small>Haz clic en la estrella de un documento para añadirlo a favoritos</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Documentos Vistos Recentemente -->
                     <div class="recent-documents">
                         <div class="recent-docs-header">
-                            <h3>📤 Documentos Recientes</h3>
+                            <h3>👁️ Documentos Vistos Recientemente</h3>
                             <div class="recent-actions">
                                 <button class="btn-refresh" onclick="portal.refreshRecentDocuments()" title="Actualizar">
                                     <span class="btn-icon">🔄</span>
                                 </button>
-                                <button class="btn-clear" onclick="portal.clearAllUploadedDocuments()" title="Limpiar Todo">
+                                <button class="btn-clear" onclick="portal.clearViewHistory()" title="Limpiar Historial">
                                     <span class="btn-icon">🗑️</span>
                                 </button>
                             </div>
                         </div>
                         <div class="recent-docs-grid" id="recentDocsList">
                             <div class="empty-state">
-                                <div class="empty-icon">📁</div>
-                                <p>No hay documentos recientes</p>
-                                <small>Los documentos subidos aparecerán aquí</small>
+                                <div class="empty-icon">👁️</div>
+                                <p>No hay documentos vistos recientemente</p>
+                                <small>Los documentos que visualices aparecerán aquí</small>
                             </div>
                         </div>
                     </div>
@@ -475,6 +504,153 @@
                         <button type="submit" class="btn-primary" id="submitUpload">Subir Documento</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Advanced Search Modal -->
+    <div id="advancedSearchModal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content advanced-search-content">
+            <div class="modal-header">
+                <h3>🔍 Búsqueda Avanzada</h3>
+                <button class="close-btn" id="closeAdvancedSearchModal">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="advanced-search-form">
+                    <!-- Busca por texto -->
+                    <div class="search-section">
+                        <div class="section-title">
+                            <h4>📝 Búsqueda por Contenido</h4>
+                            <p>Busca en títulos, descripciones, tags y códigos</p>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="advancedSearchInput" placeholder="Escriba su búsqueda..." class="form-input">
+                        </div>
+                    </div>
+
+                    <!-- Filtros -->
+                    <div class="filters-section">
+                        <div class="section-title">
+                            <h4>🎯 Filtros</h4>
+                            <p>Refine su búsqueda con filtros específicos</p>
+                        </div>
+                        
+                        <div class="filters-grid">
+                            <!-- Filtro por tipo -->
+                            <div class="filter-group">
+                                <label for="typeFilter">Tipo de Documento:</label>
+                                <select id="typeFilter" class="filter-select">
+                                    <option value="">Todos los tipos</option>
+                                    <option value="pdf">PDF</option>
+                                    <option value="excel">Excel (.xls, .xlsx)</option>
+                                    <option value="word">Word (.doc, .docx)</option>
+                                    <option value="html">HTML</option>
+                                    <option value="externo">Documento Externo</option>
+                                </select>
+                            </div>
+
+                            <!-- Filtro por capítulo -->
+                            <div class="filter-group">
+                                <label for="chapterFilter">Capítulo:</label>
+                                <select id="chapterFilter" class="filter-select">
+                                    <option value="">Todos los capítulos</option>
+                                </select>
+                            </div>
+
+                            <!-- Filtro por estado -->
+                            <div class="filter-group">
+                                <label for="statusFilter">Estado:</label>
+                                <select id="statusFilter" class="filter-select">
+                                    <option value="">Todos los estados</option>
+                                    <option value="Aprobado">Aprobado</option>
+                                    <option value="Pendiente">Pendiente</option>
+                                    <option value="Revisión">En Revisión</option>
+                                    <option value="Borrador">Borrador</option>
+                                </select>
+                            </div>
+
+                            <!-- Filtro por fecha -->
+                            <div class="filter-group">
+                                <label for="dateFilter">Fecha:</label>
+                                <select id="dateFilter" class="filter-select">
+                                    <option value="">Todas las fechas</option>
+                                    <option value="today">Hoy</option>
+                                    <option value="week">Última semana</option>
+                                    <option value="month">Último mes</option>
+                                    <option value="quarter">Último trimestre</option>
+                                    <option value="year">Último año</option>
+                                </select>
+                            </div>
+
+                            <!-- Filtro por favoritos -->
+                            <div class="filter-group">
+                                <label for="favoritesFilter">Favoritos:</label>
+                                <select id="favoritesFilter" class="filter-select">
+                                    <option value="">Todos</option>
+                                    <option value="only">Solo favoritos</option>
+                                    <option value="exclude">Excluir favoritos</option>
+                                </select>
+                            </div>
+
+                            <!-- Filtro por tamaño -->
+                            <div class="filter-group">
+                                <label for="sizeFilter">Tamaño:</label>
+                                <select id="sizeFilter" class="filter-select">
+                                    <option value="">Cualquier tamaño</option>
+                                    <option value="small">Pequeño (< 1MB)</option>
+                                    <option value="medium">Mediano (1-10MB)</option>
+                                    <option value="large">Grande (> 10MB)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ordenação -->
+                    <div class="sorting-section">
+                        <div class="section-title">
+                            <h4>📊 Ordenar por</h4>
+                            <p>Seleccione cómo ordenar los resultados</p>
+                        </div>
+                        <div class="sorting-options">
+                            <div class="sort-group">
+                                <label for="sortBy">Campo:</label>
+                                <select id="sortBy" class="filter-select">
+                                    <option value="relevance">Relevancia</option>
+                                    <option value="title">Título</option>
+                                    <option value="date">Fecha</option>
+                                    <option value="type">Tipo</option>
+                                    <option value="chapter">Capítulo</option>
+                                    <option value="size">Tamaño</option>
+                                </select>
+                            </div>
+                            <div class="sort-group">
+                                <label for="sortOrder">Orden:</label>
+                                <select id="sortOrder" class="filter-select">
+                                    <option value="desc">Descendente</option>
+                                    <option value="asc">Ascendente</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ações -->
+                    <div class="search-actions">
+                        <button class="btn-secondary" id="clearAdvancedFilters">🗑️ Limpiar Filtros</button>
+                        <button class="btn-primary" id="executeAdvancedSearch">🔍 Buscar</button>
+                    </div>
+                </div>
+
+                <!-- Resultados -->
+                <div class="search-results" id="advancedSearchResults" style="display: none;">
+                    <div class="results-header">
+                        <h4>📋 Resultados de la Búsqueda</h4>
+                        <div class="results-count" id="resultsCount">0 resultados encontrados</div>
+                    </div>
+                    <div class="results-grid" id="resultsGrid">
+                        <!-- Resultados serão carregados aqui -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -198,8 +198,43 @@ class PortalCalidad {
             if (e.key === 'Escape') {
                 this.hideUpload();
                 this.hideViewer();
+                this.hideAdvancedSearch();
             }
         });
+
+        // Busca Avançada
+        const advancedSearchBtn = document.getElementById('advancedSearchBtn');
+        if (advancedSearchBtn) {
+            advancedSearchBtn.addEventListener('click', () => this.showAdvancedSearch());
+        }
+
+        const closeAdvancedSearchModal = document.getElementById('closeAdvancedSearchModal');
+        if (closeAdvancedSearchModal) {
+            closeAdvancedSearchModal.addEventListener('click', () => this.hideAdvancedSearch());
+        }
+
+        const executeAdvancedSearch = document.getElementById('executeAdvancedSearch');
+        if (executeAdvancedSearch) {
+            executeAdvancedSearch.addEventListener('click', () => this.executeAdvancedSearch());
+        }
+
+        const clearAdvancedFilters = document.getElementById('clearAdvancedFilters');
+        if (clearAdvancedFilters) {
+            clearAdvancedFilters.addEventListener('click', () => this.clearAdvancedFilters());
+        }
+
+        // Fechar modal de busca avançada clicando no overlay
+        const advancedSearchModal = document.getElementById('advancedSearchModal');
+        if (advancedSearchModal) {
+            advancedSearchModal.addEventListener('click', (e) => {
+                if (e.target === advancedSearchModal || e.target.classList.contains('modal-overlay')) {
+                    this.hideAdvancedSearch();
+                }
+            });
+        }
+
+        // Tema
+        this.initializeTheme();
 
         console.log('✅ Eventos configurados');
     }
@@ -288,11 +323,13 @@ class PortalCalidad {
         this.showDocumentsSection();
         this.updateBreadcrumb(section);
         
-        // Verificar se é o Capítulo 15 (Laboratorio)
-        if (section.codigo === '15') {
-            this.renderLaboratorySubchapters();
+        // Verificar se tem subcapítulos (separadores)
+        const hasSubchapters = section.items && section.items.some(item => item.tipo === 'separador');
+        
+        if (hasSubchapters) {
+            this.renderSubchapters();
         } else {
-            this.renderDocuments();
+        this.renderDocuments();
         }
     }
 
@@ -383,8 +420,8 @@ class PortalCalidad {
         console.log('✅ Documentos renderizados');
     }
 
-    renderLaboratorySubchapters() {
-        console.log('🧪 Renderizando subcapítulos do laboratório...');
+    renderSubchapters() {
+        console.log('📁 Renderizando subcapítulos...');
         if (!this.currentChapter) {
             console.error('❌ Nenhum capítulo selecionado');
             return;
@@ -403,18 +440,18 @@ class PortalCalidad {
         // Filtrar apenas os separadores (subcapítulos)
         const subchapters = this.currentChapter.items ? this.currentChapter.items.filter(item => item.tipo === 'separador') : [];
         
-        console.log('🧪 Subcapítulos encontrados:', subchapters.length);
+        console.log('📁 Subcapítulos encontrados:', subchapters.length);
         
-        if (sectionTitle) sectionTitle.textContent = 'Subcapítulos de Laboratorio';
+        if (sectionTitle) sectionTitle.textContent = `Subcapítulos de ${this.currentChapter.titulo}`;
         if (sectionCode) sectionCode.textContent = this.currentChapter.codigo;
         if (documentCount) documentCount.textContent = `${subchapters.length} subcapítulos`;
         
         if (subchapters.length === 0) {
             documentsGrid.innerHTML = `
                 <div class="no-documents">
-                    <div class="no-documents-icon">🧪</div>
+                    <div class="no-documents-icon">📁</div>
                     <h3>Nenhum subcapítulo encontrado</h3>
-                    <p>Adicione subcapítulos ao Capítulo 15 no manifest.json</p>
+                    <p>Adicione subcapítulos ao Capítulo ${this.currentChapter.codigo} no manifest.json</p>
                 </div>
             `;
             return;
@@ -541,9 +578,9 @@ class PortalCalidad {
         if (!documentsGrid) return;
         
         // Buscar documentos subidos para este subcapítulo
-        const subchapterName = subchapter.titulo.split(' - ')[0].replace('🔬 ', '').replace('🛣️ ', '').replace('🏗️ ', '').replace('📊 ', '').replace('🧪 ', '').replace('📎 ', '');
+        const subchapterName = subchapter.titulo.split(' - ')[0].replace('🔬 ', '').replace('🛣️ ', '').replace('🏗️ ', '').replace('📊 ', '').replace('🧪 ', '').replace('📎 ', '').replace('📦 ', '').replace('🔍 ', '');
         const uploadedDocs = this.uploadedDocuments.filter(doc => 
-            doc.chapter === '15' && 
+            doc.chapter === this.currentChapter.codigo && 
             doc.titulo.toLowerCase().includes(subchapterName.toLowerCase())
         );
         
@@ -575,7 +612,7 @@ class PortalCalidad {
                                 <h4>💡 Como adicionar documentos:</h4>
                                 <ol>
                                     <li>Use o botão "Subir Documento" abaixo</li>
-                                    <li>Selecione o Capítulo 15</li>
+                                    <li>Selecione o Capítulo ${this.currentChapter ? this.currentChapter.codigo : 'atual'}</li>
                                     <li>Inclua "${subchapterName}" no título do documento</li>
                                     <li>Os documentos aparecerão automaticamente aqui</li>
                                 </ol>
@@ -604,12 +641,18 @@ class PortalCalidad {
         const status = (doc.estado || 'Aprobado').toLowerCase();
         const ext = this.getFileExtension(doc.ruta || doc.fileName);
         const tags = doc.tags || [];
+        const isFavorite = this.isFavorite(doc.id || 'manifest_' + doc.titulo);
         
         return `
-            <div class="document-card ${isExternal ? 'external-document' : ''}">
+            <div class="document-card ${isExternal ? 'external-document' : ''} ${isFavorite ? 'favorite' : ''}">
                 <div class="document-header">
                     <div class="document-title">${doc.titulo}</div>
+                    <div class="document-header-right">
+                        <button class="favorite-btn ${isFavorite ? 'active' : ''}" onclick="portal.toggleFavorite('${doc.id || 'manifest_' + doc.titulo}')" title="${isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos'}">
+                            <span class="favorite-icon">${isFavorite ? '⭐' : '☆'}</span>
+                        </button>
                     <div class="document-status ${status}">${doc.estado || 'Aprobado'}</div>
+                    </div>
                 </div>
                 <div class="document-meta">
                     <div class="document-date">
@@ -632,13 +675,13 @@ class PortalCalidad {
                     </div>
                 ` : ''}
                 <div class="document-actions">
-                    <button class="btn-primary" onclick="portal.viewDocument('${doc.id || 'manifest_' + doc.titulo}')">
+                    <button class="btn-primary" onclick="portal.showViewer('${doc.id || 'manifest_' + doc.titulo}')">
                         <span class="btn-icon">${isExternal ? '🔗' : '👁️'}</span>
                         <span class="btn-text">${isExternal ? 'Abrir Externo' : 'Ver Documento'}</span>
                     </button>
                     <button class="btn-secondary" onclick="portal.editDocument('${doc.id || 'manifest_' + doc.titulo}')" title="Editar">
                         <span class="btn-icon">✏️</span>
-                    </button>
+                        </button>
                     <button class="btn-danger btn-icon-only" onclick="portal.deleteDocument('${doc.id || 'manifest_' + doc.titulo}')" title="Eliminar">
                         <span class="btn-icon">🗑️</span>
                     </button>
@@ -723,22 +766,22 @@ class PortalCalidad {
             this.manifest.secciones.forEach(seccion => {
                 if (seccion.items && seccion.items.length > 0) {
                     seccion.items.forEach(doc => {
-                        const titulo = doc.titulo ? doc.titulo.toLowerCase() : '';
-                        const descripcion = doc.descripcion ? doc.descripcion.toLowerCase() : '';
-                        const tags = doc.tags ? doc.tags.join(' ').toLowerCase() : '';
-                        const codigo = doc.codigo ? doc.codigo.toLowerCase() : '';
-                        
-                        if (titulo.includes(searchTerm) || 
-                            descripcion.includes(searchTerm) || 
-                            tags.includes(searchTerm) || 
-                            codigo.includes(searchTerm)) {
-                            results.push({
-                                ...doc,
-                                seccion: seccion.titulo,
-                                tipo: 'manifest'
-                            });
-                        }
-                    });
+                    const titulo = doc.titulo ? doc.titulo.toLowerCase() : '';
+                    const descripcion = doc.descripcion ? doc.descripcion.toLowerCase() : '';
+                    const tags = doc.tags ? doc.tags.join(' ').toLowerCase() : '';
+                    const codigo = doc.codigo ? doc.codigo.toLowerCase() : '';
+                    
+                    if (titulo.includes(searchTerm) || 
+                        descripcion.includes(searchTerm) || 
+                        tags.includes(searchTerm) || 
+                        codigo.includes(searchTerm)) {
+                        results.push({
+                            ...doc,
+                            seccion: seccion.titulo,
+                            tipo: 'manifest'
+                        });
+                    }
+                });
                 }
             });
         }
@@ -1057,7 +1100,7 @@ class PortalCalidad {
             if (file.type === 'text/html' || file.name.toLowerCase().endsWith('.html') || file.name.toLowerCase().endsWith('.htm')) {
                 reader.readAsText(file, 'UTF-8');
             } else {
-                reader.readAsDataURL(file);
+            reader.readAsDataURL(file);
             }
         });
     }
@@ -1187,7 +1230,7 @@ class PortalCalidad {
     }
 
     showUploadForSubchapter(subchapterName) {
-        // Abrir o modal de upload com o capítulo 15 pré-selecionado
+        // Abrir o modal de upload com o capítulo atual pré-selecionado
         this.showUpload();
         
         // Pré-preencher o título com o nome do subcapítulo
@@ -1200,15 +1243,15 @@ class PortalCalidad {
                 titleInput.setSelectionRange(titleInput.value.length, titleInput.value.length);
             }
             
-            // Garantir que o capítulo 15 está selecionado
+            // Garantir que o capítulo atual está selecionado
             const chapterSelect = document.getElementById('documentChapter');
-            if (chapterSelect) {
-                chapterSelect.value = '15';
+            if (chapterSelect && this.currentChapter) {
+                chapterSelect.value = this.currentChapter.codigo;
             }
         }, 100);
     }
 
-    showViewerModal() {
+    async showViewerModal() {
         const modal = document.getElementById('viewerModal');
         const title = document.getElementById('viewerTitle');
         const frame = document.getElementById('documentFrame');
@@ -1274,7 +1317,7 @@ class PortalCalidad {
                             }
                         };
                     } else if (this.currentDocument.fileData.startsWith('data:text/html')) {
-                        frame.src = this.currentDocument.fileData;
+                    frame.src = this.currentDocument.fileData;
                     } else {
                         // Fallback: criar blob com charset UTF-8
                         const blob = new Blob([this.currentDocument.fileData], { type: 'text/html; charset=utf-8' });
@@ -1284,9 +1327,16 @@ class PortalCalidad {
                     frame.src = this.currentDocument.ruta;
                 }
             }
-            // Para PDFs, usar PDF.js para melhor visualização
+            // Para PDFs, usar fallback nativo (mais confiável)
             else if (fileExt === 'pdf') {
-                this.renderPDF();
+                console.log('📄 Visualizando PDF:', this.currentDocument.titulo);
+                console.log('📄 Dados do arquivo:', this.currentDocument.fileData ? 'Presente' : 'Ausente');
+                console.log('📄 Tipo de dados:', typeof this.currentDocument.fileData);
+                console.log('📄 Início dos dados:', this.currentDocument.fileData ? this.currentDocument.fileData.substring(0, 100) : 'N/A');
+                
+                // Usar fallback nativo diretamente (mais confiável que PDF.js)
+                console.log('🔄 Usando visualização nativa do navegador...');
+                this.renderPDFFallback();
             }
             // Para Excel
             else if (['xls', 'xlsx'].includes(fileExt)) {
@@ -1471,25 +1521,25 @@ class PortalCalidad {
         try {
             if (isUploaded) {
                 // Eliminar documento subido
-                const index = this.uploadedDocuments.findIndex(d => d.id === docId);
-                if (index !== -1) {
-                    this.uploadedDocuments.splice(index, 1);
-                    this.saveUploadedDocuments();
-                    this.showToast(`Documento "${doc.titulo}" eliminado permanentemente!`, 'success');
-                    this.updateStats();
+            const index = this.uploadedDocuments.findIndex(d => d.id === docId);
+            if (index !== -1) {
+                this.uploadedDocuments.splice(index, 1);
+                this.saveUploadedDocuments();
+                this.showToast(`Documento "${doc.titulo}" eliminado permanentemente!`, 'success');
+                this.updateStats();
                 }
             } else {
                 // Para documentos do manifest, mostrar instruções
                 this.showToast('Para eliminar documentos do sistema, edite o arquivo data/manifest.json', 'info');
                 return;
             }
-            
-            // Recarregar a vista atual
-            if (this.currentChapter) {
-                this.renderDocuments();
-            }
-            
-            console.log('✅ Documento eliminado:', doc.titulo);
+                
+                // Recarregar a vista atual
+                if (this.currentChapter) {
+                    this.renderDocuments();
+                }
+                
+                console.log('✅ Documento eliminado:', doc.titulo);
         } catch (error) {
             console.error('❌ Erro ao eliminar documento:', error);
             this.showToast('Erro ao eliminar documento: ' + error.message, 'error');
@@ -1535,7 +1585,7 @@ class PortalCalidad {
     // Storage
     saveUploadedDocuments() {
         try {
-            localStorage.setItem('uploadedDocuments', JSON.stringify(this.uploadedDocuments));
+        localStorage.setItem('uploadedDocuments', JSON.stringify(this.uploadedDocuments));
             console.log('💾 Documentos salvos no localStorage:', this.uploadedDocuments.length);
             
             // Também salvar no sessionStorage como backup
@@ -1579,8 +1629,53 @@ class PortalCalidad {
         const container = document.getElementById('recentDocsList');
         if (!container) return;
 
-        const recentDocs = this.uploadedDocuments
-            .sort((a, b) => new Date(b.uploadDate) - new Date(a.uploadDate))
+        // Obter histórico de visualizações (sem repetições)
+        const viewHistory = this.getViewHistory();
+        
+        if (viewHistory.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon">📁</div>
+                    <p>No hay documentos recientes</p>
+                    <small>Los documentos subidos aparecerán aquí</small>
+                </div>
+            `;
+            return;
+        }
+
+        // Buscar documentos únicos do histórico
+        const recentDocs = viewHistory
+            .map(historyItem => {
+                // Procurar nos documentos subidos
+                let doc = this.uploadedDocuments.find(d => d.id === historyItem.docId);
+                
+                if (doc) {
+                    return { ...doc, lastViewed: historyItem.timestamp };
+                }
+                
+                // Procurar no manifest
+                if (this.manifest && this.manifest.secciones) {
+                    for (const section of this.manifest.secciones) {
+                        if (section.documentos) {
+                            for (const manifestDoc of section.documentos) {
+                                const manifestDocId = 'manifest_' + manifestDoc.titulo;
+                                if (manifestDocId === historyItem.docId) {
+                                    return {
+                                        ...manifestDoc,
+                                        id: manifestDocId,
+                                        chapter: section.codigo,
+                                        lastViewed: historyItem.timestamp
+                                    };
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                return null;
+            })
+            .filter(doc => doc !== null)
+            .sort((a, b) => new Date(b.lastViewed) - new Date(a.lastViewed))
             .slice(0, 6); // Mostrar apenas os 6 mais recentes
 
         if (recentDocs.length === 0) {
@@ -1598,15 +1693,17 @@ class PortalCalidad {
     }
 
     createRecentDocCard(doc) {
-        const fileExt = this.getFileExtension(doc.fileName);
-        const fileIcon = this.getFileIcon(doc.fileName);
-        const uploadDate = new Date(doc.uploadDate);
-        const formattedDate = uploadDate.toLocaleDateString('es-ES', {
+        const fileExt = this.getFileExtension(doc.fileName || doc.ruta);
+        const fileIcon = this.getFileIcon(doc.fileName || doc.ruta);
+        
+        // Usar data da última visualização se disponível, senão usar data de upload
+        const viewDate = doc.lastViewed ? new Date(doc.lastViewed) : new Date(doc.uploadDate || doc.fecha);
+        const formattedDate = viewDate.toLocaleDateString('es-ES', {
             day: '2-digit',
             month: '2-digit',
             year: 'numeric'
         });
-        const formattedTime = uploadDate.toLocaleTimeString('es-ES', {
+        const formattedTime = viewDate.toLocaleTimeString('es-ES', {
             hour: '2-digit',
             minute: '2-digit'
         });
@@ -1618,14 +1715,14 @@ class PortalCalidad {
                     <div class="recent-doc-info">
                         <div class="recent-doc-title">${doc.titulo}</div>
                         <div class="recent-doc-meta">
-                            <span>📅 ${formattedDate}</span>
+                            <span>👁️ ${formattedDate}</span>
                             <span>🕒 ${formattedTime}</span>
-                            <span>📂 Cap. ${doc.chapter}</span>
+                            <span>📂 Cap. ${doc.chapter || 'N/A'}</span>
                         </div>
                     </div>
                 </div>
                 <div class="recent-doc-actions">
-                    <button class="btn-view" onclick="portal.viewDocument('${doc.id}')" title="Ver documento">
+                    <button class="btn-view" onclick="portal.showViewer('${doc.id}')" title="Ver documento">
                         <span>👁️</span>
                         <span>Ver</span>
                     </button>
@@ -1643,13 +1740,130 @@ class PortalCalidad {
         this.showToast('Documentos recientes actualizados', 'success');
     }
 
-    viewDocument(docId) {
-        const doc = this.uploadedDocuments.find(d => d.id === docId);
-        if (doc) {
-            this.currentDocument = doc;
-            this.showViewerModal();
+    renderFavorites() {
+        const container = document.getElementById('favoriteDocsList');
+        if (!container) return;
+
+        const favoriteDocs = this.getFavoriteDocuments();
+
+        if (favoriteDocs.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon">⭐</div>
+                    <p>No hay documentos favoritos</p>
+                    <small>Haz clic en la estrella de un documento para añadirlo a favoritos</small>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = favoriteDocs.map(doc => this.createDocumentCard(doc)).join('');
+    }
+
+    refreshFavorites() {
+        this.renderFavorites();
+        this.showToast('Favoritos actualizados', 'success');
+    }
+
+    clearAllFavorites() {
+        if (confirm('¿Estás seguro de que quieres eliminar todos los favoritos?')) {
+            this.saveFavorites([]);
+            this.renderFavorites();
+            this.updateStats();
+            this.showToast('Todos los favoritos han sido eliminados', 'info');
         }
     }
+
+    showViewer(docId) {
+        // Procurar documento nos subidos
+        let doc = this.uploadedDocuments.find(d => d.id === docId);
+        
+        if (doc) {
+            this.currentDocument = doc;
+            this.addToViewHistory(docId);
+            this.showViewerModal();
+            return;
+        }
+        
+        // Procurar documento no manifest
+        if (this.manifest && this.manifest.secciones) {
+            for (const section of this.manifest.secciones) {
+                if (section.documentos) {
+                    for (const manifestDoc of section.documentos) {
+                        const manifestDocId = 'manifest_' + manifestDoc.titulo;
+                        if (manifestDocId === docId) {
+                            this.currentDocument = {
+                                ...manifestDoc,
+                                id: manifestDocId,
+                                chapter: section.codigo
+                            };
+                            this.addToViewHistory(docId);
+                            this.showViewerModal();
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Se não encontrou, mostrar erro
+        this.showToast('Documento não encontrado', 'error');
+        console.error('Documento não encontrado:', docId);
+    }
+
+    // ===== HISTÓRICO DE VISUALIZAÇÕES =====
+    
+    getViewHistory() {
+        try {
+            const history = localStorage.getItem('portal_view_history');
+            return history ? JSON.parse(history) : [];
+        } catch (error) {
+            console.error('Erro ao carregar histórico:', error);
+            return [];
+        }
+    }
+
+    saveViewHistory(history) {
+        try {
+            localStorage.setItem('portal_view_history', JSON.stringify(history));
+        } catch (error) {
+            console.error('Erro ao salvar histórico:', error);
+        }
+    }
+
+    addToViewHistory(docId) {
+        const history = this.getViewHistory();
+        const now = new Date().toISOString();
+        
+        // Remover se já existe (para evitar duplicatas)
+        const existingIndex = history.findIndex(item => item.docId === docId);
+        if (existingIndex > -1) {
+            history.splice(existingIndex, 1);
+        }
+        
+        // Adicionar no início da lista
+        history.unshift({
+            docId: docId,
+            timestamp: now
+        });
+        
+        // Manter apenas os últimos 20 visualizações
+        const limitedHistory = history.slice(0, 20);
+        
+        this.saveViewHistory(limitedHistory);
+        
+        // Atualizar a seção de documentos recentes
+        this.renderRecentDocuments();
+    }
+
+    clearViewHistory() {
+        if (confirm('¿Estás seguro de que quieres limpiar el historial de visualizaciones?')) {
+            this.saveViewHistory([]);
+            this.renderRecentDocuments();
+            this.showToast('Historial de visualizaciones limpiado', 'info');
+        }
+    }
+
 
     updateStats() {
         const total = this.getTotalDocumentCount();
@@ -2036,6 +2250,7 @@ class PortalCalidad {
             this.renderChapters();
             this.updateStats();
             this.loadUploadedDocuments();
+            this.renderFavorites();
             console.log('✅ Sistema inicializado após login');
         } catch (error) {
             console.error('❌ Erro ao inicializar após login:', error);
@@ -2063,6 +2278,101 @@ class PortalCalidad {
         sessionStorage.removeItem('portal_authenticated');
         this.showLoginModal();
         console.log('🚪 Logout realizado');
+    }
+
+    // ===== SISTEMA DE FAVORITOS =====
+    
+    isFavorite(docId) {
+        const favorites = this.getFavorites();
+        return favorites.includes(docId);
+    }
+
+    getFavorites() {
+        try {
+            const favorites = localStorage.getItem('portal_favorites');
+            return favorites ? JSON.parse(favorites) : [];
+        } catch (error) {
+            console.error('Erro ao carregar favoritos:', error);
+            return [];
+        }
+    }
+
+    saveFavorites(favorites) {
+        try {
+            localStorage.setItem('portal_favorites', JSON.stringify(favorites));
+        } catch (error) {
+            console.error('Erro ao salvar favoritos:', error);
+        }
+    }
+
+    toggleFavorite(docId) {
+        const favorites = this.getFavorites();
+        const index = favorites.indexOf(docId);
+        
+        if (index > -1) {
+            // Remover dos favoritos
+            favorites.splice(index, 1);
+            this.showToast('Removido dos favoritos', 'info');
+        } else {
+            // Adicionar aos favoritos
+            favorites.push(docId);
+            this.showToast('Adicionado aos favoritos', 'success');
+        }
+        
+        this.saveFavorites(favorites);
+        
+        // Atualizar a interface
+        this.updateFavoriteUI(docId);
+        this.updateStats();
+        
+        // Atualizar a seção de favoritos no dashboard
+        this.renderFavorites();
+    }
+
+    updateFavoriteUI(docId) {
+        const card = document.querySelector(`[data-doc-id="${docId}"]`);
+        if (!card) return;
+
+        const isFavorite = this.isFavorite(docId);
+        const favoriteBtn = card.querySelector('.favorite-btn');
+        const favoriteIcon = card.querySelector('.favorite-icon');
+        
+        if (favoriteBtn && favoriteIcon) {
+            favoriteBtn.classList.toggle('active', isFavorite);
+            favoriteIcon.textContent = isFavorite ? '⭐' : '☆';
+            favoriteBtn.title = isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos';
+        }
+        
+        // Atualizar classe do card
+        card.classList.toggle('favorite', isFavorite);
+    }
+
+    getFavoriteDocuments() {
+        const favorites = this.getFavorites();
+        const allDocs = [];
+        
+        // Adicionar documentos do manifest
+        if (this.manifest && this.manifest.secciones) {
+            this.manifest.secciones.forEach(sec => {
+                if (sec.documentos) {
+                    sec.documentos.forEach(doc => {
+                        const docId = 'manifest_' + doc.titulo;
+                        if (favorites.includes(docId)) {
+                            allDocs.push({...doc, id: docId, chapter: sec.codigo});
+                        }
+                    });
+                }
+            });
+        }
+        
+        // Adicionar documentos subidos
+        this.uploadedDocuments.forEach(doc => {
+            if (favorites.includes(doc.id)) {
+                allDocs.push(doc);
+            }
+        });
+        
+        return allDocs;
     }
 
     async renderPDF() {
@@ -2109,16 +2419,19 @@ class PortalCalidad {
                 
                 frame.src = 'about:blank';
                 frame.onload = () => {
-                    frame.contentDocument.body.innerHTML = `
-                        <div style="padding: 20px; font-family: Arial, sans-serif;">
-                            <h2 style="color: #dc3545; margin-bottom: 20px;">📄 ${this.currentDocument.titulo}</h2>
+                    const iframeDoc = frame.contentDocument || frame.contentWindow.document;
+                    iframeDoc.body.innerHTML = `
+                        <div style="padding: 20px; font-family: Arial, sans-serif; background: white; min-height: 100vh;">
+                            <h2 style="color: #dc3545; margin-bottom: 20px; text-align: center;">📄 ${this.currentDocument.titulo}</h2>
                             <div style="text-align: center; margin-bottom: 15px;">
                                 <span style="background: #f8f9fa; padding: 5px 10px; border-radius: 15px; font-size: 0.9em; color: #6c757d;">
                                     Página 1 de ${numPages}
                                 </span>
                             </div>
-                            <div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 100%;">
-                                ${canvas.outerHTML}
+                            <div style="text-align: center; margin: 20px 0;">
+                                <div style="border: 2px solid #ddd; border-radius: 8px; overflow: hidden; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.1); background: white;">
+                                    ${canvas.outerHTML}
+                                </div>
                             </div>
                             <div style="margin-top: 15px; text-align: center;">
                                 <button onclick="portal.downloadDoc()" style="padding: 10px 20px; background: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px;">
@@ -2127,6 +2440,7 @@ class PortalCalidad {
                             </div>
                         </div>
                     `;
+                    console.log('✅ PDF renderizado no iframe com sucesso');
                 };
             } else {
                 // Fallback para visualização nativa do navegador
@@ -2292,6 +2606,596 @@ class PortalCalidad {
                 `;
             };
         }
+    }
+    // ===== BUSCA AVANÇADA =====
+    
+    showAdvancedSearch() {
+        console.log('🔍 Abrindo busca avançada...');
+        const modal = document.getElementById('advancedSearchModal');
+        if (modal) {
+            modal.classList.remove('hidden');
+            this.populateChapterFilter();
+            this.populateAdvancedSearchInput();
+        }
+    }
+
+    hideAdvancedSearch() {
+        console.log('🔍 Fechando busca avançada...');
+        const modal = document.getElementById('advancedSearchModal');
+        if (modal) {
+            modal.classList.add('hidden');
+        }
+    }
+
+    populateChapterFilter() {
+        const chapterFilter = document.getElementById('chapterFilter');
+        if (!chapterFilter || !this.manifest) return;
+
+        // Limpar opções existentes (exceto a primeira)
+        while (chapterFilter.children.length > 1) {
+            chapterFilter.removeChild(chapterFilter.lastChild);
+        }
+
+        // Adicionar opções dos capítulos
+        this.manifest.secciones.forEach(section => {
+            const option = document.createElement('option');
+            option.value = section.codigo;
+            option.textContent = `${section.codigo} - ${section.titulo}`;
+            chapterFilter.appendChild(option);
+        });
+    }
+
+    populateAdvancedSearchInput() {
+        const searchInput = document.getElementById('searchInput');
+        const advancedSearchInput = document.getElementById('advancedSearchInput');
+        
+        if (searchInput && advancedSearchInput && searchInput.value) {
+            advancedSearchInput.value = searchInput.value;
+        }
+    }
+
+    clearAdvancedFilters() {
+        console.log('🗑️ Limpando filtros avançados...');
+        
+        // Limpar campo de busca
+        const advancedSearchInput = document.getElementById('advancedSearchInput');
+        if (advancedSearchInput) advancedSearchInput.value = '';
+
+        // Limpar todos os filtros
+        const filters = [
+            'typeFilter', 'chapterFilter', 'statusFilter', 
+            'dateFilter', 'favoritesFilter', 'sizeFilter'
+        ];
+        
+        filters.forEach(filterId => {
+            const filter = document.getElementById(filterId);
+            if (filter) filter.value = '';
+        });
+
+        // Resetar ordenação
+        const sortBy = document.getElementById('sortBy');
+        const sortOrder = document.getElementById('sortOrder');
+        if (sortBy) sortBy.value = 'relevance';
+        if (sortOrder) sortOrder.value = 'desc';
+
+        // Esconder resultados
+        const results = document.getElementById('advancedSearchResults');
+        if (results) {
+            results.classList.remove('visible');
+            results.style.display = 'none';
+        }
+
+        this.showToast('Filtros limpos com sucesso!', 'success');
+    }
+
+    executeAdvancedSearch() {
+        console.log('🔍 Executando busca avançada...');
+        
+        try {
+            // Coletar critérios de busca
+            const searchCriteria = this.collectSearchCriteria();
+            console.log('🔍 Critérios coletados:', searchCriteria);
+            
+            // Executar busca
+            const results = this.performAdvancedSearch(searchCriteria);
+            console.log('🔍 Resultados encontrados:', results.length);
+            
+            // Exibir resultados
+            this.displayAdvancedSearchResults(results);
+            
+            // Mostrar toast de sucesso
+            if (results.length > 0) {
+                this.showToast(`${results.length} resultado${results.length !== 1 ? 's' : ''} encontrado${results.length !== 1 ? 's' : ''}!`, 'success');
+            } else {
+                this.showToast('Nenhum resultado encontrado. Tente ajustar os filtros.', 'warning');
+            }
+        } catch (error) {
+            console.error('❌ Erro na busca avançada:', error);
+            this.showToast('Erro ao executar busca. Tente novamente.', 'error');
+        }
+    }
+
+    collectSearchCriteria() {
+        return {
+            text: document.getElementById('advancedSearchInput')?.value || '',
+            type: document.getElementById('typeFilter')?.value || '',
+            chapter: document.getElementById('chapterFilter')?.value || '',
+            status: document.getElementById('statusFilter')?.value || '',
+            date: document.getElementById('dateFilter')?.value || '',
+            favorites: document.getElementById('favoritesFilter')?.value || '',
+            size: document.getElementById('sizeFilter')?.value || '',
+            sortBy: document.getElementById('sortBy')?.value || 'relevance',
+            sortOrder: document.getElementById('sortOrder')?.value || 'desc'
+        };
+    }
+
+    performAdvancedSearch(criteria) {
+        console.log('🔍 Critérios de busca:', criteria);
+        
+        let allDocuments = [];
+        
+        // Coletar documentos do manifest
+        if (this.manifest && this.manifest.secciones) {
+            this.manifest.secciones.forEach(section => {
+                if (section.items) {
+                    section.items.forEach(item => {
+                        allDocuments.push({
+                            ...item,
+                            source: 'manifest',
+                            chapter: section.codigo,
+                            chapterTitle: section.titulo
+                        });
+                    });
+                }
+            });
+        }
+        
+        // Coletar documentos subidos
+        if (this.uploadedDocuments) {
+            this.uploadedDocuments.forEach(doc => {
+                allDocuments.push({
+                    ...doc,
+                    source: 'uploaded',
+                    chapter: doc.chapter || 'Uploaded'
+                });
+            });
+        }
+
+        // Aplicar filtros
+        let filteredResults = allDocuments.filter(doc => {
+            // Filtro de texto
+            if (criteria.text) {
+                const searchTerm = criteria.text.toLowerCase();
+                const title = (doc.titulo || '').toLowerCase();
+                const description = (doc.descripcion || '').toLowerCase();
+                const tags = (doc.tags || []).join(' ').toLowerCase();
+                const code = (doc.codigo || '').toLowerCase();
+                
+                if (!title.includes(searchTerm) && 
+                    !description.includes(searchTerm) && 
+                    !tags.includes(searchTerm) && 
+                    !code.includes(searchTerm)) {
+                    return false;
+                }
+            }
+
+            // Filtro por tipo
+            if (criteria.type) {
+                const docType = this.getDocumentType(doc);
+                if (docType !== criteria.type) return false;
+            }
+
+            // Filtro por capítulo
+            if (criteria.chapter) {
+                if (doc.chapter !== criteria.chapter) return false;
+            }
+
+            // Filtro por estado
+            if (criteria.status) {
+                if (doc.estado !== criteria.status) return false;
+            }
+
+            // Filtro por data
+            if (criteria.date) {
+                if (!this.matchesDateFilter(doc.fecha, criteria.date)) return false;
+            }
+
+            // Filtro por favoritos
+            if (criteria.favorites) {
+                const isFavorite = this.isFavorite(doc.id || doc.titulo);
+                if (criteria.favorites === 'only' && !isFavorite) return false;
+                if (criteria.favorites === 'exclude' && isFavorite) return false;
+            }
+
+            // Filtro por tamanho
+            if (criteria.size) {
+                if (!this.matchesSizeFilter(doc.tamaño, criteria.size)) return false;
+            }
+
+            return true;
+        });
+
+        // Ordenar resultados
+        filteredResults = this.sortSearchResults(filteredResults, criteria.sortBy, criteria.sortOrder);
+
+        return filteredResults;
+    }
+
+    getDocumentType(doc) {
+        if (doc.tipo === 'externo') return 'externo';
+        
+        const ruta = doc.ruta || '';
+        if (ruta.includes('.pdf')) return 'pdf';
+        if (ruta.includes('.xls') || ruta.includes('.xlsx')) return 'excel';
+        if (ruta.includes('.doc') || ruta.includes('.docx')) return 'word';
+        if (ruta.includes('.html') || ruta.includes('.htm')) return 'html';
+        
+        return 'other';
+    }
+
+    matchesDateFilter(dateString, filter) {
+        if (!dateString) return false;
+        
+        const docDate = new Date(dateString);
+        const now = new Date();
+        
+        switch (filter) {
+            case 'today':
+                return docDate.toDateString() === now.toDateString();
+            case 'week':
+                const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                return docDate >= weekAgo;
+            case 'month':
+                const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+                return docDate >= monthAgo;
+            case 'quarter':
+                const quarterAgo = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+                return docDate >= quarterAgo;
+            case 'year':
+                const yearAgo = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
+                return docDate >= yearAgo;
+            default:
+                return true;
+        }
+    }
+
+    matchesSizeFilter(sizeString, filter) {
+        if (!sizeString) return true;
+        
+        const size = this.parseSize(sizeString);
+        
+        switch (filter) {
+            case 'small':
+                return size < 1024 * 1024; // < 1MB
+            case 'medium':
+                return size >= 1024 * 1024 && size < 10 * 1024 * 1024; // 1-10MB
+            case 'large':
+                return size >= 10 * 1024 * 1024; // > 10MB
+            default:
+                return true;
+        }
+    }
+
+    parseSize(sizeString) {
+        const match = sizeString.match(/(\d+(?:\.\d+)?)\s*(MB|KB|GB)/i);
+        if (!match) return 0;
+        
+        const value = parseFloat(match[1]);
+        const unit = match[2].toUpperCase();
+        
+        switch (unit) {
+            case 'KB': return value * 1024;
+            case 'MB': return value * 1024 * 1024;
+            case 'GB': return value * 1024 * 1024 * 1024;
+            default: return value;
+        }
+    }
+
+    sortSearchResults(results, sortBy, sortOrder) {
+        return results.sort((a, b) => {
+            let aValue, bValue;
+            
+            switch (sortBy) {
+                case 'title':
+                    aValue = (a.titulo || '').toLowerCase();
+                    bValue = (b.titulo || '').toLowerCase();
+                    break;
+                case 'date':
+                    aValue = new Date(a.fecha || 0);
+                    bValue = new Date(b.fecha || 0);
+                    break;
+                case 'type':
+                    aValue = this.getDocumentType(a);
+                    bValue = this.getDocumentType(b);
+                    break;
+                case 'chapter':
+                    aValue = a.chapter || '';
+                    bValue = b.chapter || '';
+                    break;
+                case 'size':
+                    aValue = this.parseSize(a.tamaño || '0KB');
+                    bValue = this.parseSize(b.tamaño || '0KB');
+                    break;
+                default: // relevance
+                    return 0; // Manter ordem original para relevância
+            }
+            
+            if (sortOrder === 'asc') {
+                return aValue > bValue ? 1 : -1;
+            } else {
+                return aValue < bValue ? 1 : -1;
+            }
+        });
+    }
+
+    displayAdvancedSearchResults(results) {
+        console.log('📋 Exibindo resultados:', results.length);
+        
+        const resultsContainer = document.getElementById('advancedSearchResults');
+        const resultsGrid = document.getElementById('resultsGrid');
+        const resultsCount = document.getElementById('resultsCount');
+        
+        if (!resultsContainer || !resultsGrid || !resultsCount) {
+            console.error('❌ Elementos de resultados não encontrados');
+            return;
+        }
+
+        // Atualizar contador
+        resultsCount.textContent = `${results.length} resultado${results.length !== 1 ? 's' : ''} encontrado${results.length !== 1 ? 's' : ''}`;
+        
+        // Destacar o contador
+        resultsCount.style.animation = 'pulse 0.5s ease-in-out 3';
+
+        // Limpar resultados anteriores
+        resultsGrid.innerHTML = '';
+
+        if (results.length === 0) {
+            resultsGrid.innerHTML = `
+                <div class="no-results-advanced">
+                    <div class="no-results-icon">🔍</div>
+                    <h3>Nenhum resultado encontrado</h3>
+                    <p>Tente ajustar os filtros ou usar termos de busca diferentes.</p>
+                </div>
+            `;
+        } else {
+            // Renderizar resultados
+            results.forEach(doc => {
+                const resultCard = this.createAdvancedSearchResultCard(doc);
+                resultsGrid.appendChild(resultCard);
+            });
+        }
+
+        // Mostrar seção de resultados com animação
+        resultsContainer.style.display = 'block';
+        resultsContainer.classList.add('visible');
+        
+        // Scroll para a seção de resultados
+        setTimeout(() => {
+            resultsContainer.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }, 300);
+
+        console.log('✅ Resultados exibidos com sucesso');
+    }
+
+    createAdvancedSearchResultCard(doc) {
+        const card = document.createElement('div');
+        card.className = 'result-card';
+        
+        const docType = this.getDocumentType(doc);
+        const isFavorite = this.isFavorite(doc.id || doc.titulo);
+        const docId = doc.id || doc.titulo;
+        
+        card.innerHTML = `
+            <div class="result-header">
+                <div class="result-title">${doc.titulo || 'Documento sem título'}</div>
+                <div class="result-type">${docType.toUpperCase()}</div>
+            </div>
+            
+            <div class="result-meta">
+                <span class="result-chapter">Cap. ${doc.chapter || 'N/A'}</span>
+                <div class="result-date">
+                    <span>📅</span>
+                    <span>${this.formatDate(doc.fecha)}</span>
+                </div>
+                ${doc.tamaño ? `<span>📏 ${doc.tamaño}</span>` : ''}
+            </div>
+            
+            ${doc.descripcion ? `<p style="color: var(--gray-600); font-size: 0.9rem; margin: var(--spacing-sm) 0;">${doc.descripcion}</p>` : ''}
+            
+            ${doc.tags && doc.tags.length > 0 ? `
+                <div style="display: flex; flex-wrap: wrap; gap: 4px; margin: var(--spacing-sm) 0;">
+                    ${doc.tags.map(tag => `<span style="background: var(--gray-100); color: var(--gray-600); padding: 2px 6px; border-radius: 4px; font-size: 0.75rem;">${tag}</span>`).join('')}
+                </div>
+            ` : ''}
+            
+            <div class="result-actions">
+                <button class="btn-view" onclick="portal.showViewer('${docId}')">
+                    <span>👁️</span>
+                    <span>Ver</span>
+                </button>
+                <button class="btn-favorite" onclick="portal.toggleFavorite('${docId}')">
+                    <span>${isFavorite ? '⭐' : '☆'}</span>
+                    <span>${isFavorite ? 'Favorito' : 'Favoritar'}</span>
+                </button>
+            </div>
+        `;
+        
+        return card;
+    }
+
+    // ===== SISTEMA DE TEMAS =====
+    
+    initializeTheme() {
+        console.log('🎨 Inicializando sistema de temas...');
+        
+        // Carregar tema salvo ou usar padrão
+        const savedTheme = localStorage.getItem('portal-theme') || 'light';
+        this.setTheme(savedTheme);
+        
+        console.log('✅ Sistema de temas inicializado:', savedTheme);
+    }
+
+    toggleTheme() {
+        console.log('🎨 Alternando tema...');
+        
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        this.setTheme(newTheme);
+        this.updateThemeButton(newTheme);
+        
+        // Salvar preferência
+        localStorage.setItem('portal-theme', newTheme);
+        
+        this.showToast(`Tema ${newTheme === 'dark' ? 'escuro' : 'claro'} ativado!`, 'success');
+        
+        console.log('✅ Tema alterado para:', newTheme);
+    }
+
+    setTheme(theme) {
+        console.log('🎨 Aplicando tema:', theme);
+        
+        // Aplicar tema ao documento
+        document.documentElement.setAttribute('data-theme', theme);
+        
+        // Atualizar botão
+        this.updateThemeButton(theme);
+        
+        // Adicionar classe de transição suave
+        document.body.style.transition = 'background 0.3s ease, color 0.3s ease';
+        
+        // Remover transição após aplicação
+        setTimeout(() => {
+            document.body.style.transition = '';
+        }, 300);
+    }
+
+    updateThemeButton(theme) {
+        const themeBtn = document.getElementById('themeToggleBtn');
+        if (!themeBtn) return;
+
+        const icon = themeBtn.querySelector('.btn-icon');
+        const text = themeBtn.querySelector('.btn-text');
+        
+        if (theme === 'dark') {
+            icon.textContent = '☀️';
+            text.textContent = 'Claro';
+            themeBtn.title = 'Mudar para Tema Claro';
+        } else {
+            icon.textContent = '🌙';
+            text.textContent = 'Escuro';
+            themeBtn.title = 'Mudar para Tema Escuro';
+        }
+    }
+
+    getCurrentTheme() {
+        return document.documentElement.getAttribute('data-theme') || 'light';
+    }
+
+    isDarkTheme() {
+        return this.getCurrentTheme() === 'dark';
+    }
+
+    renderPDFFallback() {
+        console.log('🔄 Usando visualização nativa do navegador para PDF...');
+        const frame = document.getElementById('documentFrame');
+        
+        try {
+            if (this.currentDocument.fileData) {
+                console.log('📄 Dados do PDF encontrados, processando...');
+                
+                let pdfData;
+                if (this.currentDocument.fileData.startsWith('data:application/pdf;base64,')) {
+                    console.log('📄 Dados em formato Base64 detectados');
+                    const base64Data = this.currentDocument.fileData.replace(/^data:application\/pdf;base64,/, '');
+                    const binaryData = atob(base64Data);
+                    const bytes = new Uint8Array(binaryData.length);
+                    for (let i = 0; i < binaryData.length; i++) {
+                        bytes[i] = binaryData.charCodeAt(i);
+                    }
+                    const blob = new Blob([bytes], { type: 'application/pdf' });
+                    pdfData = URL.createObjectURL(blob);
+                    console.log('📄 Blob URL criada:', pdfData.substring(0, 50) + '...');
+                } else if (this.currentDocument.fileData.startsWith('data:application/pdf')) {
+                    console.log('📄 Dados em formato Data URL detectados');
+                    pdfData = this.currentDocument.fileData;
+                } else {
+                    console.log('📄 Dados em formato bruto, convertendo...');
+                    const blob = new Blob([this.currentDocument.fileData], { type: 'application/pdf' });
+                    pdfData = URL.createObjectURL(blob);
+                }
+                
+                // Configurar iframe para visualização de PDF
+                frame.style.width = '100%';
+                frame.style.height = '100%';
+                frame.style.border = 'none';
+                frame.style.background = 'white';
+                
+                console.log('📄 Carregando PDF no iframe...');
+                frame.src = pdfData;
+                
+                // Verificar se carregou
+                frame.onload = () => {
+                    console.log('✅ PDF carregado no iframe com sucesso');
+                };
+                
+                frame.onerror = (error) => {
+                    console.error('❌ Erro ao carregar PDF no iframe:', error);
+                    this.showPDFError();
+                };
+                
+                // Limpar URL quando fechar o modal
+                const modal = document.getElementById('viewerModal');
+                const cleanup = () => {
+                    if (pdfData && pdfData.startsWith('blob:')) {
+                        URL.revokeObjectURL(pdfData);
+                        console.log('🧹 Blob URL limpa');
+                    }
+                    modal.removeEventListener('hidden', cleanup);
+                };
+                modal.addEventListener('hidden', cleanup);
+                
+                console.log('✅ PDF configurado para visualização nativa');
+            } else {
+                throw new Error('Dados do PDF não encontrados');
+            }
+        } catch (error) {
+            console.error('❌ Erro no processamento do PDF:', error);
+            this.showPDFError();
+        }
+    }
+    
+    showPDFError() {
+        const frame = document.getElementById('documentFrame');
+        frame.src = 'about:blank';
+        frame.onload = () => {
+            const iframeDoc = frame.contentDocument || frame.contentWindow.document;
+            iframeDoc.body.innerHTML = `
+                <div style="padding: 40px; text-align: center; font-family: Arial, sans-serif; background: white; min-height: 100vh;">
+                    <h2 style="color: #dc3545; margin-bottom: 20px;">❌ Erro ao visualizar PDF</h2>
+                    <p style="color: #666; margin-bottom: 20px;">Não foi possível carregar o PDF "${this.currentDocument.titulo}".</p>
+                    <p style="color: #666; margin-bottom: 30px;">Possíveis causas:</p>
+                    <ul style="text-align: left; max-width: 400px; margin: 20px auto; color: #666;">
+                        <li>Arquivo PDF corrompido</li>
+                        <li>PDF protegido por senha</li>
+                        <li>Formato não suportado</li>
+                        <li>Arquivo muito grande</li>
+                        <li>Problema de compatibilidade do navegador</li>
+                    </ul>
+                    <div style="margin-top: 30px;">
+                        <button onclick="portal.downloadDoc()" style="background: #007bff; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; margin: 8px; font-size: 14px;">
+                            📥 Tentar Download
+                        </button>
+                        <button onclick="portal.hideViewer()" style="background: #6c757d; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; margin: 8px; font-size: 14px;">
+                            ✕ Fechar
+                        </button>
+                    </div>
+                </div>
+            `;
+        };
     }
 }
 

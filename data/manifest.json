@@ -110,12 +110,35 @@
       "titulo": "Programación y Comunicaciones de Obra",
       "items": [
         {
-          "titulo": "Teste de Visualização em Tela Cheia",
-          "ruta": "test-fullscreen.html",
-          "tags": ["teste", "tela-cheia", "visualização", "fullscreen"],
+          "titulo": "📦 01 Comunicaciones Materiales",
+          "ruta": "registros/04_Programacion_y_Comunicaciones/01_Comunicaciones_Materiales/",
+          "tipo": "separador",
+          "tags": ["comunicaciones", "materiales", "suministros", "logística"],
+          "fecha": "2025-09-20",
+          "estado": "Activo"
+        },
+        {
+          "titulo": "🔍 02 Comunicaciones PPI",
+          "ruta": "registros/04_Programacion_y_Comunicaciones/02_Comunicaciones_PPI/",
+          "tipo": "separador",
+          "tags": ["comunicaciones", "ppi", "inspección", "control"],
+          "fecha": "2025-09-20",
+          "estado": "Activo"
+        },
+        {
+          "titulo": "🧪 03 Comunicaciones Ensayos",
+          "ruta": "registros/04_Programacion_y_Comunicaciones/03_Comunicaciones_Ensayos/",
+          "tipo": "separador",
+          "tags": ["comunicaciones", "ensayos", "laboratorio", "resultados"],
+          "fecha": "2025-09-20",
+          "estado": "Activo"
+        },
+        {
+          "titulo": "Solicitud de Apertura de Tajo - Sistema",
+          "ruta": "docs/04_Programacion/solicitud-apertura-tajo-sistema.html",
+          "tags": ["solicitud", "apertura", "tajo", "sistema"],
           "fecha": "2025-09-26",
-          "estado": "Aprobado",
-          "descripcion": "Arquivo de teste para verificar se a visualização em tela cheia está funcionando corretamente, ocupando toda a extensão da página."
+          "estado": "Aprobado"
         }
       ]
     },
