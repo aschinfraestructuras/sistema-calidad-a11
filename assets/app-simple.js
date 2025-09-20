@@ -269,7 +269,13 @@ class PortalCalidad {
         this.currentChapter = section;
         this.showDocumentsSection();
         this.updateBreadcrumb(section);
-        this.renderDocuments();
+        
+        // Verificar se é o Capítulo 15 (Laboratorio)
+        if (section.codigo === '15') {
+            this.renderLaboratorySubchapters();
+        } else {
+            this.renderDocuments();
+        }
     }
 
     showDocumentsSection() {
@@ -353,6 +359,207 @@ class PortalCalidad {
         }
         
         documentsGrid.innerHTML = allDocs.map(doc => this.createDocumentCard(doc)).join('');
+    }
+
+    renderLaboratorySubchapters() {
+        console.log('🧪 Renderizando subcapítulos do laboratório...');
+        if (!this.currentChapter) {
+            console.error('❌ Nenhum capítulo selecionado');
+            return;
+        }
+        
+        const documentsGrid = document.getElementById('documentsGrid');
+        const sectionTitle = document.getElementById('sectionTitle');
+        const sectionCode = document.getElementById('sectionCode');
+        const documentCount = document.getElementById('documentCount');
+        
+        if (!documentsGrid) {
+            console.error('❌ Elemento documentsGrid não encontrado');
+            return;
+        }
+        
+        // Filtrar apenas os separadores (subcapítulos)
+        const subchapters = this.currentChapter.items ? this.currentChapter.items.filter(item => item.tipo === 'separador') : [];
+        
+        console.log('🧪 Subcapítulos encontrados:', subchapters.length);
+        
+        if (sectionTitle) sectionTitle.textContent = 'Subcapítulos de Laboratorio';
+        if (sectionCode) sectionCode.textContent = this.currentChapter.codigo;
+        if (documentCount) documentCount.textContent = `${subchapters.length} subcapítulos`;
+        
+        if (subchapters.length === 0) {
+            documentsGrid.innerHTML = `
+                <div class="no-documents">
+                    <div class="no-documents-icon">🧪</div>
+                    <h3>Nenhum subcapítulo encontrado</h3>
+                    <p>Adicione subcapítulos ao Capítulo 15 no manifest.json</p>
+                </div>
+            `;
+            return;
+        }
+        
+        // Criar grade de subcapítulos
+        documentsGrid.innerHTML = subchapters.map(subchapter => `
+            <div class="subchapter-card" onclick="portal.showSubchapter('${subchapter.titulo}')">
+                <div class="subchapter-header">
+                    <div class="subchapter-icon">${this.getSubchapterIcon(subchapter.titulo)}</div>
+                    <div class="subchapter-status">${subchapter.estado || 'Activo'}</div>
+                </div>
+                <div class="subchapter-content">
+                    <h3 class="subchapter-title">${subchapter.titulo}</h3>
+                    <p class="subchapter-description">${this.getSubchapterDescription(subchapter.titulo)}</p>
+                    <div class="subchapter-meta">
+                        <span class="subchapter-path">${subchapter.ruta}</span>
+                    </div>
+                    ${subchapter.tags ? `
+                        <div class="subchapter-tags">
+                            ${subchapter.tags.map(tag => `<span class="subchapter-tag">#${tag}</span>`).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+                <div class="subchapter-actions">
+                    <button class="btn-primary" onclick="event.stopPropagation(); portal.showSubchapter('${subchapter.titulo}')">
+                        <span class="btn-icon">📂</span>
+                        <span class="btn-text">Abrir Subcapítulo</span>
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    getSubchapterIcon(title) {
+        if (title.includes('Aceros')) return '🔬';
+        if (title.includes('Aglomerado')) return '🛣️';
+        if (title.includes('CRT')) return '📊';
+        if (title.includes('Deflexiones')) return '📏';
+        if (title.includes('Densidades')) return '⚖️';
+        if (title.includes('Hormigón')) return '🏗️';
+        if (title.includes('Lotificación')) return '📋';
+        if (title.includes('Placas')) return '🔧';
+        if (title.includes('Préstamos')) return '🏗️';
+        if (title.includes('Sondeos')) return '🔍';
+        if (title.includes('Suelo Cemento')) return '🧱';
+        if (title.includes('Suelo Estabilizado')) return '🛠️';
+        if (title.includes('Suelos')) return '🌍';
+        if (title.includes('Testigos')) return '🔬';
+        if (title.includes('Zahorras')) return '🪨';
+        if (title.includes('Anexos')) return '📎';
+        return '📁';
+    }
+
+    getSubchapterDescription(title) {
+        if (title.includes('Aceros')) return 'Ensayos de tracción y soldadura de aceros';
+        if (title.includes('Aglomerado')) return 'Ensayos de carreteras y asfalto';
+        if (title.includes('CRT')) return 'Control de resistencia y tracción';
+        if (title.includes('Deflexiones')) return 'Medición de rugosidad IRI';
+        if (title.includes('Densidades')) return 'Ensayos Proctor y de campo';
+        if (title.includes('Hormigón')) return 'Resistencia y consistencia de hormigón';
+        if (title.includes('Lotificación')) return 'Control de lotes y trazabilidad';
+        if (title.includes('Placas')) return 'Módulos de elasticidad';
+        if (title.includes('Préstamos')) return 'Materiales de préstamo';
+        if (title.includes('Sondeos')) return 'Investigación del terreno';
+        if (title.includes('Suelo Cemento')) return 'Estabilización con cemento';
+        if (title.includes('Suelo Estabilizado')) return 'Tratamientos de suelo';
+        if (title.includes('Suelos')) return 'Caracterización geotécnica';
+        if (title.includes('Testigos')) return 'Muestras de hormigón';
+        if (title.includes('Zahorras')) return 'Materiales granulares';
+        if (title.includes('Anexos')) return 'Documentación complementaria';
+        return 'Subcapítulo de laboratorio';
+    }
+
+    showSubchapter(subchapterTitle) {
+        console.log('📂 Mostrando subcapítulo:', subchapterTitle);
+        
+        // Encontrar o subcapítulo
+        const subchapter = this.currentChapter.items.find(item => item.titulo === subchapterTitle);
+        if (!subchapter) {
+            this.showToast('Subcapítulo no encontrado', 'error');
+            return;
+        }
+        
+        this.currentSubchapter = subchapter;
+        
+        // Atualizar breadcrumb
+        this.updateSubchapterBreadcrumb(subchapter);
+        
+        // Atualizar título da seção
+        const sectionTitle = document.getElementById('sectionTitle');
+        const sectionCode = document.getElementById('sectionCode');
+        const documentCount = document.getElementById('documentCount');
+        
+        if (sectionTitle) {
+            sectionTitle.textContent = subchapter.titulo;
+        }
+        if (sectionCode) {
+            sectionCode.textContent = `${this.currentChapter.codigo} › ${subchapter.titulo.split(' - ')[0]}`;
+        }
+        if (documentCount) {
+            documentCount.textContent = '0 documentos';
+        }
+        
+        // Carregar documentos do subcapítulo
+        this.renderSubchapterDocuments(subchapter);
+    }
+
+    updateSubchapterBreadcrumb(subchapter) {
+        const breadcrumb = document.getElementById('breadcrumb');
+        if (breadcrumb) {
+            breadcrumb.innerHTML = `
+                <span class="breadcrumb-item" onclick="portal.showDashboard()" style="cursor: pointer; color: var(--primary); text-decoration: underline;">🏠 Dashboard</span>
+                <span class="breadcrumb-separator">›</span>
+                <span class="breadcrumb-item" onclick="portal.selectChapter(portal.currentChapter)" style="cursor: pointer; color: var(--primary); text-decoration: underline;">${this.currentChapter.codigo} - ${this.currentChapter.titulo}</span>
+                <span class="breadcrumb-separator">›</span>
+                <span class="breadcrumb-item active">${subchapter.titulo.split(' - ')[0]}</span>
+            `;
+        }
+    }
+
+    renderSubchapterDocuments(subchapter) {
+        const documentsGrid = document.getElementById('documentsGrid');
+        if (!documentsGrid) return;
+        
+        // Por enquanto, mostrar interface para adicionar documentos
+        documentsGrid.innerHTML = `
+            <div class="subchapter-documents">
+                <div class="subchapter-info">
+                    <div class="subchapter-icon-large">${this.getSubchapterIcon(subchapter.titulo)}</div>
+                    <h3>${subchapter.titulo}</h3>
+                    <p>${this.getSubchapterDescription(subchapter.titulo)}</p>
+                    <div class="subchapter-path-info">
+                        <strong>📂 Pasta:</strong> ${subchapter.ruta}
+                    </div>
+                </div>
+                
+                <div class="documents-list">
+                    <div class="empty-state">
+                        <div class="empty-icon">📭</div>
+                        <h3>Nenhum documento encontrado</h3>
+                        <p>Adicione documentos PDF nesta pasta para vê-los aqui</p>
+                        <div class="add-document-instructions">
+                            <h4>💡 Como adicionar documentos:</h4>
+                            <ol>
+                                <li>Vá para a pasta: <code>${subchapter.ruta}</code></li>
+                                <li>Coloque os arquivos PDF numerados</li>
+                                <li>Use nomenclatura: <code>001_ensaio_tipo.pdf</code></li>
+                                <li>Os documentos aparecerão automaticamente</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="subchapter-actions">
+                    <button class="btn-primary" onclick="portal.showUpload()">
+                        <span class="btn-icon">📤</span>
+                        <span class="btn-text">Subir Documento</span>
+                    </button>
+                    <button class="btn-secondary" onclick="portal.selectChapter(portal.currentChapter)">
+                        <span class="btn-icon">🔙</span>
+                        <span class="btn-text">Voltar aos Subcapítulos</span>
+                    </button>
+                </div>
+            </div>
+        `;
+    }
         console.log('✅ Documentos renderizados');
     }
 

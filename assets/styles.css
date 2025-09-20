@@ -895,6 +895,233 @@ body {
     line-height: 1.4;
 }
 
+/* Subcapítulos do Laboratório */
+.subchapter-card {
+    background: var(--gradient-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all var(--transition-normal);
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.subchapter-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--primary);
+}
+
+.subchapter-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s;
+}
+
+.subchapter-card:hover::before {
+    left: 100%;
+}
+
+.subchapter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.subchapter-icon {
+    font-size: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    border-radius: var(--radius-lg);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.subchapter-status {
+    background: var(--gradient-success);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.subchapter-content {
+    margin-bottom: var(--spacing-lg);
+}
+
+.subchapter-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin: 0 0 var(--spacing-sm) 0;
+    line-height: 1.3;
+}
+
+.subchapter-description {
+    color: var(--gray-600);
+    font-size: 0.9rem;
+    margin: 0 0 var(--spacing-sm) 0;
+    line-height: 1.4;
+}
+
+.subchapter-meta {
+    margin: var(--spacing-sm) 0;
+}
+
+.subchapter-path {
+    background: var(--gray-100);
+    color: var(--gray-700);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-family: monospace;
+}
+
+.subchapter-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: var(--spacing-sm);
+}
+
+.subchapter-tag {
+    background: var(--gray-200);
+    color: var(--gray-700);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.subchapter-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.subchapter-actions .btn-primary {
+    flex: 1;
+    justify-content: center;
+}
+
+/* Interface de documentos do subcapítulo */
+.subchapter-documents {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.subchapter-info {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-xl);
+    background: var(--gradient-card);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.subchapter-icon-large {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    border-radius: var(--radius-xl);
+    color: white;
+    box-shadow: var(--shadow-lg);
+    margin: 0 auto var(--spacing-lg) auto;
+}
+
+.subchapter-info h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin: 0 0 var(--spacing-sm) 0;
+}
+
+.subchapter-info p {
+    color: var(--gray-600);
+    font-size: 1.1rem;
+    margin: 0 0 var(--spacing-md) 0;
+}
+
+.subchapter-path-info {
+    background: var(--gray-100);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--primary);
+}
+
+.subchapter-path-info strong {
+    color: var(--gray-800);
+}
+
+.documents-list {
+    margin-bottom: var(--spacing-xl);
+}
+
+.add-document-instructions {
+    background: var(--gray-50);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--gray-200);
+    margin-top: var(--spacing-lg);
+    text-align: left;
+}
+
+.add-document-instructions h4 {
+    color: var(--gray-800);
+    margin: 0 0 var(--spacing-md) 0;
+    font-size: 1rem;
+}
+
+.add-document-instructions ol {
+    margin: 0;
+    padding-left: var(--spacing-lg);
+    color: var(--gray-700);
+}
+
+.add-document-instructions li {
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.5;
+}
+
+.add-document-instructions code {
+    background: var(--gray-200);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.9rem;
+}
+
+.subchapter-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+}
+
+.subchapter-actions .btn-primary,
+.subchapter-actions .btn-secondary {
+    min-width: 200px;
+    justify-content: center;
+}
+
 .document-card::before {
     content: '';
     position: absolute;
