@@ -785,7 +785,11 @@ class PortalCalidad {
             sectionCode.textContent = `${this.currentChapter.codigo} › ${subchapter.titulo.split(' - ')[0]}`;
         }
         if (documentCount) {
-            documentCount.textContent = '0 documentos';
+            const totalDocs = (subchapter.items || []).length + this.uploadedDocuments.filter(doc => 
+                doc.chapter === this.currentChapter.codigo && 
+                doc.titulo.toLowerCase().includes(subchapterName.toLowerCase())
+            ).length;
+            documentCount.textContent = `${totalDocs} documento${totalDocs !== 1 ? 's' : ''}`;
         }
         
         // Carregar documentos do subcapítulo
@@ -809,6 +813,9 @@ class PortalCalidad {
         const documentsGrid = document.getElementById('documentsGrid');
         if (!documentsGrid) return;
         
+        // Buscar documentos do manifest (subchapter.items)
+        const manifestDocs = subchapter.items || [];
+        
         // Buscar documentos subidos para este subcapítulo
         const subchapterName = subchapter.titulo.split(' - ')[0].replace('🔬 ', '').replace('🛣️ ', '').replace('🏗️ ', '').replace('📊 ', '').replace('🧪 ', '').replace('📎 ', '').replace('📦 ', '').replace('🔍 ', '');
         const uploadedDocs = this.uploadedDocuments.filter(doc => 
@@ -816,8 +823,13 @@ class PortalCalidad {
             doc.titulo.toLowerCase().includes(subchapterName.toLowerCase())
         );
         
+        // Combinar documentos do manifest e subidos
+        const allDocs = [...manifestDocs, ...uploadedDocs];
+        
         console.log(`🔍 Buscando documentos para subcapítulo: ${subchapterName}`);
-        console.log(`📄 Documentos encontrados: ${uploadedDocs.length}`);
+        console.log(`📄 Documentos do manifest: ${manifestDocs.length}`);
+        console.log(`📄 Documentos subidos: ${uploadedDocs.length}`);
+        console.log(`📄 Total de documentos: ${allDocs.length}`);
         
         documentsGrid.innerHTML = `
             <div class="subchapter-documents">
@@ -831,9 +843,9 @@ class PortalCalidad {
                 </div>
                 
                 <div class="documents-list">
-                    ${uploadedDocs.length > 0 ? `
+                    ${allDocs.length > 0 ? `
                         <div class="documents-grid">
-                            ${uploadedDocs.map(doc => this.createDocumentCard(doc)).join('')}
+                            ${allDocs.map(doc => this.createDocumentCard(doc)).join('')}
                         </div>
                     ` : `
                         <div class="empty-state">
