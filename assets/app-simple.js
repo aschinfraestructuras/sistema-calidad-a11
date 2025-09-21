@@ -448,9 +448,14 @@ class PortalCalidad {
         // Mostrar todas as seções do dashboard
         if (welcomeSection) welcomeSection.classList.remove('hidden');
         if (documentsSection) documentsSection.classList.add('hidden');
-        if (chaptersList) chaptersList.classList.add('hidden'); // Esconder lista de capítulos por padrão
+        if (chaptersList) chaptersList.classList.remove('hidden'); // Mostrar lista de capítulos no dashboard
         
-        // Cards do dashboard sempre visíveis
+        // Garantir que a barra lateral está visível
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar) {
+            sidebar.classList.remove('hidden');
+            sidebar.style.display = 'flex';
+        }
         
         document.querySelectorAll('.chapter-item').forEach(item => {
             item.classList.remove('active');
