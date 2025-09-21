@@ -450,18 +450,34 @@ class PortalCalidad {
         if (documentsSection) documentsSection.classList.add('hidden');
         if (chaptersList) chaptersList.classList.remove('hidden'); // Mostrar lista de capítulos no dashboard
         
-        // Garantir que a barra lateral está visível
-        const sidebar = document.querySelector('.sidebar');
-        if (sidebar) {
-            sidebar.classList.remove('hidden');
-            sidebar.style.display = 'flex';
-        }
+        // Garantir que a barra lateral está visível - FORÇAR VISIBILIDADE
+        this.ensureSidebarVisible();
         
         document.querySelectorAll('.chapter-item').forEach(item => {
             item.classList.remove('active');
         });
         
         this.updateStats();
+    }
+
+    // Nova função para garantir que a barra lateral sempre esteja visível
+    ensureSidebarVisible() {
+        console.log('🔧 Garantindo visibilidade da barra lateral...');
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar) {
+            // Remover todas as classes que podem esconder
+            sidebar.classList.remove('hidden', 'mobile-hidden');
+            
+            // Forçar estilos de visibilidade
+            sidebar.style.display = 'flex';
+            sidebar.style.visibility = 'visible';
+            sidebar.style.opacity = '1';
+            sidebar.style.position = 'sticky';
+            sidebar.style.left = '0';
+            sidebar.style.transform = 'translateX(0)';
+            
+            console.log('✅ Barra lateral forçada a ser visível');
+        }
     }
 
     // Função removida - cards do dashboard sempre visíveis
@@ -2627,6 +2643,10 @@ class PortalCalidad {
             this.loadUploadedDocuments();
             this.renderFavorites();
             this.setupLazyLoading(); // Inicializar lazy loading
+            
+            // Garantir que a barra lateral está visível na inicialização
+            this.ensureSidebarVisible();
+            
             console.log('✅ Sistema inicializado após login');
         } catch (error) {
             console.error('❌ Erro ao inicializar após login:', error);
