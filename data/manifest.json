@@ -637,17 +637,108 @@
     {
       "codigo": "18",
       "titulo": "Normativas",
-      "items": []
+      "items": [],
+      "subcapitulos": [
+        {
+          "codigo": "18-01",
+          "titulo": "01 Código Estructural",
+          "items": []
+        },
+        {
+          "codigo": "18-02",
+          "titulo": "02 EHE (Instrucción de Hormigón Estructural)",
+          "items": []
+        },
+        {
+          "codigo": "18-03",
+          "titulo": "03 Memoria Obra",
+          "items": []
+        },
+        {
+          "codigo": "18-04",
+          "titulo": "04 Normas UNE",
+          "items": []
+        },
+        {
+          "codigo": "18-05",
+          "titulo": "05 PG3 (Pliego General de Condiciones)",
+          "items": []
+        },
+        {
+          "codigo": "18-06",
+          "titulo": "06 Pliego de Obra",
+          "items": []
+        },
+        {
+          "codigo": "18-07",
+          "titulo": "07 SEST (Suelo Estabilizado)",
+          "items": []
+        }
+      ]
     },
     {
       "codigo": "19",
       "titulo": "Pruebas Finales",
-      "items": []
+      "items": [],
+      "subcapitulos": [
+        {
+          "codigo": "19-01",
+          "titulo": "01 Pruebas de Carga",
+          "items": []
+        },
+        {
+          "codigo": "19-02",
+          "titulo": "02 Pruebas de Funcionalidad",
+          "items": []
+        },
+        {
+          "codigo": "19-03",
+          "titulo": "03 Pruebas de Seguridad",
+          "items": []
+        },
+        {
+          "codigo": "19-04",
+          "titulo": "04 Certificaciones Finales",
+          "items": []
+        },
+        {
+          "codigo": "19-05",
+          "titulo": "05 Informes de Pruebas",
+          "items": []
+        }
+      ]
     },
     {
       "codigo": "20",
       "titulo": "Auditorías",
-      "items": []
+      "items": [],
+      "subcapitulos": [
+        {
+          "codigo": "20-01",
+          "titulo": "01 Auditorias Internas",
+          "items": []
+        },
+        {
+          "codigo": "20-02",
+          "titulo": "02 Auditorias Externas",
+          "items": []
+        },
+        {
+          "codigo": "20-03",
+          "titulo": "03 Plan de Auditorias",
+          "items": []
+        },
+        {
+          "codigo": "20-04",
+          "titulo": "04 Informes de Auditoria",
+          "items": []
+        },
+        {
+          "codigo": "20-05",
+          "titulo": "05 Acciones Correctivas",
+          "items": []
+        }
+      ]
     },
     {
       "codigo": "21",
