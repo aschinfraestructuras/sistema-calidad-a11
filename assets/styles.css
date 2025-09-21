@@ -697,42 +697,228 @@ body {
 
 /* Elemento decorativo A11 removido - estava sendo cortado pelo navbar */
 
-/* Elemento decorativo A11 no dashboard */
+/* Elemento decorativo A11 no dashboard - VERSÃO PREMIUM */
 .a11-decoration {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--spacing-sm);
-    margin: var(--spacing-md) auto;
-    padding: var(--spacing-sm) var(--spacing-lg);
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(99, 102, 241, 0.15) 100%);
-    border: 2px solid rgba(59, 130, 246, 0.3);
+    gap: var(--spacing-md);
+    margin: var(--spacing-lg) auto;
+    padding: var(--spacing-md) var(--spacing-xl);
+    background: linear-gradient(135deg, 
+        rgba(30, 64, 175, 0.2) 0%, 
+        rgba(59, 130, 246, 0.25) 25%,
+        rgba(99, 102, 241, 0.3) 50%,
+        rgba(59, 130, 246, 0.25) 75%,
+        rgba(30, 64, 175, 0.2) 100%);
+    border: 3px solid transparent;
+    background-clip: padding-box;
     border-radius: var(--radius-full);
-    font-size: 1rem;
-    font-weight: 700;
+    font-size: 1.1rem;
+    font-weight: 800;
     color: var(--primary);
-    animation: pulse 3s ease-in-out infinite;
-    max-width: 300px;
-    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
+    animation: a11PremiumPulse 4s ease-in-out infinite;
+    max-width: 350px;
+    box-shadow: 
+        0 8px 25px rgba(59, 130, 246, 0.3),
+        0 0 0 1px rgba(59, 130, 246, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+    transform: translateY(0);
+    transition: all var(--transition-spring);
+}
+
+.a11-decoration::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.4), 
+        transparent);
+    transition: left 1.2s ease;
+    z-index: 1;
+}
+
+.a11-decoration::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, 
+        #3b82f6, #1e40af, #3b82f6, #1e40af);
+    border-radius: var(--radius-full);
+    z-index: -1;
+}
+
+.a11-decoration:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 
+        0 15px 35px rgba(59, 130, 246, 0.4),
+        0 0 0 1px rgba(59, 130, 246, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.a11-decoration:hover::before {
+    left: 100%;
 }
 
 .road-icon {
-    font-size: 1rem;
-    animation: bounce 2s ease-in-out infinite;
+    font-size: 1.3rem;
+    animation: roadIconBounce 2.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+    position: relative;
+    z-index: 2;
 }
 
 .road-text {
-    letter-spacing: 0.1em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-weight: 900;
+}
+
+/* Animações premium */
+@keyframes a11PremiumPulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 
+            0 8px 25px rgba(59, 130, 246, 0.3),
+            0 0 0 1px rgba(59, 130, 246, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    50% { 
+        transform: scale(1.02);
+        box-shadow: 
+            0 12px 30px rgba(59, 130, 246, 0.4),
+            0 0 0 1px rgba(59, 130, 246, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+}
+
+@keyframes roadIconBounce {
+    0%, 100% { 
+        transform: translateY(0) scale(1);
+        filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+    }
+    25% { 
+        transform: translateY(-3px) scale(1.1);
+        filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.7));
+    }
+    50% { 
+        transform: translateY(-5px) scale(1.15);
+        filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.8));
+    }
+    75% { 
+        transform: translateY(-3px) scale(1.1);
+        filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.7));
+    }
+}
+
+
+/* Card A11 com efeitos visuais especiais */
+.a11-highlight {
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #1e40af 100%) !important;
+    color: white !important;
+    border: 2px solid #60a5fa !important;
+    position: relative;
+    overflow: hidden;
+    transform: translateY(0);
+    transition: all var(--transition-spring);
+}
+
+.a11-highlight::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.8s ease;
+}
+
+.a11-highlight:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(30, 64, 175, 0.4);
+    border-color: #93c5fd !important;
+}
+
+.a11-highlight:hover::before {
+    left: 100%;
+}
+
+.a11-highlight .info-icon {
+    font-size: 2rem !important;
+    animation: roadPulse 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
+
+.a11-highlight h4 {
+    color: white !important;
+    font-weight: 700 !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.a11-highlight p {
+    color: rgba(255, 255, 255, 0.9) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes roadPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
 }
 
 /* Ajustar para tema escuro */
 [data-theme="dark"] .a11-decoration {
-    background: linear-gradient(135deg, rgba(79, 70, 229, 0.25) 0%, rgba(99, 102, 241, 0.25) 100%);
-    border-color: rgba(79, 70, 229, 0.4);
+    background: linear-gradient(135deg, 
+        rgba(79, 70, 229, 0.3) 0%, 
+        rgba(99, 102, 241, 0.35) 25%,
+        rgba(129, 140, 248, 0.4) 50%,
+        rgba(99, 102, 241, 0.35) 75%,
+        rgba(79, 70, 229, 0.3) 100%);
     color: var(--primary-light);
-    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+    box-shadow: 
+        0 8px 25px rgba(79, 70, 229, 0.4),
+        0 0 0 1px rgba(79, 70, 229, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
+
+[data-theme="dark"] .a11-decoration::after {
+    background: linear-gradient(45deg, 
+        #4f46e5, #6366f1, #4f46e5, #6366f1);
+}
+
+[data-theme="dark"] .a11-decoration:hover {
+    box-shadow: 
+        0 15px 35px rgba(79, 70, 229, 0.5),
+        0 0 0 1px rgba(79, 70, 229, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .road-icon {
+    filter: drop-shadow(0 0 8px rgba(79, 70, 229, 0.6));
+}
+
+[data-theme="dark"] .a11-highlight {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1e40af 100%) !important;
+    border-color: #60a5fa !important;
+}
+
+[data-theme="dark"] .a11-highlight:hover {
+    box-shadow: 0 20px 40px rgba(30, 64, 175, 0.6);
+    border-color: #93c5fd !important;
+}
+
 
 [data-theme="dark"] ::-webkit-scrollbar-track {
     background: #2d3142;
@@ -1067,6 +1253,7 @@ body {
     font-weight: 500;
 }
 
+
 /* Conteúdo principal */
 .main-content {
     flex: 1;
@@ -1077,7 +1264,7 @@ body {
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     margin: var(--spacing-sm);
-    padding-top: var(--spacing-xl);
+    padding-top: var(--spacing-lg);
 }
 
 /* Seção de boas-vindas */
