@@ -790,27 +790,62 @@
         {
           "codigo": "17-01",
           "titulo": "01 Propuestas y Presupuestos",
-          "items": []
+          "items": [
+            {
+              "nombre": "Propuestas y Presupuestos",
+              "tipo": "html",
+              "ruta": "docs/17_Control_Economico_Calidad/propuestas-presupuestos.html",
+              "descripcion": "Gestión de propuestas comerciales y presupuestos con desglose detallado, condiciones comerciales y seguimiento de aprobaciones según protocolos de gestión comercial"
+            }
+          ]
         },
         {
           "codigo": "17-02",
           "titulo": "02 Facturas y Pagos",
-          "items": []
+          "items": [
+            {
+              "nombre": "Facturas y Pagos",
+              "tipo": "html",
+              "ruta": "docs/17_Control_Economico_Calidad/facturas-pagos.html",
+              "descripcion": "Control de facturación y gestión de pagos con seguimiento de estados, métodos de pago y conciliación bancaria según protocolos financieros"
+            }
+          ]
         },
         {
           "codigo": "17-03",
           "titulo": "03 Contratos y Convenios",
-          "items": []
+          "items": [
+            {
+              "nombre": "Contratos y Convenios",
+              "tipo": "html",
+              "ruta": "docs/17_Control_Economico_Calidad/contratos-convenios.html",
+              "descripcion": "Gestión contractual y convenios con seguimiento de estados, condiciones especiales y renovaciones según protocolos legales y comerciales"
+            }
+          ]
         },
         {
           "codigo": "17-04",
           "titulo": "04 Previsiones de Costes",
-          "items": []
+          "items": [
+            {
+              "nombre": "Previsiones de Costes",
+              "tipo": "html",
+              "ruta": "docs/17_Control_Economico_Calidad/previsiones-costes.html",
+              "descripcion": "Control presupuestario y previsiones de costes con análisis de desviaciones, factores de riesgo y medidas correctivas según protocolos de gestión financiera"
+            }
+          ]
         },
         {
           "codigo": "17-05",
           "titulo": "05 Correspondencia y Emails",
-          "items": []
+          "items": [
+            {
+              "nombre": "Correspondencia y Emails",
+              "tipo": "html",
+              "ruta": "docs/17_Control_Economico_Calidad/correspondencia-emails.html",
+              "descripcion": "Gestión de comunicaciones y correspondencia con seguimiento de estados, prioridades y respuestas según protocolos de comunicación empresarial"
+            }
+          ]
         }
       ]
     },
