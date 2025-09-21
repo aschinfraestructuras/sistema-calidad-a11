@@ -187,7 +187,34 @@
     {
       "codigo": "08",
       "titulo": "Calibración de Equipos",
-      "items": []
+      "items": [],
+      "subcapitulos": [
+        {
+          "codigo": "08-01",
+          "titulo": "01 Calibración Laboratorio Obra",
+          "items": []
+        },
+        {
+          "codigo": "08-02",
+          "titulo": "02 Certificados de Calibración",
+          "items": []
+        },
+        {
+          "codigo": "08-03",
+          "titulo": "03 Plan de Calibración",
+          "items": []
+        },
+        {
+          "codigo": "08-04",
+          "titulo": "04 Equipos de Medición",
+          "items": []
+        },
+        {
+          "codigo": "08-05",
+          "titulo": "05 Registros de Calibración",
+          "items": []
+        }
+      ]
     },
     {
       "codigo": "09",
