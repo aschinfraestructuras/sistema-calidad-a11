@@ -346,7 +346,7 @@ class PortalCalidad {
             this.renderSubchapters();
         } else {
             console.log('📄 Renderizando documentos...');
-            this.renderDocuments();
+        this.renderDocuments();
         }
     }
 
@@ -451,7 +451,7 @@ class PortalCalidad {
         // Usar batch DOM updates para melhor performance
         this.batchDOMUpdates([
             () => {
-                documentsGrid.innerHTML = allDocs.map(doc => this.createDocumentCard(doc)).join('');
+        documentsGrid.innerHTML = allDocs.map(doc => this.createDocumentCard(doc)).join('');
             }
         ]);
         
@@ -2074,6 +2074,9 @@ class PortalCalidad {
         const uploaded = this.uploadedDocuments.length;
         const recent = this.getRecentDocumentCount();
 
+        // Calcular estatísticas dinâmicas dos capítulos e subcapítulos
+        const chapterStats = this.calculateChapterStats();
+
         const totalDocuments = document.getElementById('totalDocuments');
         const uploadedDocuments = document.getElementById('uploadedDocuments');
         const recentDocuments = document.getElementById('recentDocuments');
@@ -2081,31 +2084,94 @@ class PortalCalidad {
         const uploadedDocs = document.getElementById('uploadedDocs');
         const filledChapters = document.getElementById('filledChapters');
         const completionRate = document.getElementById('completionRate');
+        const chapterCount = document.getElementById('chapterCount');
+        const totalChapters = document.getElementById('totalChapters');
+        const totalSubchapters = document.getElementById('totalSubchapters');
 
+        // Atualizar contadores básicos
         if (totalDocuments) totalDocuments.textContent = total;
         if (uploadedDocuments) uploadedDocuments.textContent = uploaded;
         if (recentDocuments) recentDocuments.textContent = recent;
         if (totalDocs) totalDocs.textContent = total;
         if (uploadedDocs) uploadedDocs.textContent = uploaded;
 
-        // Novos indicadores
+        // Atualizar contador de capítulos no sidebar
+        if (chapterCount) {
+            chapterCount.textContent = `${chapterStats.totalChapters} capítulos`;
+        }
+
+        // Atualizar contadores de capítulos e subcapítulos no dashboard
+        if (totalChapters) {
+            totalChapters.textContent = chapterStats.totalChapters;
+        }
+        if (totalSubchapters) {
+            totalSubchapters.textContent = chapterStats.totalSubchapters;
+        }
+
+        // Novos indicadores melhorados
         if (filledChapters) {
-            const filled = this.manifest ? this.manifest.secciones.filter(sec => sec.documentos && sec.documentos.length > 0).length : 0;
-            filledChapters.textContent = filled;
+            filledChapters.textContent = chapterStats.chaptersWithDocuments;
         }
         
         if (completionRate) {
-            const totalChapters = this.manifest ? this.manifest.secciones.length : 21;
-            const filled = this.manifest ? this.manifest.secciones.filter(sec => sec.documentos && sec.documentos.length > 0).length : 0;
-            const rate = totalChapters > 0 ? Math.round((filled / totalChapters) * 100) : 0;
+            const rate = chapterStats.totalChapters > 0 ? 
+                Math.round((chapterStats.chaptersWithDocuments / chapterStats.totalChapters) * 100) : 0;
             completionRate.textContent = rate + '%';
         }
+
+        // Log das estatísticas para debug
+        console.log('📊 Estatísticas atualizadas:', {
+            totalChapters: chapterStats.totalChapters,
+            totalSubchapters: chapterStats.totalSubchapters,
+            chaptersWithDocuments: chapterStats.chaptersWithDocuments,
+            uploadedDocuments: uploaded
+        });
 
         // Atualizar cronograma do projeto
         this.updateProjectTimeline();
 
         // Atualizar lista de documentos recentes
         this.updateRecentDocumentsList();
+    }
+
+    // Nova função para calcular estatísticas dos capítulos
+    calculateChapterStats() {
+        if (!this.manifest || !this.manifest.secciones) {
+            return {
+                totalChapters: 0,
+                totalSubchapters: 0,
+                chaptersWithDocuments: 0,
+                chaptersWithSubchapters: 0
+            };
+        }
+
+        const sections = this.manifest.secciones;
+        let totalSubchapters = 0;
+        let chaptersWithDocuments = 0;
+        let chaptersWithSubchapters = 0;
+
+        sections.forEach(section => {
+            // Contar subcapítulos
+            if (section.subcapitulos && section.subcapitulos.length > 0) {
+                totalSubchapters += section.subcapitulos.length;
+                chaptersWithSubchapters++;
+            }
+
+            // Verificar se tem documentos (no manifest ou subidos)
+            const hasManifestDocs = section.documentos && section.documentos.length > 0;
+            const hasUploadedDocs = this.uploadedDocuments.some(doc => doc.chapter === section.codigo);
+            
+            if (hasManifestDocs || hasUploadedDocs) {
+                chaptersWithDocuments++;
+            }
+        });
+
+        return {
+            totalChapters: sections.length,
+            totalSubchapters: totalSubchapters,
+            chaptersWithDocuments: chaptersWithDocuments,
+            chaptersWithSubchapters: chaptersWithSubchapters
+        };
     }
 
     updateProjectTimeline() {
@@ -2322,7 +2388,7 @@ class PortalCalidad {
         }
         
         container.appendChild(toast);
-        
+
         // Adicionar animação de entrada
         setTimeout(() => {
             toast.classList.add('show');

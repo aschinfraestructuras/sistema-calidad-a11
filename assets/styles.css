@@ -3810,6 +3810,11 @@ body.login-active .header {
     color: white;
 }
 
+.stat-card.secondary {
+    background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+    color: white;
+}
+
 .stat-card.success {
     background: linear-gradient(135deg, var(--success), #34d399);
     color: white;
