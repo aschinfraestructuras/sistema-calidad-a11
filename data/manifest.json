@@ -25,7 +25,24 @@
     {
       "codigo": "02",
       "titulo": "Plan de Ensayos y Controles",
-      "items": []
+      "items": [],
+      "subcapitulos": [
+        {
+          "codigo": "02-01",
+          "titulo": "01 Plan Ensayos",
+          "items": []
+        },
+        {
+          "codigo": "02-02",
+          "titulo": "02 Plan Ensayo Asistencia Tecnica",
+          "items": []
+        },
+        {
+          "codigo": "02-03",
+          "titulo": "03 Lotificación Estructuras",
+          "items": []
+        }
+      ]
     },
     {
       "codigo": "03",
