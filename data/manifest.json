@@ -155,7 +155,34 @@
     {
       "codigo": "07",
       "titulo": "Equipos, Maquinaria y Tajos",
-      "items": []
+      "items": [],
+      "subcapitulos": [
+        {
+          "codigo": "07-01",
+          "titulo": "01 Control de Accesos",
+          "items": []
+        },
+        {
+          "codigo": "07-02",
+          "titulo": "02 Equipos y Maquinaria",
+          "items": []
+        },
+        {
+          "codigo": "07-03",
+          "titulo": "03 Gestión de Tajos",
+          "items": []
+        },
+        {
+          "codigo": "07-04",
+          "titulo": "04 Mantenimiento de Equipos",
+          "items": []
+        },
+        {
+          "codigo": "07-05",
+          "titulo": "05 Certificaciones de Maquinaria",
+          "items": []
+        }
+      ]
     },
     {
       "codigo": "08",
