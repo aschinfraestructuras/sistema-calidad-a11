@@ -244,8 +244,7 @@ class PortalCalidad {
             });
         }
 
-        // Stat-cards clicáveis para navegação
-        this.setupStatCardNavigation();
+        // Stat-cards removidos - navegação desabilitada para evitar conflitos
 
         // Menu mobile
         this.setupMobileMenu();
@@ -256,134 +255,9 @@ class PortalCalidad {
         console.log('✅ Eventos configurados');
     }
 
-    // Nova função para configurar navegação dos stat-cards
-    setupStatCardNavigation() {
-        console.log('🎯 Configurando navegação dos stat-cards...');
-        
-        // Mapear stat-cards para capítulos específicos
-        const statCardMappings = {
-            'totalChapters': null, // Mostrar todos os capítulos
-            'totalSubchapters': null, // Mostrar todos os capítulos
-            'totalDocuments': null, // Mostrar todos os capítulos
-            'uploadedDocuments': null, // Mostrar todos os capítulos
-            'recentDocuments': null, // Mostrar todos os capítulos
-            'filledChapters': null, // Mostrar capítulos com documentos
-            'completionRate': null // Mostrar todos os capítulos
-        };
+    // Função removida - navegação dos stat-cards desabilitada
 
-        // Adicionar eventos de clique para cada stat-card
-        Object.keys(statCardMappings).forEach(cardId => {
-            const card = document.getElementById(cardId);
-            if (card) {
-                // Encontrar o card pai
-                const statCard = card.closest('.stat-card');
-                if (statCard) {
-                    statCard.style.cursor = 'pointer';
-                    statCard.setAttribute('role', 'button');
-                    statCard.setAttribute('tabindex', '0');
-                    statCard.setAttribute('aria-label', `Navegar para ${this.getStatCardLabel(cardId)}`);
-                    
-                    // Evento de clique
-                    statCard.addEventListener('click', () => {
-                        this.navigateFromStatCard(cardId);
-                    });
-                    
-                    // Evento de teclado (Enter e Space)
-                    statCard.addEventListener('keydown', (e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            this.navigateFromStatCard(cardId);
-                        }
-                    });
-                    
-                    console.log(`✅ Stat-card configurado: ${cardId}`);
-                }
-            }
-        });
-    }
-
-    // Função para obter o label do stat-card
-    getStatCardLabel(cardId) {
-        const labels = {
-            'totalChapters': 'todos os capítulos',
-            'totalSubchapters': 'todos os capítulos',
-            'totalDocuments': 'todos os capítulos',
-            'uploadedDocuments': 'capítulos com documentos subidos',
-            'recentDocuments': 'capítulos com documentos recentes',
-            'filledChapters': 'capítulos completados',
-            'completionRate': 'todos os capítulos'
-        };
-        return labels[cardId] || 'capítulos';
-    }
-
-    // Função para navegar a partir do stat-card
-    navigateFromStatCard(cardId) {
-        console.log(`🎯 Navegando a partir do stat-card: ${cardId}`);
-        
-        // Mostrar toast informativo
-        const label = this.getStatCardLabel(cardId);
-        this.showToast(`Navegando para ${label}...`, 'info');
-        
-        // Navegar para o dashboard e mostrar a lista de capítulos
-        this.showDashboard();
-        
-        // Aguardar um pouco para o dashboard carregar
-        setTimeout(() => {
-            // Mostrar a seção de capítulos
-            this.showChaptersList();
-            
-            // Scroll suave para a lista de capítulos
-            setTimeout(() => {
-                const chaptersList = document.getElementById('chaptersList');
-                if (chaptersList) {
-                    chaptersList.scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'start' 
-                    });
-                }
-            }, 100);
-        }, 200);
-    }
-
-    // Nova função para mostrar a lista de capítulos
-    showChaptersList() {
-        console.log('📚 Mostrando lista de capítulos...');
-        
-        // Esconder seções do dashboard temporariamente
-        const welcomeSection = document.querySelector('.welcome-section');
-        const statsGrid = document.querySelector('.stats-grid');
-        const projectTimeline = document.querySelector('.project-timeline-compact');
-        const favoriteDocuments = document.querySelector('.favorite-documents');
-        
-        if (welcomeSection) welcomeSection.classList.add('hidden');
-        if (statsGrid) statsGrid.classList.add('hidden');
-        if (projectTimeline) projectTimeline.classList.add('hidden');
-        if (favoriteDocuments) favoriteDocuments.classList.add('hidden');
-        
-        // Mostrar a lista de capítulos
-        const chaptersList = document.getElementById('chaptersList');
-        if (chaptersList) {
-            chaptersList.classList.remove('hidden');
-            
-            // Sempre renderizar os capítulos para garantir que apareçam
-            this.renderChapters();
-        }
-        
-        // Atualizar breadcrumb para mostrar que estamos na lista de capítulos
-        this.updateBreadcrumbForChaptersList();
-    }
-
-    // Nova função para atualizar breadcrumb quando estiver na lista de capítulos
-    updateBreadcrumbForChaptersList() {
-        const breadcrumb = document.getElementById('breadcrumb');
-        if (breadcrumb) {
-            breadcrumb.innerHTML = `
-                <span class="breadcrumb-item" onclick="portal.showDashboard()" style="cursor: pointer; color: var(--primary); text-decoration: underline;">🏠 Dashboard</span>
-                <span class="breadcrumb-separator">›</span>
-                <span class="breadcrumb-item active">📚 Lista de Capítulos</span>
-            `;
-        }
-    }
+    // Funções de navegação dos stat-cards removidas - simplificação
 
     // Nova função para configurar menu mobile
     setupMobileMenu() {
@@ -576,8 +450,7 @@ class PortalCalidad {
         if (documentsSection) documentsSection.classList.add('hidden');
         if (chaptersList) chaptersList.classList.add('hidden'); // Esconder lista de capítulos por padrão
         
-        // Restaurar visibilidade dos cards do dashboard
-        this.restoreDashboardCards();
+        // Cards do dashboard sempre visíveis
         
         document.querySelectorAll('.chapter-item').forEach(item => {
             item.classList.remove('active');
@@ -586,20 +459,7 @@ class PortalCalidad {
         this.updateStats();
     }
 
-    // Nova função para restaurar a visibilidade dos cards do dashboard
-    restoreDashboardCards() {
-        console.log('🔄 Restaurando cards do dashboard...');
-        
-        const welcomeSection = document.querySelector('.welcome-section');
-        const statsGrid = document.querySelector('.stats-grid');
-        const projectTimeline = document.querySelector('.project-timeline-compact');
-        const favoriteDocuments = document.querySelector('.favorite-documents');
-        
-        if (welcomeSection) welcomeSection.classList.remove('hidden');
-        if (statsGrid) statsGrid.classList.remove('hidden');
-        if (projectTimeline) projectTimeline.classList.remove('hidden');
-        if (favoriteDocuments) favoriteDocuments.classList.remove('hidden');
-    }
+    // Função removida - cards do dashboard sempre visíveis
 
     updateBreadcrumb(section) {
         const breadcrumb = document.getElementById('breadcrumb');
