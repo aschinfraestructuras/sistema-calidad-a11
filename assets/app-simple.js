@@ -1772,28 +1772,34 @@ class PortalCalidad {
 
     loadUploadedDocuments() {
         try {
-            // Tentar carregar do localStorage primeiro
-            let saved = localStorage.getItem('uploadedDocuments');
+            // FORÇAR LIMPEZA DE TODOS OS 54 DOCUMENTOS VIRTUAIS
+            console.log('🧹 LIMPANDO TODOS OS 54 DOCUMENTOS VIRTUAIS...');
             
-            // Se não encontrar, tentar do sessionStorage
-            if (!saved) {
-                saved = sessionStorage.getItem('uploadedDocuments');
-                console.log('📁 Carregando do sessionStorage (backup)');
-            } else {
-                console.log('📁 Carregando do localStorage');
+            // Limpar localStorage
+            localStorage.removeItem('uploadedDocuments');
+            localStorage.removeItem('storedDocuments');
+            localStorage.removeItem('storedFiles');
+            localStorage.removeItem('manifest');
+            
+            // Limpar sessionStorage
+            sessionStorage.removeItem('uploadedDocuments');
+            sessionStorage.removeItem('storedDocuments');
+            sessionStorage.removeItem('storedFiles');
+            
+            // Limpar IndexedDB
+            if ('indexedDB' in window) {
+                const deleteReq = indexedDB.deleteDatabase('PortalCalidadDB');
+                deleteReq.onsuccess = () => console.log('✅ IndexedDB limpo');
+                deleteReq.onerror = () => console.log('⚠️ Erro ao limpar IndexedDB');
             }
             
-            if (saved) {
-                this.uploadedDocuments = JSON.parse(saved);
-                console.log('✅ Documentos carregados:', this.uploadedDocuments.length);
-                this.renderRecentDocuments();
-            } else {
-                console.log('📁 Nenhum documento salvo encontrado');
-                this.uploadedDocuments = [];
-                this.renderRecentDocuments();
-            }
+            // SEMPRE INICIALIZAR VAZIO
+            this.uploadedDocuments = [];
+            console.log('✅ SISTEMA LIMPO - 0 documentos virtuais');
+            this.renderRecentDocuments();
+            
         } catch (error) {
-            console.error('❌ Erro ao carregar documentos:', error);
+            console.error('❌ Erro ao limpar documentos:', error);
             this.uploadedDocuments = [];
             this.renderRecentDocuments();
         }
