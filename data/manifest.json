@@ -73,17 +73,27 @@
       "subcapitulos": [
         {
           "codigo": "04-01",
-          "titulo": "01 Comunicaciones Materiales",
+          "titulo": "01 Cronogramas y Planificación obra",
           "items": []
         },
         {
-          "codigo": "04-02", 
-          "titulo": "02 Comunicaciones PPI",
+          "codigo": "04-02",
+          "titulo": "02 Peticiones-RFI-Comunicaciones con DF",
           "items": []
         },
         {
           "codigo": "04-03",
-          "titulo": "03 Comunicaciones Ensayos", 
+          "titulo": "03 Comunicaciones Materiales",
+          "items": []
+        },
+        {
+          "codigo": "04-04",
+          "titulo": "04 Comunicaciones PPI",
+          "items": []
+        },
+        {
+          "codigo": "04-05",
+          "titulo": "05 Comunicaciones Ensayos",
           "items": []
         }
       ]
