@@ -715,27 +715,52 @@
       "subcapitulos": [
         {
           "codigo": "20-01",
-          "titulo": "01 Auditorias Internas",
+          "titulo": "01 Plan de Auditorias",
           "items": []
         },
         {
           "codigo": "20-02",
-          "titulo": "02 Auditorias Externas",
+          "titulo": "02 Auditorias Internas",
           "items": []
         },
         {
           "codigo": "20-03",
-          "titulo": "03 Plan de Auditorias",
+          "titulo": "03 Auditorias Externas",
           "items": []
         },
         {
           "codigo": "20-04",
-          "titulo": "04 Informes de Auditoria",
+          "titulo": "04 Auditorias de Calidad",
           "items": []
         },
         {
           "codigo": "20-05",
-          "titulo": "05 Acciones Correctivas",
+          "titulo": "05 Auditorias Ambientales",
+          "items": []
+        },
+        {
+          "codigo": "20-06",
+          "titulo": "06 Auditorias de Seguridad",
+          "items": []
+        },
+        {
+          "codigo": "20-07",
+          "titulo": "07 Informes de Auditoria",
+          "items": []
+        },
+        {
+          "codigo": "20-08",
+          "titulo": "08 Acciones Correctivas",
+          "items": []
+        },
+        {
+          "codigo": "20-09",
+          "titulo": "09 Seguimiento de NC",
+          "items": []
+        },
+        {
+          "codigo": "20-10",
+          "titulo": "10 Certificaciones de Auditoria",
           "items": []
         }
       ]
