@@ -349,7 +349,7 @@ class PortalCalidad {
     showChaptersList() {
         console.log('📚 Mostrando lista de capítulos...');
         
-        // Esconder outras seções usando classes CSS
+        // Esconder seções do dashboard temporariamente
         const welcomeSection = document.querySelector('.welcome-section');
         const statsGrid = document.querySelector('.stats-grid');
         const projectTimeline = document.querySelector('.project-timeline-compact');
@@ -365,10 +365,23 @@ class PortalCalidad {
         if (chaptersList) {
             chaptersList.classList.remove('hidden');
             
-            // Renderizar os capítulos se não estiverem renderizados
-            if (!chaptersList.innerHTML.trim()) {
-                this.renderChapters();
-            }
+            // Sempre renderizar os capítulos para garantir que apareçam
+            this.renderChapters();
+        }
+        
+        // Atualizar breadcrumb para mostrar que estamos na lista de capítulos
+        this.updateBreadcrumbForChaptersList();
+    }
+
+    // Nova função para atualizar breadcrumb quando estiver na lista de capítulos
+    updateBreadcrumbForChaptersList() {
+        const breadcrumb = document.getElementById('breadcrumb');
+        if (breadcrumb) {
+            breadcrumb.innerHTML = `
+                <span class="breadcrumb-item" onclick="portal.showDashboard()" style="cursor: pointer; color: var(--primary); text-decoration: underline;">🏠 Dashboard</span>
+                <span class="breadcrumb-separator">›</span>
+                <span class="breadcrumb-item active">📚 Lista de Capítulos</span>
+            `;
         }
     }
 
@@ -558,15 +571,34 @@ class PortalCalidad {
         const documentsSection = document.getElementById('documentsSection');
         const chaptersList = document.getElementById('chaptersList');
         
+        // Mostrar todas as seções do dashboard
         if (welcomeSection) welcomeSection.classList.remove('hidden');
         if (documentsSection) documentsSection.classList.add('hidden');
-        if (chaptersList) chaptersList.classList.remove('hidden');
+        if (chaptersList) chaptersList.classList.add('hidden'); // Esconder lista de capítulos por padrão
+        
+        // Restaurar visibilidade dos cards do dashboard
+        this.restoreDashboardCards();
         
         document.querySelectorAll('.chapter-item').forEach(item => {
             item.classList.remove('active');
         });
         
         this.updateStats();
+    }
+
+    // Nova função para restaurar a visibilidade dos cards do dashboard
+    restoreDashboardCards() {
+        console.log('🔄 Restaurando cards do dashboard...');
+        
+        const welcomeSection = document.querySelector('.welcome-section');
+        const statsGrid = document.querySelector('.stats-grid');
+        const projectTimeline = document.querySelector('.project-timeline-compact');
+        const favoriteDocuments = document.querySelector('.favorite-documents');
+        
+        if (welcomeSection) welcomeSection.classList.remove('hidden');
+        if (statsGrid) statsGrid.classList.remove('hidden');
+        if (projectTimeline) projectTimeline.classList.remove('hidden');
+        if (favoriteDocuments) favoriteDocuments.classList.remove('hidden');
     }
 
     updateBreadcrumb(section) {
