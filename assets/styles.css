@@ -4222,80 +4222,206 @@ body.login-active .header {
 }
 
 .stat-card.primary {
-    background: linear-gradient(135deg, var(--asch-blue) 0%, var(--asch-blue-light) 50%, #3b82f6 100%);
+    background: linear-gradient(135deg, 
+        #1e40af 0%, 
+        #3b82f6 25%, 
+        #60a5fa 50%, 
+        #93c5fd 75%, 
+        #dbeafe 100%);
     color: white;
-    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
+    box-shadow: 
+        0 10px 40px rgba(30, 64, 175, 0.4),
+        0 4px 16px rgba(59, 130, 246, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .stat-card.primary:hover {
-    background: linear-gradient(135deg, var(--asch-blue-dark) 0%, var(--asch-blue) 50%, var(--asch-blue-light) 100%);
-    box-shadow: 0 12px 48px rgba(59, 130, 246, 0.4);
+    background: linear-gradient(135deg, 
+        #1e3a8a 0%, 
+        #1e40af 25%, 
+        #3b82f6 50%, 
+        #60a5fa 75%, 
+        #93c5fd 100%);
+    box-shadow: 
+        0 20px 60px rgba(30, 64, 175, 0.5),
+        0 8px 24px rgba(59, 130, 246, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(-6px) scale(1.05);
 }
 
 .stat-card.secondary {
-    background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 50%, #6366f1 100%);
+    background: linear-gradient(135deg, 
+        #4f46e5 0%, 
+        #6366f1 25%, 
+        #8b5cf6 50%, 
+        #a78bfa 75%, 
+        #c4b5fd 100%);
     color: white;
-    box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3);
+    box-shadow: 
+        0 10px 40px rgba(79, 70, 229, 0.4),
+        0 4px 16px rgba(99, 102, 241, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .stat-card.secondary:hover {
-    background: linear-gradient(135deg, #4f46e5 0%, var(--secondary) 50%, var(--secondary-dark) 100%);
-    box-shadow: 0 12px 48px rgba(99, 102, 241, 0.4);
+    background: linear-gradient(135deg, 
+        #3730a3 0%, 
+        #4f46e5 25%, 
+        #6366f1 50%, 
+        #8b5cf6 75%, 
+        #a78bfa 100%);
+    box-shadow: 
+        0 20px 60px rgba(79, 70, 229, 0.5),
+        0 8px 24px rgba(99, 102, 241, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(-6px) scale(1.05);
 }
 
 .stat-card.success {
-    background: linear-gradient(135deg, var(--success) 0%, #34d399 50%, #10b981 100%);
+    background: linear-gradient(135deg, 
+        #059669 0%, 
+        #10b981 25%, 
+        #34d399 50%, 
+        #6ee7b7 75%, 
+        #a7f3d0 100%);
     color: white;
-    box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3);
+    box-shadow: 
+        0 10px 40px rgba(5, 150, 105, 0.4),
+        0 4px 16px rgba(16, 185, 129, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .stat-card.success:hover {
-    background: linear-gradient(135deg, #059669 0%, var(--success) 50%, #34d399 100%);
-    box-shadow: 0 12px 48px rgba(16, 185, 129, 0.4);
+    background: linear-gradient(135deg, 
+        #047857 0%, 
+        #059669 25%, 
+        #10b981 50%, 
+        #34d399 75%, 
+        #6ee7b7 100%);
+    box-shadow: 
+        0 20px 60px rgba(5, 150, 105, 0.5),
+        0 8px 24px rgba(16, 185, 129, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(-6px) scale(1.05);
 }
 
 .stat-card.info {
-    background: linear-gradient(135deg, var(--info) 0%, #60a5fa 50%, #3b82f6 100%);
+    background: linear-gradient(135deg, 
+        #0284c7 0%, 
+        #0ea5e9 25%, 
+        #38bdf8 50%, 
+        #7dd3fc 75%, 
+        #bae6fd 100%);
     color: white;
-    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
+    box-shadow: 
+        0 10px 40px rgba(2, 132, 199, 0.4),
+        0 4px 16px rgba(14, 165, 233, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .stat-card.info:hover {
-    background: linear-gradient(135deg, #1d4ed8 0%, var(--info) 50%, #60a5fa 100%);
-    box-shadow: 0 12px 48px rgba(59, 130, 246, 0.4);
+    background: linear-gradient(135deg, 
+        #0369a1 0%, 
+        #0284c7 25%, 
+        #0ea5e9 50%, 
+        #38bdf8 75%, 
+        #7dd3fc 100%);
+    box-shadow: 
+        0 20px 60px rgba(2, 132, 199, 0.5),
+        0 8px 24px rgba(14, 165, 233, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(-6px) scale(1.05);
 }
 
 .stat-card.warning {
-    background: linear-gradient(135deg, var(--warning) 0%, #fbbf24 50%, #f59e0b 100%);
+    background: linear-gradient(135deg, 
+        #d97706 0%, 
+        #f59e0b 25%, 
+        #fbbf24 50%, 
+        #fcd34d 75%, 
+        #fef3c7 100%);
     color: white;
-    box-shadow: 0 8px 32px rgba(245, 158, 11, 0.3);
+    box-shadow: 
+        0 10px 40px rgba(217, 119, 6, 0.4),
+        0 4px 16px rgba(245, 158, 11, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .stat-card.warning:hover {
-    background: linear-gradient(135deg, #d97706 0%, var(--warning) 50%, #fbbf24 100%);
-    box-shadow: 0 12px 48px rgba(245, 158, 11, 0.4);
+    background: linear-gradient(135deg, 
+        #b45309 0%, 
+        #d97706 25%, 
+        #f59e0b 50%, 
+        #fbbf24 75%, 
+        #fcd34d 100%);
+    box-shadow: 
+        0 20px 60px rgba(217, 119, 6, 0.5),
+        0 8px 24px rgba(245, 158, 11, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(-6px) scale(1.05);
 }
 
 .stat-card.purple {
-    background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 50%, #7c3aed 100%);
+    background: linear-gradient(135deg, 
+        #7c3aed 0%, 
+        #8b5cf6 25%, 
+        #a78bfa 50%, 
+        #c4b5fd 75%, 
+        #e9d5ff 100%);
     color: white;
-    box-shadow: 0 8px 32px rgba(139, 92, 246, 0.3);
+    box-shadow: 
+        0 10px 40px rgba(124, 58, 237, 0.4),
+        0 4px 16px rgba(139, 92, 246, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .stat-card.purple:hover {
-    background: linear-gradient(135deg, #6d28d9 0%, #8b5cf6 50%, #a78bfa 100%);
-    box-shadow: 0 12px 48px rgba(139, 92, 246, 0.4);
+    background: linear-gradient(135deg, 
+        #6d28d9 0%, 
+        #7c3aed 25%, 
+        #8b5cf6 50%, 
+        #a78bfa 75%, 
+        #c4b5fd 100%);
+    box-shadow: 
+        0 20px 60px rgba(124, 58, 237, 0.5),
+        0 8px 24px rgba(139, 92, 246, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(-6px) scale(1.05);
 }
 
 .stat-card.orange {
-    background: linear-gradient(135deg, #f97316 0%, #fb923c 50%, #ea580c 100%);
+    background: linear-gradient(135deg, 
+        #ea580c 0%, 
+        #f97316 25%, 
+        #fb923c 50%, 
+        #fdba74 75%, 
+        #fed7aa 100%);
     color: white;
-    box-shadow: 0 8px 32px rgba(249, 115, 22, 0.3);
+    box-shadow: 
+        0 10px 40px rgba(234, 88, 12, 0.4),
+        0 4px 16px rgba(249, 115, 22, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .stat-card.orange:hover {
-    background: linear-gradient(135deg, #c2410c 0%, #f97316 50%, #fb923c 100%);
-    box-shadow: 0 12px 48px rgba(249, 115, 22, 0.4);
+    background: linear-gradient(135deg, 
+        #c2410c 0%, 
+        #ea580c 25%, 
+        #f97316 50%, 
+        #fb923c 75%, 
+        #fdba74 100%);
+    box-shadow: 
+        0 20px 60px rgba(234, 88, 12, 0.5),
+        0 8px 24px rgba(249, 115, 22, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(-6px) scale(1.05);
 }
 
 .stat-card .stat-icon {
