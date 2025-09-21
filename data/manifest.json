@@ -47,7 +47,24 @@
     {
       "codigo": "03",
       "titulo": "Objetivos y Política de Calidad",
-      "items": []
+      "items": [],
+      "subcapitulos": [
+        {
+          "codigo": "03-01",
+          "titulo": "01 Política ASCH-OHLA",
+          "items": []
+        },
+        {
+          "codigo": "03-02",
+          "titulo": "02 Objetivos 2025",
+          "items": []
+        },
+        {
+          "codigo": "03-03",
+          "titulo": "03 Manual de Calidad",
+          "items": []
+        }
+      ]
     },
     {
       "codigo": "04",
