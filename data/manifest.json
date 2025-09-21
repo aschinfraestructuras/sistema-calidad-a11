@@ -409,7 +409,39 @@
     {
       "codigo": "14",
       "titulo": "Control Planos",
-      "items": []
+      "items": [],
+      "subcapitulos": [
+        {
+          "codigo": "14-01",
+          "titulo": "01 Planos de Proyecto",
+          "items": []
+        },
+        {
+          "codigo": "14-02",
+          "titulo": "02 Planos de Ejecución",
+          "items": []
+        },
+        {
+          "codigo": "14-03",
+          "titulo": "03 Modificaciones de Planos",
+          "items": []
+        },
+        {
+          "codigo": "14-04",
+          "titulo": "04 Planos As-Built",
+          "items": []
+        },
+        {
+          "codigo": "14-05",
+          "titulo": "05 Control de Versiones",
+          "items": []
+        },
+        {
+          "codigo": "14-06",
+          "titulo": "06 Archivo de Planos",
+          "items": []
+        }
+      ]
     },
     {
       "codigo": "15",
