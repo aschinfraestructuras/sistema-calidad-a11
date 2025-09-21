@@ -480,6 +480,63 @@ class PortalCalidad {
         }
     }
 
+    // Função para melhorar automaticamente todos os ícones de pasta
+    enhanceFolderIcons() {
+        console.log('🎨 Melhorando elementos visuais das pastas...');
+        
+        // Selecionar todos os ícones de pasta
+        const folderIcons = document.querySelectorAll('.chapter-icon, .subchapter-icon, .folder-icon, [class*="icon"]');
+        
+        folderIcons.forEach((icon, index) => {
+            // Adicionar classes CSS premium
+            icon.classList.add('chapter-icon');
+            
+            // Determinar tipo baseado no contexto
+            const parentText = icon.closest('.chapter-item, .subchapter-item, .document-item')?.textContent?.toLowerCase() || '';
+            let iconType = 'default';
+            
+            if (parentText.includes('procedimiento') || parentText.includes('pac')) {
+                iconType = 'procedimientos';
+            } else if (parentText.includes('laboratorio') || parentText.includes('ensayo')) {
+                iconType = 'laboratorio';
+            } else if (parentText.includes('calidad') || parentText.includes('control')) {
+                iconType = 'calidad';
+            } else if (parentText.includes('documento') || parentText.includes('certificado')) {
+                iconType = 'documentos';
+            } else if (parentText.includes('ensayo') || parentText.includes('prueba')) {
+                iconType = 'ensayos';
+            } else if (parentText.includes('normativa') || parentText.includes('reglamento')) {
+                iconType = 'normativas';
+            } else if (parentText.includes('auditoria') || parentText.includes('inspección')) {
+                iconType = 'auditorias';
+            }
+            
+            // Aplicar tipo específico
+            icon.setAttribute('data-type', iconType);
+            
+            // Adicionar ícone Unicode mais sofisticado
+            if (!icon.textContent || icon.textContent.trim() === '') {
+                const iconMap = {
+                    'procedimientos': '📋',
+                    'laboratorio': '🧪',
+                    'calidad': '⭐',
+                    'documentos': '📄',
+                    'ensayos': '🔬',
+                    'normativas': '📜',
+                    'auditorias': '🔍',
+                    'default': '📁'
+                };
+                icon.textContent = iconMap[iconType] || iconMap['default'];
+            }
+            
+            // Adicionar animação de entrada
+            icon.style.animationDelay = `${index * 0.1}s`;
+            icon.style.animation = 'scaleIn 0.6s ease-out forwards';
+        });
+        
+        console.log(`✅ ${folderIcons.length} ícones de pasta melhorados automaticamente`);
+    }
+
     // Função removida - cards do dashboard sempre visíveis
 
     updateBreadcrumb(section) {
@@ -2646,6 +2703,9 @@ class PortalCalidad {
             
             // Garantir que a barra lateral está visível na inicialização
             this.ensureSidebarVisible();
+            
+            // Melhorar ícones de pasta automaticamente
+            setTimeout(() => this.enhanceFolderIcons(), 500);
             
             console.log('✅ Sistema inicializado após login');
         } catch (error) {
