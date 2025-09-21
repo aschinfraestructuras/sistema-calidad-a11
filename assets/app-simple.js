@@ -785,6 +785,7 @@ class PortalCalidad {
             sectionCode.textContent = `${this.currentChapter.codigo} › ${subchapter.titulo.split(' - ')[0]}`;
         }
         if (documentCount) {
+            const subchapterName = subchapter.titulo.split(' - ')[0].replace('🔬 ', '').replace('🛣️ ', '').replace('🏗️ ', '').replace('📊 ', '').replace('🧪 ', '').replace('📎 ', '').replace('📦 ', '').replace('🔍 ', '');
             const totalDocs = (subchapter.items || []).length + this.uploadedDocuments.filter(doc => 
                 doc.chapter === this.currentChapter.codigo && 
                 doc.titulo.toLowerCase().includes(subchapterName.toLowerCase())
