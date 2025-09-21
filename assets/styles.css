@@ -1082,7 +1082,7 @@ body {
     line-height: 1.1;
     position: relative;
     transition: all 0.3s ease;
-    animation: textGlow 10s ease-in-out infinite;
+    animation: textGlow 10s ease-in-out infinite, textFloat 15s ease-in-out infinite;
 }
 
 /* Efeito de brilho no texto */
@@ -1164,6 +1164,11 @@ body {
 @keyframes textGlow {
     0%, 100% { filter: drop-shadow(0 0 2px rgba(71, 85, 105, 0.1)); }
     50% { filter: drop-shadow(0 0 6px rgba(100, 116, 139, 0.2)); }
+}
+
+@keyframes textFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-1px); }
 }
 
 /* Efeitos hover profissionais - APENAS HOVER, SEM ANIMAÇÕES CONTÍNUAS */
