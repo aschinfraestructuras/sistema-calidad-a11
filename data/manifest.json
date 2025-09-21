@@ -663,52 +663,122 @@
         {
           "codigo": "16-02",
           "titulo": "02 Características Generales Obra",
-          "items": []
+          "items": [
+            {
+              "nombre": "Características Generales de Obra",
+              "tipo": "html",
+              "ruta": "docs/16_Documentacion_General/caracteristicas-generales-obra.html",
+              "descripcion": "Documentación técnica completa del proyecto con especificaciones, materiales, equipos, personal y características técnicas según normativas de construcción"
+            }
+          ]
         },
         {
           "codigo": "16-03",
           "titulo": "03 Contactos Obra",
-          "items": []
+          "items": [
+            {
+              "nombre": "Contactos de Obra",
+              "tipo": "html",
+              "ruta": "docs/16_Documentacion_General/contactos-obra.html",
+              "descripcion": "Directorio completo de contactos del proyecto con información de personal, emergencias, técnicos y responsables según protocolos de comunicación"
+            }
+          ]
         },
         {
           "codigo": "16-04",
           "titulo": "04 Distribución de Funciones",
-          "items": []
+          "items": [
+            {
+              "nombre": "Distribución de Funciones de Obra",
+              "tipo": "html",
+              "ruta": "docs/16_Documentacion_General/distribucion-funciones-obra.html",
+              "descripcion": "Sistema de organización y asignación de responsabilidades con matriz de funciones, jerarquías y flujo de comunicación según protocolos de gestión organizacional"
+            }
+          ]
         },
         {
           "codigo": "16-05",
           "titulo": "05 Estructuración Obra",
-          "items": []
+          "items": [
+            {
+              "nombre": "Estructuración de Obra",
+              "tipo": "html",
+              "ruta": "docs/16_Documentacion_General/estructuracion-obra.html",
+              "descripcion": "Documentación de organización y planificación estructural con elementos técnicos, materiales, equipos y planificación temporal según normativas de construcción"
+            }
+          ]
         },
         {
           "codigo": "16-06",
           "titulo": "06 Fotos Obra",
-          "items": []
+          "items": [
+            {
+              "nombre": "Fotos de Obra",
+              "tipo": "html",
+              "ruta": "docs/16_Documentacion_General/fotos-obra.html",
+              "descripcion": "Sistema de registro fotográfico del proyecto con información técnica, condiciones meteorológicas y seguimiento visual según protocolos de documentación"
+            }
+          ]
         },
         {
           "codigo": "16-07",
           "titulo": "07 Hoja de Firmas",
-          "items": []
+          "items": [
+            {
+              "nombre": "Hoja de Firmas de Obra",
+              "tipo": "html",
+              "ruta": "docs/16_Documentacion_General/hoja-firmas-obra.html",
+              "descripcion": "Sistema de registro de firmas y aprobaciones con seguimiento de firmantes, fechas y estados según protocolos de gestión documental"
+            }
+          ]
         },
         {
           "codigo": "16-08",
           "titulo": "08 Logotipos Obra",
-          "items": []
+          "items": [
+            {
+              "nombre": "Logotipos de Obra",
+              "tipo": "html",
+              "ruta": "docs/16_Documentacion_General/logotipos-obra.html",
+              "descripcion": "Gestión de identidad visual del proyecto con especificaciones técnicas, paleta de colores, tipografía y guías de uso según estándares corporativos"
+            }
+          ]
         },
         {
           "codigo": "16-09",
           "titulo": "09 Organigrama",
-          "items": []
+          "items": [
+            {
+              "nombre": "Organigrama de Obra",
+              "tipo": "html",
+              "ruta": "docs/16_Documentacion_General/organigrama-obra.html",
+              "descripcion": "Estructura organizacional del proyecto con jerarquías, dependencias y flujo de comunicación según protocolos de gestión de recursos humanos"
+            }
+          ]
         },
         {
           "codigo": "16-10",
           "titulo": "10 Registros",
-          "items": []
+          "items": [
+            {
+              "nombre": "Registros de Obra",
+              "tipo": "html",
+              "ruta": "docs/16_Documentacion_General/registros-obra.html",
+              "descripcion": "Sistema de gestión de registros y documentación con seguimiento de estados, responsables y próximas acciones según protocolos de gestión documental"
+            }
+          ]
         },
         {
           "codigo": "16-11",
           "titulo": "11 Revisión de Contrato",
-          "items": []
+          "items": [
+            {
+              "nombre": "Revisión de Contrato",
+              "tipo": "html",
+              "ruta": "docs/16_Documentacion_General/revision-contrato.html",
+              "descripcion": "Análisis y seguimiento contractual con revisión de cláusulas, análisis de cumplimiento y evaluación de riesgos según protocolos legales"
+            }
+          ]
         }
       ]
     },
