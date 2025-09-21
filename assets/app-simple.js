@@ -1462,10 +1462,8 @@ class PortalCalidad {
                 }
             }, 1000);
             
-            // Verificar integridade após salvar
-            setTimeout(() => {
-                this.verifyDataIntegrity();
-            }, 1000);
+            // VERIFICAÇÃO DE INTEGRIDADE DESABILITADA (evitar loop)
+            console.log('✅ Upload concluído sem verificação de integridade');
             
             this.showToast('Documento subido correctamente', 'success');
             this.hideUpload();
@@ -1486,62 +1484,10 @@ class PortalCalidad {
         }
     }
     
-    // Verificar integridade dos dados salvos
+    // Verificar integridade dos dados salvos (DESABILITADA)
     verifyDataIntegrity() {
-        try {
-            console.log('🔍 Verificando integridade dos dados...');
-            
-            // Verificar se os dados estão salvos corretamente
-            const localStorageData = localStorage.getItem('uploadedDocuments');
-            const sessionStorageData = sessionStorage.getItem('uploadedDocuments');
-            const backupData = localStorage.getItem('documents_backup');
-            
-            let integrityScore = 0;
-            let totalChecks = 3;
-            
-            if (localStorageData) {
-                const parsed = JSON.parse(localStorageData);
-                if (parsed.length === this.uploadedDocuments.length) {
-                    integrityScore++;
-                    console.log('✅ localStorage: OK');
-                } else {
-                    console.warn('⚠️ localStorage: Dados inconsistentes');
-                }
-            }
-            
-            if (sessionStorageData) {
-                const parsed = JSON.parse(sessionStorageData);
-                if (parsed.length === this.uploadedDocuments.length) {
-                    integrityScore++;
-                    console.log('✅ sessionStorage: OK');
-                } else {
-                    console.warn('⚠️ sessionStorage: Dados inconsistentes');
-                }
-            }
-            
-            if (backupData) {
-                const parsed = JSON.parse(backupData);
-                if (parsed.length === this.uploadedDocuments.length) {
-                    integrityScore++;
-                    console.log('✅ Backup: OK');
-                } else {
-                    console.warn('⚠️ Backup: Dados inconsistentes');
-                }
-            }
-            
-            const integrityPercentage = (integrityScore / totalChecks) * 100;
-            console.log(`📊 Integridade dos dados: ${integrityPercentage}% (${integrityScore}/${totalChecks})`);
-            
-            if (integrityPercentage < 100) {
-                console.warn('⚠️ Detectada inconsistência, recriando backups...');
-                this.saveUploadedDocuments();
-            } else {
-                console.log('✅ Todos os dados estão íntegros e salvos corretamente');
-            }
-            
-        } catch (error) {
-            console.error('❌ Erro na verificação de integridade:', error);
-        }
+        console.log('🔍 Verificação de integridade desabilitada para evitar loops');
+        return; // FUNÇÃO DESABILITADA
     }
 
     fileToBase64(file) {
@@ -2035,7 +1981,7 @@ class PortalCalidad {
         }
     }
 
-    // Storage Robusto - Sistema Otimizado para Grandes Volumes
+    // Storage Robusto - Sistema Otimizado para Grandes Volumes (SEM LOOP)
     saveUploadedDocuments() {
         try {
             const documentsData = JSON.stringify(this.uploadedDocuments);
@@ -2045,12 +1991,8 @@ class PortalCalidad {
             // 1. INDEXEDDB (Principal para grandes volumes)
             this.saveToIndexedDB(documentsData);
             
-            // 2. LOCALSTORAGE (Apenas metadados para arquivos grandes)
-            if (dataSize < 2 * 1024 * 1024) { // Menos de 2MB
-                localStorage.setItem('uploadedDocuments', documentsData);
-                console.log('💾 Documentos salvos no localStorage:', this.uploadedDocuments.length);
-            } else {
-                // Para arquivos grandes, salvar apenas metadados
+            // 2. LOCALSTORAGE (Apenas metadados para evitar quota)
+            try {
                 const metadata = this.uploadedDocuments.map(doc => ({
                     id: doc.id,
                     nombre: doc.nombre,
@@ -2059,15 +2001,18 @@ class PortalCalidad {
                     tags: doc.tags
                 }));
                 localStorage.setItem('uploadedDocuments_metadata', JSON.stringify(metadata));
-                console.log('💾 Metadados salvos no localStorage (arquivo grande)');
+                console.log('💾 Metadados salvos no localStorage');
+            } catch (quotaError) {
+                console.warn('⚠️ localStorage cheio, usando apenas IndexedDB');
             }
             
-            // 3. BACKUP EM MÚLTIPLAS CHAVES (Redundância)
-            localStorage.setItem('backup_documents_' + Date.now(), documentsData);
-            localStorage.setItem('documents_backup', documentsData);
-            
-            // 4. LIMPAR BACKUPS ANTIGOS (manter apenas os 10 mais recentes)
-            this.cleanOldBackups();
+            // 3. BACKUP LIMITADO (apenas 1 backup para evitar quota)
+            try {
+                localStorage.setItem('documents_backup', documentsData);
+                console.log('💾 Backup salvo');
+            } catch (quotaError) {
+                console.warn('⚠️ Backup não salvo (quota excedida)');
+            }
             
             console.log('✅ Sistema de persistência otimizado ativado');
             
@@ -2076,12 +2021,8 @@ class PortalCalidad {
             
         } catch (error) {
             console.error('❌ Erro ao salvar documentos:', error);
-            // Tentar salvar de forma mais simples se falhar
-            try {
-        localStorage.setItem('uploadedDocuments', JSON.stringify(this.uploadedDocuments));
-            } catch (simpleError) {
-                console.error('❌ Falha crítica no salvamento:', simpleError);
-            }
+            // Usar apenas IndexedDB em caso de erro
+            this.saveToIndexedDB(JSON.stringify(this.uploadedDocuments));
         }
     }
     
