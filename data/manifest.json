@@ -162,7 +162,14 @@
         {
           "codigo": "06-01",
           "titulo": "01 Formatos PPI - Documentación",
-          "items": []
+          "items": [
+            {
+              "nombre": "Registro PPI - Puntos de Inspección y Control",
+              "tipo": "html",
+              "ruta": "docs/06_PPI/registro-ppi-inspeccion-control.html",
+              "descripcion": "Sistema completo de control de puntos de inspección con checklist, documentación fotográfica, firmas y seguimiento de conformidad según normativas UNE-EN ISO 9001:2015"
+            }
+          ]
         },
         {
           "codigo": "06-02",
@@ -530,7 +537,14 @@
         {
           "codigo": "15-05",
           "titulo": "05 Ensayos de obra - Actas y Informes",
-          "items": []
+          "items": [
+            {
+              "nombre": "Acta de Ensayos de Obra - Laboratorio",
+              "tipo": "html",
+              "ruta": "docs/15_Laboratorio/acta-ensayos-obra-laboratorio.html",
+              "descripcion": "Sistema completo de actas de ensayos de laboratorio con resultados, certificación, conformidad y seguimiento según normativas UNE-EN aplicables"
+            }
+          ]
         },
         {
           "codigo": "15-06",
@@ -637,7 +651,14 @@
         {
           "codigo": "16-01",
           "titulo": "01 Actas de Reunión",
-          "items": []
+          "items": [
+            {
+              "nombre": "Acta de Reunión de Obra",
+              "tipo": "html",
+              "ruta": "docs/16_Documentacion_General/acta-reunion-obra.html",
+              "descripcion": "Sistema completo de actas de reunión con participantes, agenda, decisiones, seguimiento y firmas según protocolos de gestión de obra"
+            }
+          ]
         },
         {
           "codigo": "16-02",
