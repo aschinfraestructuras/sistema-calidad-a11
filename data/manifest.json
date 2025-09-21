@@ -261,7 +261,44 @@
     {
       "codigo": "10",
       "titulo": "No Conformidades",
-      "items": []
+      "items": [],
+      "subcapitulos": [
+        {
+          "codigo": "10-01",
+          "titulo": "01 Informes Técnicos",
+          "items": []
+        },
+        {
+          "codigo": "10-02",
+          "titulo": "02 Listado NC",
+          "items": []
+        },
+        {
+          "codigo": "10-03",
+          "titulo": "03 No Conformidades",
+          "items": []
+        },
+        {
+          "codigo": "10-04",
+          "titulo": "04 Anexos",
+          "items": []
+        },
+        {
+          "codigo": "10-05",
+          "titulo": "05 Acciones Correctivas",
+          "items": []
+        },
+        {
+          "codigo": "10-06",
+          "titulo": "06 Seguimiento y Control",
+          "items": []
+        },
+        {
+          "codigo": "10-07",
+          "titulo": "07 Registros de NC",
+          "items": []
+        }
+      ]
     },
     {
       "codigo": "11",
