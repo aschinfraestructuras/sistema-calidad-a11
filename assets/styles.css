@@ -727,6 +727,7 @@ body {
     overflow: hidden;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    animation: a11GentleGlow 6s ease-in-out infinite;
 }
 
 .a11-decoration::before {
@@ -4219,5 +4220,45 @@ body.login-active .header {
     .advanced-search-content {
         max-width: 95vw;
         margin: 2.5vh auto;
+    }
+}
+
+/* Animação suave para o elemento A-11 */
+@keyframes a11GentleGlow {
+    0%, 100% {
+        box-shadow: 
+            0 8px 32px rgba(59, 130, 246, 0.15),
+            0 2px 8px rgba(59, 130, 246, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        transform: translateY(0);
+    }
+    50% {
+        box-shadow: 
+            0 12px 40px rgba(59, 130, 246, 0.25),
+            0 4px 16px rgba(59, 130, 246, 0.18),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        transform: translateY(-2px);
+    }
+}
+
+/* Versão para tema escuro */
+[data-theme="dark"] .a11-decoration {
+    animation: a11GentleGlowDark 6s ease-in-out infinite;
+}
+
+@keyframes a11GentleGlowDark {
+    0%, 100% {
+        box-shadow: 
+            0 8px 32px rgba(79, 70, 229, 0.2),
+            0 2px 8px rgba(79, 70, 229, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        transform: translateY(0);
+    }
+    50% {
+        box-shadow: 
+            0 12px 40px rgba(79, 70, 229, 0.35),
+            0 4px 16px rgba(79, 70, 229, 0.25),
+            inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        transform: translateY(-2px);
     }
 }
