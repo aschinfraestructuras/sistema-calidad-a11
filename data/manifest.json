@@ -119,7 +119,67 @@
         },
         {
           "codigo": "15-06",
-          "titulo": "Otros Ensayos",
+          "titulo": "Densidades",
+          "items": []
+        },
+        {
+          "codigo": "15-07",
+          "titulo": "Placas de Carga",
+          "items": []
+        },
+        {
+          "codigo": "15-08",
+          "titulo": "Deflexiones-IRI",
+          "items": []
+        },
+        {
+          "codigo": "15-09",
+          "titulo": "Sondeos",
+          "items": []
+        },
+        {
+          "codigo": "15-10",
+          "titulo": "Testigos",
+          "items": []
+        },
+        {
+          "codigo": "15-11",
+          "titulo": "Suelo-Cemento",
+          "items": []
+        },
+        {
+          "codigo": "15-12",
+          "titulo": "Suelo-Estabilizado",
+          "items": []
+        },
+        {
+          "codigo": "15-13",
+          "titulo": "Zahorras",
+          "items": []
+        },
+        {
+          "codigo": "15-14",
+          "titulo": "Aglomerado",
+          "items": []
+        },
+        {
+          "codigo": "15-15",
+          "titulo": "CRT",
+          "items": []
+        },
+        {
+          "codigo": "15-16",
+          "titulo": "Lotificación",
+          "items": []
+        },
+        {
+          "codigo": "15-17",
+          "titulo": "Prestamos",
+          "items": []
+        },
+        {
+          "codigo": "15-18",
+          "titulo": "Anexos",
           "items": []
         }
       ]
