@@ -337,9 +337,15 @@ class PortalCalidad {
         // Verificar se tem subcapítulos
         const hasSubchapters = section.subcapitulos && section.subcapitulos.length > 0;
         
+        console.log('🔍 DEBUG - Capítulo:', section.codigo, section.titulo);
+        console.log('🔍 DEBUG - Tem subcapítulos?', hasSubchapters);
+        console.log('🔍 DEBUG - Subcapítulos:', section.subcapitulos);
+        
         if (hasSubchapters) {
+            console.log('📁 Renderizando subcapítulos...');
             this.renderSubchapters();
         } else {
+            console.log('📄 Renderizando documentos...');
             this.renderDocuments();
         }
     }
@@ -590,7 +596,7 @@ class PortalCalidad {
         console.log('📂 Mostrando subcapítulo:', subchapterTitle);
         
         // Encontrar o subcapítulo
-        const subchapter = this.currentChapter.items.find(item => item.titulo === subchapterTitle);
+        const subchapter = this.currentChapter.subcapitulos.find(sub => sub.titulo === subchapterTitle);
         if (!subchapter) {
             this.showToast('Subcapítulo no encontrado', 'error');
             return;
