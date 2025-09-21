@@ -244,10 +244,96 @@ class PortalCalidad {
             });
         }
 
+        // Stat-cards clicáveis para navegação
+        this.setupStatCardNavigation();
+
         // Tema
         this.initializeTheme();
 
         console.log('✅ Eventos configurados');
+    }
+
+    // Nova função para configurar navegação dos stat-cards
+    setupStatCardNavigation() {
+        console.log('🎯 Configurando navegação dos stat-cards...');
+        
+        // Mapear stat-cards para capítulos específicos
+        const statCardMappings = {
+            'totalChapters': null, // Mostrar todos os capítulos
+            'totalSubchapters': null, // Mostrar todos os capítulos
+            'totalDocuments': null, // Mostrar todos os capítulos
+            'uploadedDocuments': null, // Mostrar todos os capítulos
+            'recentDocuments': null, // Mostrar todos os capítulos
+            'filledChapters': null, // Mostrar capítulos com documentos
+            'completionRate': null // Mostrar todos os capítulos
+        };
+
+        // Adicionar eventos de clique para cada stat-card
+        Object.keys(statCardMappings).forEach(cardId => {
+            const card = document.getElementById(cardId);
+            if (card) {
+                // Encontrar o card pai
+                const statCard = card.closest('.stat-card');
+                if (statCard) {
+                    statCard.style.cursor = 'pointer';
+                    statCard.setAttribute('role', 'button');
+                    statCard.setAttribute('tabindex', '0');
+                    statCard.setAttribute('aria-label', `Navegar para ${this.getStatCardLabel(cardId)}`);
+                    
+                    // Evento de clique
+                    statCard.addEventListener('click', () => {
+                        this.navigateFromStatCard(cardId);
+                    });
+                    
+                    // Evento de teclado (Enter e Space)
+                    statCard.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            this.navigateFromStatCard(cardId);
+                        }
+                    });
+                    
+                    console.log(`✅ Stat-card configurado: ${cardId}`);
+                }
+            }
+        });
+    }
+
+    // Função para obter o label do stat-card
+    getStatCardLabel(cardId) {
+        const labels = {
+            'totalChapters': 'todos os capítulos',
+            'totalSubchapters': 'todos os capítulos',
+            'totalDocuments': 'todos os capítulos',
+            'uploadedDocuments': 'capítulos com documentos subidos',
+            'recentDocuments': 'capítulos com documentos recentes',
+            'filledChapters': 'capítulos completados',
+            'completionRate': 'todos os capítulos'
+        };
+        return labels[cardId] || 'capítulos';
+    }
+
+    // Função para navegar a partir do stat-card
+    navigateFromStatCard(cardId) {
+        console.log(`🎯 Navegando a partir do stat-card: ${cardId}`);
+        
+        // Mostrar toast informativo
+        const label = this.getStatCardLabel(cardId);
+        this.showToast(`Navegando para ${label}...`, 'info');
+        
+        // Navegar para o dashboard (que mostra todos os capítulos)
+        this.showDashboard();
+        
+        // Scroll suave para a lista de capítulos
+        setTimeout(() => {
+            const chaptersList = document.getElementById('chaptersList');
+            if (chaptersList) {
+                chaptersList.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }
+        }, 300);
     }
 
     renderChapters() {
