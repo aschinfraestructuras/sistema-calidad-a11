@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEST - Suelo Estabilizado</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 95%;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="sest" width="30" height="30" patternUnits="userSpaceOnUse"><rect x="0" y="0" width="30" height="30" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><rect x="10" y="10" width="10" height="10" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23sest)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .project-info {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            background: #f8f9fa;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #27ae60;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            width: 24px;
+            height: 24px;
+            background: #27ae60;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #27ae60;
+            box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .sest-grid {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .sest-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 15px;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #e9ecef;
+            align-items: center;
+        }
+
+        .sest-item:hover {
+            background: #e9ecef;
+            border-left-color: #27ae60;
+        }
+
+        .sest-item input, .sest-item select {
+            margin: 0;
+        }
+
+        .add-sest-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .add-sest-btn:hover {
+            background: #229954;
+        }
+
+        .signature-section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .signature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .signature-box {
+            text-align: center;
+            padding: 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+
+        .signature-line {
+            border-bottom: 2px solid #333;
+            margin: 20px 0 10px;
+            height: 2px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #229954;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+            transform: translateY(-2px);
+        }
+
+        .code-generator {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-display {
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .btn-generate {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .btn-generate:hover {
+            background: #c0392b;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left-color: #17a2b8;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border-left-color: #ffc107;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border-left-color: #28a745;
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #27ae60;
+        }
+
+        .summary-card h3 {
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+
+        .summary-card .number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .sest-reference {
+            background: #eafaf1;
+            border-left: 4px solid #27ae60;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .sest-reference h4 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .sest-reference p {
+            color: #555;
+            font-size: 14px;
+            margin: 4px 0;
+        }
+
+        @media (max-width: 768px) {
+            .form-row, .form-row-3 {
+                grid-template-columns: 1fr;
+            }
+            
+            .sest-item {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .signature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+
+        @media print {
+            .action-buttons, .btn-generate, .add-sest-btn {
+                display: none;
+            }
+            
+            .container {
+                box-shadow: none;
+            }
+            
+            .section {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <div class="logo">🌱</div>
+                <h1>SEST - SUELO ESTABILIZADO</h1>
+                <div class="subtitle">Normativa de Suelos Estabilizados</div>
+                <div class="project-info">
+                    <strong>Proyecto:</strong> Autovía A-11 | <strong>Contratista:</strong> ASCH-OHLA | <strong>Fecha:</strong> <span id="currentDate"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Código de Documento -->
+            <div class="code-generator">
+                <div>
+                    <strong>Código Documento:</strong> <span class="code-display" id="docCode">SEST-2025-001</span>
+                </div>
+                <button class="btn-generate" onclick="generateDocCode()">Generar Nuevo</button>
+            </div>
+
+            <!-- Información General -->
+            <div class="section">
+                <div class="section-title">
+                    <div class="section-icon">📋</div>
+                    Información General
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="projectName">Proyecto:</label>
+                        <input type="text" id="projectName" value="Autovía A-11" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="documentType">Tipo de Documento:</label>
+                        <select id="documentType">
+                            <option value="">Seleccionar tipo</option>
+                            <option value="normativa">Normativa SEST</option>
+                            <option value="aplicacion">Aplicación SEST</option>
+                            <option value="ensayos">Ensayos SEST</option>
+                            <option value="certificacion">Certificación SEST</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="contractor">Contratista:</label>
+                        <input type="text" id="contractor" value="ASCH-OHLA" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="client">Cliente:</label>
+                        <input type="text" id="client" placeholder="Ministerio de Fomento">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="documentDate">Fecha del Documento:</label>
+                        <input type="date" id="documentDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="version">Versión SEST:</label>
+                        <select id="version">
+                            <option value="SEST-2023">SEST-2023 (Vigente)</option>
+                            <option value="SEST-2019">SEST-2019 (Histórica)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Descripción del Documento:</label>
+                    <textarea id="description" placeholder="Descripción detallada del documento SEST..."></textarea>
+                </div>
+            </div>
+
+            <!-- Referencias SEST -->
+            <div class="section">
+                <div class="section-title">
+                    <div class="section-icon">📚</div>
+                    Referencias SEST
+                </div>
+                
+                <div class="sest-reference">
+                    <h4>📖 Capítulo I - Generalidades</h4>
+                    <p><strong>Artículo 1:</strong> Objeto y ámbito de aplicación</p>
+                    <p><strong>Artículo 2:</strong> Definiciones</p>
+                    <p><strong>Artículo 3:</strong> Clasificación de suelos</p>
+                    <p><strong>Artículo 4:</strong> Criterios de diseño</p>
+                </div>
+
+                <div class="sest-reference">
+                    <h4>🏗️ Capítulo II - Materiales</h4>
+                    <p><strong>Artículo 5:</strong> Suelos naturales</p>
+                    <p><strong>Artículo 6:</strong> Estabilizantes</p>
+                    <p><strong>Artículo 7:</strong> Aditivos</p>
+                    <p><strong>Artículo 8:</strong> Agua</p>
+                </div>
+
+                <div class="sest-reference">
+                    <h4>⚙️ Capítulo III - Proceso de Estabilización</h4>
+                    <p><strong>Artículo 9:</strong> Preparación del suelo</p>
+                    <p><strong>Artículo 10:</strong> Dosificación</p>
+                    <p><strong>Artículo 11:</strong> Mezclado</p>
+                    <p><strong>Artículo 12:</strong> Compactación</p>
+                </div>
+
+                <div class="sest-reference">
+                    <h4>🔧 Capítulo IV - Control de Calidad</h4>
+                    <p><strong>Artículo 13:</strong> Ensayos de control</p>
+                    <p><strong>Artículo 14:</strong> Tolerancias</p>
+                    <p><strong>Artículo 15:</strong> No conformidades</p>
+                    <p><strong>Artículo 16:</strong> Certificación</p>
+                </div>
+            </div>
+
+            <!-- Aplicación SEST -->
+            <div class="section">
+                <div class="section-title">
+                    <div class="section-icon">📋</div>
+                    Aplicación SEST
+                </div>
+                
+                <div class="sest-grid">
+                    <div class="sest-item">
+                        <div>
+                            <label>Artículo/Condición</label>
+                            <input type="text" placeholder="Ej: Art. 5 - Suelos naturales">
+                        </div>
+                        <div>
+                            <label>Número</label>
+                            <input type="text" placeholder="5">
+                        </div>
+                        <div>
+                            <label>Estado</label>
+                            <select>
+                                <option value="">Seleccionar</option>
+                                <option value="aplicable">Aplicable</option>
+                                <option value="modificado">Modificado</option>
+                                <option value="excluido">Excluido</option>
+                                <option value="especial">Condición Especial</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Fecha Aplicación</label>
+                            <input type="date">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="add-sest-btn" onclick="addSestItem()">
+                    ➕ Añadir Condición
+                </button>
+
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <h3>Total Condiciones</h3>
+                        <div class="number" id="totalCondiciones">1</div>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Aplicables</h3>
+                        <div class="number" id="aplicablesCount">0</div>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Modificadas</h3>
+                        <div class="number" id="modificadasCount">0</div>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Excluidas</h3>
+                        <div class="number" id="excluidasCount">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Firmas y Aprobaciones -->
+            <div class="section">
+                <div class="section-title">
+                    <div class="section-icon">✍️</div>
+                    Firmas y Aprobaciones
+                </div>
+                
+                <div class="signature-section">
+                    <div class="signature-grid">
+                        <div class="signature-box">
+                            <h4>Responsable SEST</h4>
+                            <div class="signature-line"></div>
+                            <p>Nombre: <input type="text" id="sestManagerName" placeholder="Nombre completo"></p>
+                            <p>Colegiado: <input type="text" id="sestManagerNumber" placeholder="Nº Colegiado"></p>
+                            <p>Fecha: <input type="date" id="sestManagerDate"></p>
+                        </div>
+                        
+                        <div class="signature-box">
+                            <h4>Director de Proyecto</h4>
+                            <div class="signature-line"></div>
+                            <p>Nombre: <input type="text" id="projectDirectorName" placeholder="Nombre completo"></p>
+                            <p>Colegiado: <input type="text" id="projectDirectorNumber" placeholder="Nº Colegiado"></p>
+                            <p>Fecha: <input type="date" id="projectDirectorDate"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="saveData()">
+                    💾 Guardar Documento
+                </button>
+                <button class="btn btn-success" onclick="approveDocument()">
+                    ✅ Aprobar Documento
+                </button>
+                <button class="btn btn-secondary" onclick="printDocument()">
+                    🖨️ Imprimir
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let sestCount = 1;
+
+        // Generar código de documento automático
+        function generateDocCode() {
+            const year = new Date().getFullYear();
+            const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+            const code = `SEST-${year}-${random}`;
+            document.getElementById('docCode').textContent = code;
+        }
+
+        // Actualizar fecha actual
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('es-ES');
+        document.getElementById('documentDate').value = new Date().toISOString().split('T')[0];
+
+        // Añadir condición SEST
+        function addSestItem() {
+            sestCount++;
+            const sestGrid = document.querySelector('.sest-grid');
+            const newSestItem = document.createElement('div');
+            newSestItem.className = 'sest-item';
+            newSestItem.innerHTML = `
+                <div>
+                    <label>Artículo/Condición</label>
+                    <input type="text" placeholder="Ej: Art. 5 - Suelos naturales">
+                </div>
+                <div>
+                    <label>Número</label>
+                    <input type="text" placeholder="5">
+                </div>
+                <div>
+                    <label>Estado</label>
+                    <select>
+                        <option value="">Seleccionar</option>
+                        <option value="aplicable">Aplicable</option>
+                        <option value="modificado">Modificado</option>
+                        <option value="excluido">Excluido</option>
+                        <option value="especial">Condición Especial</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Fecha Aplicación</label>
+                    <input type="date">
+                </div>
+            `;
+            sestGrid.appendChild(newSestItem);
+            updateSestSummary();
+        }
+
+        // Actualizar resumen SEST
+        function updateSestSummary() {
+            const totalCondiciones = document.querySelectorAll('.sest-item').length;
+            let aplicablesCount = 0;
+            let modificadasCount = 0;
+            let excluidasCount = 0;
+
+            document.querySelectorAll('.sest-item').forEach(item => {
+                const status = item.querySelector('select').value;
+                
+                if (status === 'aplicable') aplicablesCount++;
+                if (status === 'modificado') modificadasCount++;
+                if (status === 'excluido') excluidasCount++;
+            });
+
+            document.getElementById('totalCondiciones').textContent = totalCondiciones;
+            document.getElementById('aplicablesCount').textContent = aplicablesCount;
+            document.getElementById('modificadasCount').textContent = modificadasCount;
+            document.getElementById('excluidasCount').textContent = excluidasCount;
+        }
+
+        // Event listeners para actualizar resumen
+        document.addEventListener('change', function(e) {
+            if (e.target.closest('.sest-item')) {
+                updateSestSummary();
+            }
+        });
+
+        // Guardar datos
+        function saveData() {
+            const data = {
+                docCode: document.getElementById('docCode').textContent,
+                projectName: document.getElementById('projectName').value,
+                documentType: document.getElementById('documentType').value,
+                contractor: document.getElementById('contractor').value,
+                client: document.getElementById('client').value,
+                documentDate: document.getElementById('documentDate').value,
+                version: document.getElementById('version').value,
+                description: document.getElementById('description').value,
+                sestManagerName: document.getElementById('sestManagerName').value,
+                sestManagerNumber: document.getElementById('sestManagerNumber').value,
+                sestManagerDate: document.getElementById('sestManagerDate').value,
+                projectDirectorName: document.getElementById('projectDirectorName').value,
+                projectDirectorNumber: document.getElementById('projectDirectorNumber').value,
+                projectDirectorDate: document.getElementById('projectDirectorDate').value,
+                timestamp: new Date().toISOString()
+            };
+
+            // Guardar en localStorage
+            const savedDocs = JSON.parse(localStorage.getItem('savedSEST') || '[]');
+            savedDocs.push(data);
+            localStorage.setItem('savedSEST', JSON.stringify(savedDocs));
+
+            // Mostrar mensaje de éxito
+            showAlert('Documento SEST guardado correctamente', 'success');
+        }
+
+        // Aprobar documento
+        function approveDocument() {
+            saveData();
+            showAlert('Documento aprobado y guardado', 'success');
+        }
+
+        // Imprimir documento
+        function printDocument() {
+            window.print();
+        }
+
+        // Mostrar alertas
+        function showAlert(message, type) {
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            
+            const content = document.querySelector('.content');
+            content.insertBefore(alert, content.firstChild);
+            
+            setTimeout(() => {
+                alert.remove();
+            }, 3000);
+        }
+
+        // Auto-save cada 30 segundos
+        setInterval(() => {
+            if (document.getElementById('projectName').value) {
+                saveData();
+            }
+        }, 30000);
+
+        // Cargar datos guardados
+        function loadSavedData() {
+            const savedDocs = JSON.parse(localStorage.getItem('savedSEST') || '[]');
+            if (savedDocs.length > 0) {
+                const lastDoc = savedDocs[savedDocs.length - 1];
+                // Cargar datos del último documento guardado
+                Object.keys(lastDoc).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        element.value = lastDoc[key];
+                    }
+                });
+            }
+        }
+
+        // Cargar datos al iniciar
+        loadSavedData();
+    </script>
+</body>
+</html>

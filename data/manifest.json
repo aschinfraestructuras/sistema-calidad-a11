@@ -857,37 +857,86 @@
         {
           "codigo": "18-01",
           "titulo": "01 Código Estructural",
-          "items": []
+          "items": [
+            {
+              "nombre": "Código Estructural",
+              "tipo": "html",
+              "ruta": "docs/18_Normativas/codigo-estructural.html",
+              "descripcion": "Sistema completo de gestión del Código Estructural con referencias normativas, criterios de diseño, aplicación de normativas y certificación según CTE y Eurocódigos"
+            }
+          ]
         },
         {
           "codigo": "18-02",
           "titulo": "02 EHE (Instrucción de Hormigón Estructural)",
-          "items": []
+          "items": [
+            {
+              "nombre": "EHE - Instrucción de Hormigón Estructural",
+              "tipo": "html",
+              "ruta": "docs/18_Normativas/ehe-hormigon-estructural.html",
+              "descripcion": "Sistema completo de gestión EHE-08 con características del hormigón, armaduras, clases de exposición, criterios de diseño y certificación estructural"
+            }
+          ]
         },
         {
           "codigo": "18-03",
           "titulo": "03 Memoria Obra",
-          "items": []
+          "items": [
+            {
+              "nombre": "Memoria de Obra",
+              "tipo": "html",
+              "ruta": "docs/18_Normativas/memoria-obra.html",
+              "descripcion": "Sistema completo de gestión de memoria técnica con estructura documental, contenido por capítulos, anexos, planos y documentación técnica del proyecto"
+            }
+          ]
         },
         {
           "codigo": "18-04",
           "titulo": "04 Normas UNE",
-          "items": []
+          "items": [
+            {
+              "nombre": "Normas UNE",
+              "tipo": "html",
+              "ruta": "docs/18_Normativas/normas-une.html",
+              "descripcion": "Sistema completo de gestión de normativas UNE con referencias a UNE-EN ISO 9001:2015, UNE-EN 206, UNE-EN 10025, Eurocódigos y aplicación de normativas"
+            }
+          ]
         },
         {
           "codigo": "18-05",
           "titulo": "05 PG3 (Pliego General de Condiciones)",
-          "items": []
+          "items": [
+            {
+              "nombre": "PG3 - Pliego General de Condiciones",
+              "tipo": "html",
+              "ruta": "docs/18_Normativas/pg3-pliego-general.html",
+              "descripcion": "Sistema completo de gestión PG3 con condiciones generales de contratación, aplicación de artículos, modificaciones y cumplimiento normativo"
+            }
+          ]
         },
         {
           "codigo": "18-06",
           "titulo": "06 Pliego de Obra",
-          "items": []
+          "items": [
+            {
+              "nombre": "Pliego de Obra",
+              "tipo": "html",
+              "ruta": "docs/18_Normativas/pliego-obra.html",
+              "descripcion": "Sistema completo de gestión del pliego de obra con condiciones específicas del proyecto, aplicación de artículos y modificaciones contractuales"
+            }
+          ]
         },
         {
           "codigo": "18-07",
           "titulo": "07 SEST (Suelo Estabilizado)",
-          "items": []
+          "items": [
+            {
+              "nombre": "SEST - Suelo Estabilizado",
+              "tipo": "html",
+              "ruta": "docs/18_Normativas/sest-suelo-estabilizado.html",
+              "descripcion": "Sistema completo de gestión SEST con normativa de suelos estabilizados, proceso de estabilización, control de calidad y certificación"
+            }
+          ]
         }
       ]
     },
