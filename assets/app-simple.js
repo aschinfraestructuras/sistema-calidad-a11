@@ -1772,30 +1772,48 @@ class PortalCalidad {
 
     loadUploadedDocuments() {
         try {
-            // FORÇAR LIMPEZA DE TODOS OS 54 DOCUMENTOS VIRTUAIS
-            console.log('🧹 LIMPANDO TODOS OS 54 DOCUMENTOS VIRTUAIS...');
+            // LIMPEZA TOTAL E DEFINITIVA - ZERO DOCUMENTOS VIRTUAIS
+            console.log('🧹 LIMPEZA TOTAL - ELIMINANDO TODOS OS DOCUMENTOS VIRTUAIS...');
             
-            // Limpar localStorage
-            localStorage.removeItem('uploadedDocuments');
-            localStorage.removeItem('storedDocuments');
-            localStorage.removeItem('storedFiles');
-            localStorage.removeItem('manifest');
+            // Limpar TODOS os dados do localStorage
+            const keysToRemove = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && (key.includes('uploaded') || key.includes('stored') || key.includes('document') || key.includes('manifest'))) {
+                    keysToRemove.push(key);
+                }
+            }
+            keysToRemove.forEach(key => localStorage.removeItem(key));
             
-            // Limpar sessionStorage
-            sessionStorage.removeItem('uploadedDocuments');
-            sessionStorage.removeItem('storedDocuments');
-            sessionStorage.removeItem('storedFiles');
+            // Limpar TODOS os dados do sessionStorage
+            const sessionKeysToRemove = [];
+            for (let i = 0; i < sessionStorage.length; i++) {
+                const key = sessionStorage.key(i);
+                if (key && (key.includes('uploaded') || key.includes('stored') || key.includes('document') || key.includes('manifest'))) {
+                    sessionKeysToRemove.push(key);
+                }
+            }
+            sessionKeysToRemove.forEach(key => sessionStorage.removeItem(key));
             
-            // Limpar IndexedDB
+            // Limpar IndexedDB completamente
             if ('indexedDB' in window) {
-                const deleteReq = indexedDB.deleteDatabase('PortalCalidadDB');
-                deleteReq.onsuccess = () => console.log('✅ IndexedDB limpo');
-                deleteReq.onerror = () => console.log('⚠️ Erro ao limpar IndexedDB');
+                try {
+                    indexedDB.deleteDatabase('PortalCalidadDB');
+                    indexedDB.deleteDatabase('uploadedDocuments');
+                    indexedDB.deleteDatabase('storedDocuments');
+                    indexedDB.deleteDatabase('storedFiles');
+                } catch (e) {
+                    console.log('IndexedDB já estava limpo');
+                }
             }
             
-            // SEMPRE INICIALIZAR VAZIO
+            // FORÇAR INICIALIZAÇÃO VAZIA
             this.uploadedDocuments = [];
-            console.log('✅ SISTEMA LIMPO - 0 documentos virtuais');
+            this.cache.documents.clear();
+            this.cache.chapters.clear();
+            this.cache.searchResults.clear();
+            
+            console.log('✅ SISTEMA COMPLETAMENTE LIMPO - 0 documentos virtuais');
             this.renderRecentDocuments();
             
         } catch (error) {
