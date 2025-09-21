@@ -30,7 +30,14 @@
         {
           "codigo": "02-01",
           "titulo": "01 Plan Ensayos",
-          "items": []
+          "items": [
+            {
+              "nombre": "Registro RFI - Plan de Ensayos y Controles",
+              "tipo": "html",
+              "ruta": "docs/02_Plan_Ensayos_Controles/registro-rfi-ensayos.html",
+              "descripcion": "Sistema completo de gestión de RFI (Request for Information) para ensayos y controles con códigos automáticos, seguimiento de consultas y respuestas según normativas UNE-EN ISO 9001:2015"
+            }
+          ]
         },
         {
           "codigo": "02-02",
