@@ -605,7 +605,34 @@
     {
       "codigo": "17",
       "titulo": "Control Económico Calidad Obra",
-      "items": []
+      "items": [],
+      "subcapitulos": [
+        {
+          "codigo": "17-01",
+          "titulo": "01 Propuestas y Presupuestos",
+          "items": []
+        },
+        {
+          "codigo": "17-02",
+          "titulo": "02 Facturas y Pagos",
+          "items": []
+        },
+        {
+          "codigo": "17-03",
+          "titulo": "03 Contratos y Convenios",
+          "items": []
+        },
+        {
+          "codigo": "17-04",
+          "titulo": "04 Previsiones de Costes",
+          "items": []
+        },
+        {
+          "codigo": "17-05",
+          "titulo": "05 Correspondencia y Emails",
+          "items": []
+        }
+      ]
     },
     {
       "codigo": "18",
