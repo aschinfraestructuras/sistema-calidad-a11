@@ -64,6 +64,13 @@ class PortalCalidad {
     setupEvents() {
         console.log('🔧 Configurando eventos...');
         
+        // PREVENIR DUPLICAÇÃO DE EVENTOS
+        if (this.eventsSetup) {
+            console.log('⚠️ Eventos já configurados, pulando...');
+            return;
+        }
+        this.eventsSetup = true;
+        
         // Busca
         const searchInput = document.getElementById('searchInput');
         if (searchInput) {
@@ -1390,6 +1397,13 @@ class PortalCalidad {
     async handleUpload() {
         console.log('📤 Processando upload...');
         
+        // PREVENIR UPLOAD DUPLICADO
+        if (this.uploading) {
+            console.log('⚠️ Upload já em andamento, ignorando...');
+            return;
+        }
+        this.uploading = true;
+        
         const title = document.getElementById('documentTitle');
         const chapter = document.getElementById('documentChapter');
         const tags = document.getElementById('documentTags');
@@ -1431,9 +1445,22 @@ class PortalCalidad {
             };
 
             this.uploadedDocuments.push(doc);
+            console.log('📄 Documento adicionado à lista. Total:', this.uploadedDocuments.length);
             
             // Salvar com sistema robusto
             this.saveUploadedDocuments();
+            console.log('💾 Salvamento executado. Verificando...');
+            
+            // VERIFICAÇÃO IMEDIATA
+            setTimeout(() => {
+                const saved = localStorage.getItem('uploadedDocuments');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    console.log('✅ Verificação: Documentos salvos:', parsed.length);
+                } else {
+                    console.error('❌ Verificação: Nenhum documento encontrado no localStorage!');
+                }
+            }, 1000);
             
             // Verificar integridade após salvar
             setTimeout(() => {
@@ -1455,6 +1482,7 @@ class PortalCalidad {
             this.showToast('Error al subir', 'error');
         } finally {
             this.showLoading(false);
+            this.uploading = false; // LIBERAR FLAG DE UPLOAD
         }
     }
     
@@ -2007,36 +2035,50 @@ class PortalCalidad {
         }
     }
 
-    // Storage Robusto - Sistema Triplo de Backup
+    // Storage Robusto - Sistema Otimizado para Grandes Volumes
     saveUploadedDocuments() {
         try {
             const documentsData = JSON.stringify(this.uploadedDocuments);
+            const dataSize = new Blob([documentsData]).size;
+            console.log(`📊 Tamanho dos dados: ${(dataSize / 1024 / 1024).toFixed(2)} MB`);
             
-            // 1. LOCALSTORAGE (Principal)
-            localStorage.setItem('uploadedDocuments', documentsData);
-            console.log('💾 Documentos salvos no localStorage:', this.uploadedDocuments.length);
-            
-            // 2. SESSIONSTORAGE (Backup)
-            sessionStorage.setItem('uploadedDocuments', documentsData);
-            console.log('💾 Backup salvo no sessionStorage');
-            
-            // 3. INDEXEDDB (Backup Avançado)
+            // 1. INDEXEDDB (Principal para grandes volumes)
             this.saveToIndexedDB(documentsData);
             
-            // 4. BACKUP EM MÚLTIPLAS CHAVES (Redundância)
+            // 2. LOCALSTORAGE (Apenas metadados para arquivos grandes)
+            if (dataSize < 2 * 1024 * 1024) { // Menos de 2MB
+                localStorage.setItem('uploadedDocuments', documentsData);
+                console.log('💾 Documentos salvos no localStorage:', this.uploadedDocuments.length);
+            } else {
+                // Para arquivos grandes, salvar apenas metadados
+                const metadata = this.uploadedDocuments.map(doc => ({
+                    id: doc.id,
+                    nombre: doc.nombre,
+                    fecha: doc.fecha,
+                    chapter: doc.chapter,
+                    tags: doc.tags
+                }));
+                localStorage.setItem('uploadedDocuments_metadata', JSON.stringify(metadata));
+                console.log('💾 Metadados salvos no localStorage (arquivo grande)');
+            }
+            
+            // 3. BACKUP EM MÚLTIPLAS CHAVES (Redundância)
             localStorage.setItem('backup_documents_' + Date.now(), documentsData);
             localStorage.setItem('documents_backup', documentsData);
             
-            // 5. LIMPAR BACKUPS ANTIGOS (manter apenas os 5 mais recentes)
+            // 4. LIMPAR BACKUPS ANTIGOS (manter apenas os 10 mais recentes)
             this.cleanOldBackups();
             
-            console.log('✅ Sistema de persistência robusto ativado');
+            console.log('✅ Sistema de persistência otimizado ativado');
+            
+            // MONITORAR CAPACIDADE
+            this.monitorStorageCapacity();
             
         } catch (error) {
             console.error('❌ Erro ao salvar documentos:', error);
             // Tentar salvar de forma mais simples se falhar
             try {
-                localStorage.setItem('uploadedDocuments', JSON.stringify(this.uploadedDocuments));
+        localStorage.setItem('uploadedDocuments', JSON.stringify(this.uploadedDocuments));
             } catch (simpleError) {
                 console.error('❌ Falha crítica no salvamento:', simpleError);
             }
@@ -2082,11 +2124,13 @@ class PortalCalidad {
             const keys = Object.keys(localStorage);
             const backupKeys = keys.filter(key => key.startsWith('backup_documents_'));
             
-            if (backupKeys.length > 5) {
-                // Ordenar por timestamp e remover os mais antigos
-                backupKeys.sort().slice(0, -5).forEach(key => {
+            // MANTER MAIS BACKUPS E SER MENOS AGRESSIVO
+            if (backupKeys.length > 10) {
+                // Ordenar por timestamp e remover apenas os mais antigos
+                backupKeys.sort().slice(0, -10).forEach(key => {
                     localStorage.removeItem(key);
                 });
+                console.log('🧹 Backups antigos limpos, mantidos os 10 mais recentes');
             }
         } catch (error) {
             console.warn('⚠️ Erro ao limpar backups antigos:', error);
@@ -2102,6 +2146,20 @@ class PortalCalidad {
             if (storedDocs) {
                 this.uploadedDocuments = JSON.parse(storedDocs);
                 console.log('✅ Documentos carregados do localStorage:', this.uploadedDocuments.length);
+                return;
+            }
+            
+            // 2. Tentar carregar metadados (para arquivos grandes)
+            let metadata = localStorage.getItem('uploadedDocuments_metadata');
+            if (metadata) {
+                console.log('📋 Metadados encontrados, carregando do IndexedDB...');
+                this.loadFromIndexedDB().then(docs => {
+                    if (docs && docs.length > 0) {
+                        this.uploadedDocuments = docs;
+                        console.log('✅ Documentos carregados do IndexedDB:', docs.length);
+                        this.renderRecentDocuments();
+                    }
+                });
                 return;
             }
             
@@ -2153,6 +2211,47 @@ class PortalCalidad {
             this.uploadedDocuments = [];
         }
     }
+
+    // Monitorar capacidade de armazenamento
+    monitorStorageCapacity() {
+        try {
+            // Calcular uso do localStorage
+            let localStorageSize = 0;
+            for (let key in localStorage) {
+                if (localStorage.hasOwnProperty(key)) {
+                    localStorageSize += localStorage[key].length;
+                }
+            }
+            
+            const localStorageMB = (localStorageSize / 1024 / 1024).toFixed(2);
+            const localStorageLimit = 5; // MB aproximado
+            
+            console.log(`📊 Capacidade localStorage: ${localStorageMB}MB / ${localStorageLimit}MB`);
+            
+            if (localStorageMB > localStorageLimit * 0.8) {
+                console.warn('⚠️ localStorage próximo do limite!');
+                this.showToast(`Armazenamento: ${localStorageMB}MB (${(localStorageMB/localStorageLimit*100).toFixed(0)}%)`, 'warning');
+            }
+            
+            // Verificar IndexedDB
+            if ('indexedDB' in window) {
+                navigator.storage.estimate().then(estimate => {
+                    const usedMB = (estimate.usage / 1024 / 1024).toFixed(2);
+                    const quotaMB = (estimate.quota / 1024 / 1024).toFixed(2);
+                    console.log(`📊 IndexedDB: ${usedMB}MB / ${quotaMB}MB`);
+                    
+                    if (estimate.usage / estimate.quota > 0.8) {
+                        console.warn('⚠️ IndexedDB próximo do limite!');
+                        this.showToast(`IndexedDB: ${usedMB}MB (${(estimate.usage/estimate.quota*100).toFixed(0)}%)`, 'warning');
+                    }
+                });
+            }
+            
+        } catch (error) {
+            console.warn('⚠️ Erro ao monitorar capacidade:', error);
+        }
+    }
+
     
     // Carregar do IndexedDB
     async loadFromIndexedDB() {

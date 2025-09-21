@@ -101,7 +101,14 @@
         {
           "codigo": "04-05",
           "titulo": "05 Comunicaciones Ensayos",
-          "items": []
+          "items": [
+            {
+              "nombre": "Comunicación de Resultados de Ensayos",
+              "tipo": "html",
+              "ruta": "docs/04_Comunicacion_Resultados_Ensayos/comunicacion-resultados-ensayos.html",
+              "descripcion": "Sistema de comunicación de resultados de ensayos de laboratorio con certificación de conformidad, análisis técnico y distribución a stakeholders según normativas UNE-EN aplicables"
+            }
+          ]
         }
       ]
     },
@@ -307,7 +314,14 @@
         {
           "codigo": "10-03",
           "titulo": "03 No Conformidades",
-          "items": []
+          "items": [
+            {
+              "nombre": "Gestión de No Conformidades",
+              "tipo": "html",
+              "ruta": "docs/14_No_Conformidades/gestion-no-conformidades-completo.html",
+              "descripcion": "Sistema completo de gestión de no conformidades con registro, análisis de causas, acciones correctivas, seguimiento y cierre, garantizando la mejora continua del sistema de calidad"
+            }
+          ]
         },
         {
           "codigo": "10-04",
@@ -376,7 +390,14 @@
         {
           "codigo": "12-02",
           "titulo": "02 Cálculos Estructurales",
-          "items": []
+          "items": [
+            {
+              "nombre": "Cálculos y Notas Técnicas",
+              "tipo": "html",
+              "ruta": "docs/12_Calculos_Notas_Tecnicas/calculos-notas-tecnicas.html",
+              "descripcion": "Sistema completo de cálculos estructurales con verificaciones, armado calculado, notas técnicas y validación según normativas EHE-08, CTE-DB-SE y códigos de cálculo vigentes"
+            }
+          ]
         },
         {
           "codigo": "12-03",
@@ -408,7 +429,14 @@
         {
           "codigo": "13-01",
           "titulo": "01 Replanteos",
-          "items": []
+          "items": [
+            {
+              "nombre": "Control Geométrico y Topográfico",
+              "tipo": "html",
+              "ruta": "docs/13_Control_Geometrico/control-geometrico-completo.html",
+              "descripcion": "Sistema completo de control geométrico con replanteos, mediciones topográficas, control de niveles, verificaciones de tolerancias y certificaciones geométricas según normativas técnicas aplicables"
+            }
+          ]
         },
         {
           "codigo": "13-02",
@@ -782,7 +810,14 @@
         {
           "codigo": "20-02",
           "titulo": "02 Auditorias Internas",
-          "items": []
+          "items": [
+            {
+              "nombre": "Auditoría Interna de Calidad",
+              "tipo": "html",
+              "ruta": "docs/13_Auditorias/auditoria-interna-completa.html",
+              "descripcion": "Sistema completo de auditoría interna con checklist, evaluación de procesos, identificación de no conformidades, observaciones y oportunidades de mejora según UNE-EN ISO 9001:2015"
+            }
+          ]
         },
         {
           "codigo": "20-03",
@@ -834,7 +869,14 @@
         {
           "codigo": "21-01",
           "titulo": "01 Informes Mensuales",
-          "items": []
+          "items": [
+            {
+              "nombre": "Informe de Seguimiento y Control de Calidad",
+              "tipo": "html",
+              "ruta": "docs/21_Informes_Seguimiento/informe-seguimiento-completo.html",
+              "descripcion": "Sistema integral de seguimiento con KPIs, control económico, calidad, seguridad, hitos y análisis de riesgos según normativas UNE-EN ISO 9001:2015, 14001:2015 y OHSAS 18001:2007"
+            }
+          ]
         },
         {
           "codigo": "21-02",
