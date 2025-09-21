@@ -372,7 +372,39 @@
     {
       "codigo": "13",
       "titulo": "Control Geométrico",
-      "items": []
+      "items": [],
+      "subcapitulos": [
+        {
+          "codigo": "13-01",
+          "titulo": "01 Replanteos",
+          "items": []
+        },
+        {
+          "codigo": "13-02",
+          "titulo": "02 Control de Niveles",
+          "items": []
+        },
+        {
+          "codigo": "13-03",
+          "titulo": "03 Mediciones Topográficas",
+          "items": []
+        },
+        {
+          "codigo": "13-04",
+          "titulo": "04 Planos de Obra",
+          "items": []
+        },
+        {
+          "codigo": "13-05",
+          "titulo": "05 Certificaciones Geométricas",
+          "items": []
+        },
+        {
+          "codigo": "13-06",
+          "titulo": "06 Registros de Control",
+          "items": []
+        }
+      ]
     },
     {
       "codigo": "14",
