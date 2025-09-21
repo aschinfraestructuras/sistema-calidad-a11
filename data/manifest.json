@@ -460,92 +460,122 @@
       "subcapitulos": [
         {
           "codigo": "15-01",
-          "titulo": "Aceros",
+          "titulo": "01 Comparativos Laboratorio",
           "items": []
         },
         {
           "codigo": "15-02",
-          "titulo": "Hormigones",
+          "titulo": "02 Equipo Tecnico - Laboratorio Obra",
           "items": []
         },
         {
           "codigo": "15-03",
-          "titulo": "Suelos",
+          "titulo": "03 Estudios de materiales",
           "items": []
         },
         {
           "codigo": "15-04",
-          "titulo": "Áridos",
+          "titulo": "04 Formulas de Trabajo",
           "items": []
         },
         {
           "codigo": "15-05",
-          "titulo": "Asfaltos",
+          "titulo": "05 Ensayos de obra - Actas y Informes",
           "items": []
         },
         {
           "codigo": "15-06",
-          "titulo": "Densidades",
+          "titulo": "06 Campañas complementarias de Laboratorio",
           "items": []
         },
         {
           "codigo": "15-07",
-          "titulo": "Placas de Carga",
+          "titulo": "07 Aceros",
           "items": []
         },
         {
           "codigo": "15-08",
-          "titulo": "Deflexiones-IRI",
+          "titulo": "08 Hormigones",
           "items": []
         },
         {
           "codigo": "15-09",
-          "titulo": "Sondeos",
+          "titulo": "09 Suelos",
           "items": []
         },
         {
           "codigo": "15-10",
-          "titulo": "Testigos",
+          "titulo": "10 Áridos",
           "items": []
         },
         {
           "codigo": "15-11",
-          "titulo": "Suelo-Cemento",
+          "titulo": "11 Asfaltos",
           "items": []
         },
         {
           "codigo": "15-12",
-          "titulo": "Suelo-Estabilizado",
+          "titulo": "12 Densidades",
           "items": []
         },
         {
           "codigo": "15-13",
-          "titulo": "Zahorras",
+          "titulo": "13 Placas de Carga",
           "items": []
         },
         {
           "codigo": "15-14",
-          "titulo": "Aglomerado",
+          "titulo": "14 Deflexiones-IRI",
           "items": []
         },
         {
           "codigo": "15-15",
-          "titulo": "CRT",
+          "titulo": "15 Sondeos",
           "items": []
         },
         {
           "codigo": "15-16",
-          "titulo": "Lotificación",
+          "titulo": "16 Testigos",
           "items": []
         },
         {
           "codigo": "15-17",
-          "titulo": "Prestamos",
+          "titulo": "17 Suelo-Cemento",
           "items": []
         },
         {
           "codigo": "15-18",
-          "titulo": "Anexos",
+          "titulo": "18 Suelo-Estabilizado",
+          "items": []
+        },
+        {
+          "codigo": "15-19",
+          "titulo": "19 Zahorras",
+          "items": []
+        },
+        {
+          "codigo": "15-20",
+          "titulo": "20 Aglomerado",
+          "items": []
+        },
+        {
+          "codigo": "15-21",
+          "titulo": "21 CRT",
+          "items": []
+        },
+        {
+          "codigo": "15-22",
+          "titulo": "22 Lotificación",
+          "items": []
+        },
+        {
+          "codigo": "15-23",
+          "titulo": "23 Prestamos",
+          "items": []
+        },
+        {
+          "codigo": "15-24",
+          "titulo": "24 Anexos",
           "items": []
         }
       ]
