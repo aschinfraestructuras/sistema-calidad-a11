@@ -133,7 +133,24 @@
     {
       "codigo": "06",
       "titulo": "Puntos de Inspección y Control (PPI)",
-      "items": []
+      "items": [],
+      "subcapitulos": [
+        {
+          "codigo": "06-01",
+          "titulo": "01 Formatos PPI - Documentación",
+          "items": []
+        },
+        {
+          "codigo": "06-02",
+          "titulo": "02 Listado PPI - Control de Actividades",
+          "items": []
+        },
+        {
+          "codigo": "06-03",
+          "titulo": "03 PPI Global - Seguimiento General",
+          "items": []
+        }
+      ]
     },
     {
       "codigo": "07",
