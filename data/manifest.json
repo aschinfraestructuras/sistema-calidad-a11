@@ -3,7 +3,24 @@
     {
       "codigo": "01",
       "titulo": "Sistema de Gestión de Documentos",
-      "items": []
+      "items": [],
+      "subcapitulos": [
+        {
+          "codigo": "01-01",
+          "titulo": "01 Procedimientos de Calidad",
+          "items": []
+        },
+        {
+          "codigo": "01-02",
+          "titulo": "02 PAC - Revisiones",
+          "items": []
+        },
+        {
+          "codigo": "01-03",
+          "titulo": "03 Organigrama Obra",
+          "items": []
+        }
+      ]
     },
     {
       "codigo": "02",
