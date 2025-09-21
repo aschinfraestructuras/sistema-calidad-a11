@@ -1430,7 +1430,15 @@ class PortalCalidad {
             };
 
             this.uploadedDocuments.push(doc);
+            
+            // Salvar com sistema robusto
             this.saveUploadedDocuments();
+            
+            // Verificar integridade após salvar
+            setTimeout(() => {
+                this.verifyDataIntegrity();
+            }, 1000);
+            
             this.showToast('Documento subido correctamente', 'success');
             this.hideUpload();
             this.updateStats();
@@ -1446,6 +1454,64 @@ class PortalCalidad {
             this.showToast('Error al subir', 'error');
         } finally {
             this.showLoading(false);
+        }
+    }
+    
+    // Verificar integridade dos dados salvos
+    verifyDataIntegrity() {
+        try {
+            console.log('🔍 Verificando integridade dos dados...');
+            
+            // Verificar se os dados estão salvos corretamente
+            const localStorageData = localStorage.getItem('uploadedDocuments');
+            const sessionStorageData = sessionStorage.getItem('uploadedDocuments');
+            const backupData = localStorage.getItem('documents_backup');
+            
+            let integrityScore = 0;
+            let totalChecks = 3;
+            
+            if (localStorageData) {
+                const parsed = JSON.parse(localStorageData);
+                if (parsed.length === this.uploadedDocuments.length) {
+                    integrityScore++;
+                    console.log('✅ localStorage: OK');
+                } else {
+                    console.warn('⚠️ localStorage: Dados inconsistentes');
+                }
+            }
+            
+            if (sessionStorageData) {
+                const parsed = JSON.parse(sessionStorageData);
+                if (parsed.length === this.uploadedDocuments.length) {
+                    integrityScore++;
+                    console.log('✅ sessionStorage: OK');
+                } else {
+                    console.warn('⚠️ sessionStorage: Dados inconsistentes');
+                }
+            }
+            
+            if (backupData) {
+                const parsed = JSON.parse(backupData);
+                if (parsed.length === this.uploadedDocuments.length) {
+                    integrityScore++;
+                    console.log('✅ Backup: OK');
+                } else {
+                    console.warn('⚠️ Backup: Dados inconsistentes');
+                }
+            }
+            
+            const integrityPercentage = (integrityScore / totalChecks) * 100;
+            console.log(`📊 Integridade dos dados: ${integrityPercentage}% (${integrityScore}/${totalChecks})`);
+            
+            if (integrityPercentage < 100) {
+                console.warn('⚠️ Detectada inconsistência, recriando backups...');
+                this.saveUploadedDocuments();
+            } else {
+                console.log('✅ Todos os dados estão íntegros e salvos corretamente');
+            }
+            
+        } catch (error) {
+            console.error('❌ Erro na verificação de integridade:', error);
         }
     }
 
@@ -1940,70 +2006,188 @@ class PortalCalidad {
         }
     }
 
-    // Storage
+    // Storage Robusto - Sistema Triplo de Backup
     saveUploadedDocuments() {
         try {
-        localStorage.setItem('uploadedDocuments', JSON.stringify(this.uploadedDocuments));
+            const documentsData = JSON.stringify(this.uploadedDocuments);
+            
+            // 1. LOCALSTORAGE (Principal)
+            localStorage.setItem('uploadedDocuments', documentsData);
             console.log('💾 Documentos salvos no localStorage:', this.uploadedDocuments.length);
             
-            // Também salvar no sessionStorage como backup
-            sessionStorage.setItem('uploadedDocuments', JSON.stringify(this.uploadedDocuments));
+            // 2. SESSIONSTORAGE (Backup)
+            sessionStorage.setItem('uploadedDocuments', documentsData);
             console.log('💾 Backup salvo no sessionStorage');
+            
+            // 3. INDEXEDDB (Backup Avançado)
+            this.saveToIndexedDB(documentsData);
+            
+            // 4. BACKUP EM MÚLTIPLAS CHAVES (Redundância)
+            localStorage.setItem('backup_documents_' + Date.now(), documentsData);
+            localStorage.setItem('documents_backup', documentsData);
+            
+            // 5. LIMPAR BACKUPS ANTIGOS (manter apenas os 5 mais recentes)
+            this.cleanOldBackups();
+            
+            console.log('✅ Sistema de persistência robusto ativado');
+            
         } catch (error) {
             console.error('❌ Erro ao salvar documentos:', error);
+            // Tentar salvar de forma mais simples se falhar
+            try {
+                localStorage.setItem('uploadedDocuments', JSON.stringify(this.uploadedDocuments));
+            } catch (simpleError) {
+                console.error('❌ Falha crítica no salvamento:', simpleError);
+            }
+        }
+    }
+    
+    // Salvar no IndexedDB
+    async saveToIndexedDB(data) {
+        try {
+            if ('indexedDB' in window) {
+                const request = indexedDB.open('PortalCalidadDB', 1);
+                
+                request.onupgradeneeded = function(event) {
+                    const db = event.target.result;
+                    if (!db.objectStoreNames.contains('documents')) {
+                        db.createObjectStore('documents', { keyPath: 'id' });
+                    }
+                };
+                
+                request.onsuccess = function(event) {
+                    const db = event.target.result;
+                    const transaction = db.transaction(['documents'], 'readwrite');
+                    const store = transaction.objectStore('documents');
+                    
+                    const documentRecord = {
+                        id: 'all_documents',
+                        data: data,
+                        timestamp: Date.now()
+                    };
+                    
+                    store.put(documentRecord);
+                    console.log('💾 Backup salvo no IndexedDB');
+                };
+            }
+        } catch (error) {
+            console.warn('⚠️ IndexedDB não disponível:', error);
+        }
+    }
+    
+    // Limpar backups antigos
+    cleanOldBackups() {
+        try {
+            const keys = Object.keys(localStorage);
+            const backupKeys = keys.filter(key => key.startsWith('backup_documents_'));
+            
+            if (backupKeys.length > 5) {
+                // Ordenar por timestamp e remover os mais antigos
+                backupKeys.sort().slice(0, -5).forEach(key => {
+                    localStorage.removeItem(key);
+                });
+            }
+        } catch (error) {
+            console.warn('⚠️ Erro ao limpar backups antigos:', error);
         }
     }
 
     loadUploadedDocuments() {
         try {
-            // LIMPEZA TOTAL E DEFINITIVA - ZERO DOCUMENTOS VIRTUAIS
-            console.log('🧹 LIMPEZA TOTAL - ELIMINANDO TODOS OS DOCUMENTOS VIRTUAIS...');
+            console.log('📂 Carregando documentos salvos...');
             
-            // Limpar TODOS os dados do localStorage
-            const keysToRemove = [];
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                if (key && (key.includes('uploaded') || key.includes('stored') || key.includes('document') || key.includes('manifest'))) {
-                    keysToRemove.push(key);
-                }
+            // 1. Tentar carregar do localStorage principal
+            let storedDocs = localStorage.getItem('uploadedDocuments');
+            if (storedDocs) {
+                this.uploadedDocuments = JSON.parse(storedDocs);
+                console.log('✅ Documentos carregados do localStorage:', this.uploadedDocuments.length);
+                return;
             }
-            keysToRemove.forEach(key => localStorage.removeItem(key));
             
-            // Limpar TODOS os dados do sessionStorage
-            const sessionKeysToRemove = [];
-            for (let i = 0; i < sessionStorage.length; i++) {
-                const key = sessionStorage.key(i);
-                if (key && (key.includes('uploaded') || key.includes('stored') || key.includes('document') || key.includes('manifest'))) {
-                    sessionKeysToRemove.push(key);
-                }
+            // 2. Tentar carregar do backup principal
+            storedDocs = localStorage.getItem('documents_backup');
+            if (storedDocs) {
+                this.uploadedDocuments = JSON.parse(storedDocs);
+                console.log('✅ Documentos carregados do backup principal:', this.uploadedDocuments.length);
+                return;
             }
-            sessionKeysToRemove.forEach(key => sessionStorage.removeItem(key));
             
-            // Limpar IndexedDB completamente
-            if ('indexedDB' in window) {
-                try {
-                    indexedDB.deleteDatabase('PortalCalidadDB');
-                    indexedDB.deleteDatabase('uploadedDocuments');
-                    indexedDB.deleteDatabase('storedDocuments');
-                    indexedDB.deleteDatabase('storedFiles');
-                } catch (e) {
-                    console.log('IndexedDB já estava limpo');
+            // 3. Tentar carregar dos backups com timestamp
+            const keys = Object.keys(localStorage);
+            const backupKeys = keys.filter(key => key.startsWith('backup_documents_'));
+            if (backupKeys.length > 0) {
+                // Pegar o backup mais recente
+                backupKeys.sort().reverse();
+                const latestBackup = localStorage.getItem(backupKeys[0]);
+                if (latestBackup) {
+                    this.uploadedDocuments = JSON.parse(latestBackup);
+                    console.log('✅ Documentos carregados do backup mais recente:', this.uploadedDocuments.length);
+                    return;
                 }
             }
             
-            // FORÇAR INICIALIZAÇÃO VAZIA
+            // 4. Fallback para sessionStorage
+            const sessionDocs = sessionStorage.getItem('uploadedDocuments');
+            if (sessionDocs) {
+                this.uploadedDocuments = JSON.parse(sessionDocs);
+                console.log('✅ Documentos carregados do sessionStorage:', this.uploadedDocuments.length);
+                return;
+            }
+            
+            // 5. Tentar carregar do IndexedDB
+            this.loadFromIndexedDB().then(docs => {
+                if (docs && docs.length > 0) {
+                    this.uploadedDocuments = docs;
+                    console.log('✅ Documentos carregados do IndexedDB:', docs.length);
+                    this.renderRecentDocuments();
+                }
+            });
+            
+            // Se não há documentos salvos, inicializar array vazio
             this.uploadedDocuments = [];
-            this.cache.documents.clear();
-            this.cache.chapters.clear();
-            this.cache.searchResults.clear();
-            
-            console.log('✅ SISTEMA COMPLETAMENTE LIMPO - 0 documentos virtuais');
-            this.renderRecentDocuments();
+            console.log('📝 Nenhum documento salvo encontrado, inicializando array vazio');
             
         } catch (error) {
-            console.error('❌ Erro ao limpar documentos:', error);
+            console.error('❌ Erro ao carregar documentos:', error);
             this.uploadedDocuments = [];
-            this.renderRecentDocuments();
+        }
+    }
+    
+    // Carregar do IndexedDB
+    async loadFromIndexedDB() {
+        try {
+            if ('indexedDB' in window) {
+                return new Promise((resolve, reject) => {
+                    const request = indexedDB.open('PortalCalidadDB', 1);
+                    
+                    request.onsuccess = function(event) {
+                        const db = event.target.result;
+                        const transaction = db.transaction(['documents'], 'readonly');
+                        const store = transaction.objectStore('documents');
+                        const getRequest = store.get('all_documents');
+                        
+                        getRequest.onsuccess = function() {
+                            if (getRequest.result && getRequest.result.data) {
+                                const docs = JSON.parse(getRequest.result.data);
+                                resolve(docs);
+                            } else {
+                                resolve([]);
+                            }
+                        };
+                        
+                        getRequest.onerror = function() {
+                            resolve([]);
+                        };
+                    };
+                    
+                    request.onerror = function() {
+                        resolve([]);
+                    };
+                });
+            }
+        } catch (error) {
+            console.warn('⚠️ Erro ao carregar do IndexedDB:', error);
+            return [];
         }
     }
 
