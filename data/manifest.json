@@ -335,7 +335,39 @@
     {
       "codigo": "12",
       "titulo": "Cálculos y Notas Técnicas",
-      "items": []
+      "items": [],
+      "subcapitulos": [
+        {
+          "codigo": "12-01",
+          "titulo": "01 Informes Técnicos",
+          "items": []
+        },
+        {
+          "codigo": "12-02",
+          "titulo": "02 Cálculos Estructurales",
+          "items": []
+        },
+        {
+          "codigo": "12-03",
+          "titulo": "03 Notas Técnicas",
+          "items": []
+        },
+        {
+          "codigo": "12-04",
+          "titulo": "04 Estudios Geotécnicos",
+          "items": []
+        },
+        {
+          "codigo": "12-05",
+          "titulo": "05 Informes de Costos",
+          "items": []
+        },
+        {
+          "codigo": "12-06",
+          "titulo": "06 Documentación Técnica",
+          "items": []
+        }
+      ]
     },
     {
       "codigo": "13",
