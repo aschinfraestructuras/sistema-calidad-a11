@@ -324,19 +324,52 @@ class PortalCalidad {
         const label = this.getStatCardLabel(cardId);
         this.showToast(`Navegando para ${label}...`, 'info');
         
-        // Navegar para o dashboard (que mostra todos os capítulos)
+        // Navegar para o dashboard e mostrar a lista de capítulos
         this.showDashboard();
         
-        // Scroll suave para a lista de capítulos
+        // Aguardar um pouco para o dashboard carregar
         setTimeout(() => {
-            const chaptersList = document.getElementById('chaptersList');
-            if (chaptersList) {
-                chaptersList.scrollIntoView({ 
-                    behavior: 'smooth', 
-                    block: 'start' 
-                });
+            // Mostrar a seção de capítulos
+            this.showChaptersList();
+            
+            // Scroll suave para a lista de capítulos
+            setTimeout(() => {
+                const chaptersList = document.getElementById('chaptersList');
+                if (chaptersList) {
+                    chaptersList.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                    });
+                }
+            }, 100);
+        }, 200);
+    }
+
+    // Nova função para mostrar a lista de capítulos
+    showChaptersList() {
+        console.log('📚 Mostrando lista de capítulos...');
+        
+        // Esconder outras seções usando classes CSS
+        const welcomeSection = document.querySelector('.welcome-section');
+        const statsGrid = document.querySelector('.stats-grid');
+        const projectTimeline = document.querySelector('.project-timeline-compact');
+        const favoriteDocuments = document.querySelector('.favorite-documents');
+        
+        if (welcomeSection) welcomeSection.classList.add('hidden');
+        if (statsGrid) statsGrid.classList.add('hidden');
+        if (projectTimeline) projectTimeline.classList.add('hidden');
+        if (favoriteDocuments) favoriteDocuments.classList.add('hidden');
+        
+        // Mostrar a lista de capítulos
+        const chaptersList = document.getElementById('chaptersList');
+        if (chaptersList) {
+            chaptersList.classList.remove('hidden');
+            
+            // Renderizar os capítulos se não estiverem renderizados
+            if (!chaptersList.innerHTML.trim()) {
+                this.renderChapters();
             }
-        }, 300);
+        }
     }
 
     // Nova função para configurar menu mobile
@@ -523,9 +556,11 @@ class PortalCalidad {
         console.log('📊 Mostrando dashboard');
         const welcomeSection = document.getElementById('welcomeSection');
         const documentsSection = document.getElementById('documentsSection');
+        const chaptersList = document.getElementById('chaptersList');
         
         if (welcomeSection) welcomeSection.classList.remove('hidden');
         if (documentsSection) documentsSection.classList.add('hidden');
+        if (chaptersList) chaptersList.classList.remove('hidden');
         
         document.querySelectorAll('.chapter-item').forEach(item => {
             item.classList.remove('active');
