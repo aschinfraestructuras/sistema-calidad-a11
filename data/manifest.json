@@ -91,7 +91,44 @@
     {
       "codigo": "05",
       "titulo": "Trazabilidad de Materiales",
-      "items": []
+      "items": [],
+      "subcapitulos": [
+        {
+          "codigo": "05-01",
+          "titulo": "01 Codigos de Obra - Trazabilidad",
+          "items": []
+        },
+        {
+          "codigo": "05-02",
+          "titulo": "02 Trazabilidad Suelos",
+          "items": []
+        },
+        {
+          "codigo": "05-03",
+          "titulo": "03 Trazabilidad Acero",
+          "items": []
+        },
+        {
+          "codigo": "05-04",
+          "titulo": "04 Trazabilidad Densidades",
+          "items": []
+        },
+        {
+          "codigo": "05-05",
+          "titulo": "05 Trazabilidad Hormigón",
+          "items": []
+        },
+        {
+          "codigo": "05-06",
+          "titulo": "06 Trazabilidad Placas de Carga",
+          "items": []
+        },
+        {
+          "codigo": "05-07",
+          "titulo": "07 Trazabilidad Tubos",
+          "items": []
+        }
+      ]
     },
     {
       "codigo": "06",
