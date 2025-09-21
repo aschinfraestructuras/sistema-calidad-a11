@@ -820,6 +820,37 @@ body {
     }
 }
 
+/* ===============================================
+   FORÇA VISIBILIDADE DA BARRA LATERAL - REGRA ABSOLUTA
+   =============================================== */
+
+/* REGRA ABSOLUTA PARA SIDEBAR SEMPRE VISÍVEL */
+.sidebar,
+.sidebar.hidden,
+.sidebar.mobile-hidden,
+.sidebar[style*="display: none"],
+.sidebar[style*="visibility: hidden"],
+.sidebar[style*="opacity: 0"],
+.sidebar[style*="left: -"],
+.sidebar[style*="transform: translateX(-"] {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    left: 0 !important;
+    transform: translateX(0) !important;
+    position: sticky !important;
+    width: 320px !important;
+    min-width: 320px !important;
+    height: 85vh !important;
+    top: 140px !important;
+    z-index: 10 !important;
+    flex-direction: column !important;
+    background: var(--gradient-card) !important;
+    border-radius: var(--radius-2xl) !important;
+    box-shadow: var(--shadow-xl) !important;
+    padding: var(--spacing-md) !important;
+}
+
 /* ===== ANIMAÇÕES ELEGANTES ===== */
 @keyframes cardSlideIn {
     0% {
@@ -1369,23 +1400,26 @@ body {
 /* Sidebar */
 .sidebar {
     width: 320px !important;
-    min-width: 320px;
-    background: var(--gradient-card);
-    border-radius: var(--radius-2xl);
-    box-shadow: var(--shadow-xl);
-    padding: var(--spacing-md);
+    min-width: 320px !important;
+    background: var(--gradient-card) !important;
+    border-radius: var(--radius-2xl) !important;
+    box-shadow: var(--shadow-xl) !important;
+    padding: var(--spacing-md) !important;
     display: flex !important;
-    flex-direction: column;
-    height: 85vh;
-    min-height: 600px;
-    position: sticky;
-    top: 140px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    z-index: 10;
+    flex-direction: column !important;
+    height: 85vh !important;
+    min-height: 600px !important;
+    position: sticky !important;
+    top: 140px !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    z-index: 10 !important;
     visibility: visible !important;
     opacity: 1 !important;
-    flex-shrink: 0;
+    flex-shrink: 0 !important;
+    left: 0 !important;
+    transform: translateX(0) !important;
+    transition: none !important;
 }
 
 .sidebar-header {
@@ -4364,7 +4398,11 @@ body.login-active .header {
     }
     
     .sidebar.mobile-hidden {
-        left: -100%;
+        left: 0 !important;
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        transform: translateX(0) !important;
     }
     
     .main-layout {
