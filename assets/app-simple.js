@@ -247,6 +247,9 @@ class PortalCalidad {
         // Stat-cards clicáveis para navegação
         this.setupStatCardNavigation();
 
+        // Menu mobile
+        this.setupMobileMenu();
+
         // Tema
         this.initializeTheme();
 
@@ -334,6 +337,78 @@ class PortalCalidad {
                 });
             }
         }, 300);
+    }
+
+    // Nova função para configurar menu mobile
+    setupMobileMenu() {
+        console.log('📱 Configurando menu mobile...');
+        
+        // Verificar se estamos em mobile
+        this.isMobile = window.innerWidth <= 768;
+        
+        // Listener para mudanças de tamanho da tela
+        window.addEventListener('resize', () => {
+            this.isMobile = window.innerWidth <= 768;
+            this.updateMobileLayout();
+        });
+        
+        // Inicializar layout mobile
+        this.updateMobileLayout();
+    }
+
+    // Função para alternar menu mobile
+    toggleMobileMenu() {
+        console.log('📱 Alternando menu mobile...');
+        
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const sidebar = document.querySelector('.sidebar');
+        
+        if (mobileMenuBtn && sidebar) {
+            const isActive = mobileMenuBtn.classList.contains('active');
+            
+            if (isActive) {
+                // Fechar menu
+                mobileMenuBtn.classList.remove('active');
+                sidebar.classList.remove('mobile-open');
+                document.body.classList.remove('mobile-menu-open');
+            } else {
+                // Abrir menu
+                mobileMenuBtn.classList.add('active');
+                sidebar.classList.add('mobile-open');
+                document.body.classList.add('mobile-menu-open');
+            }
+        }
+    }
+
+    // Função para atualizar layout mobile
+    updateMobileLayout() {
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const sidebar = document.querySelector('.sidebar');
+        
+        if (this.isMobile) {
+            // Mostrar botão hambúrguer
+            if (mobileMenuBtn) {
+                mobileMenuBtn.style.display = 'flex';
+            }
+            
+            // Esconder sidebar por padrão
+            if (sidebar) {
+                sidebar.classList.add('mobile-hidden');
+            }
+        } else {
+            // Esconder botão hambúrguer
+            if (mobileMenuBtn) {
+                mobileMenuBtn.style.display = 'none';
+                mobileMenuBtn.classList.remove('active');
+            }
+            
+            // Mostrar sidebar
+            if (sidebar) {
+                sidebar.classList.remove('mobile-hidden', 'mobile-open');
+            }
+            
+            document.body.classList.remove('mobile-menu-open');
+        }
     }
 
     renderChapters() {
