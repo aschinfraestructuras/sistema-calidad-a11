@@ -873,14 +873,14 @@ class PortalCalidad {
         const status = (doc.estado || 'Aprobado').toLowerCase();
         const ext = this.getFileExtension(doc.ruta || doc.fileName);
         const tags = doc.tags || [];
-        const isFavorite = this.isFavorite(doc.id || 'manifest_' + doc.titulo);
+        const isFavorite = this.isFavorite(doc.id || 'manifest_' + (doc.titulo || doc.nombre));
         
         return `
             <div class="document-card ${isExternal ? 'external-document' : ''} ${isFavorite ? 'favorite' : ''}">
                 <div class="document-header">
-                    <div class="document-title">${doc.titulo}</div>
+                    <div class="document-title">${doc.titulo || doc.nombre}</div>
                     <div class="document-header-right">
-                        <button class="favorite-btn ${isFavorite ? 'active' : ''}" onclick="portal.toggleFavorite('${doc.id || 'manifest_' + doc.titulo}')" title="${isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos'}">
+                        <button class="favorite-btn ${isFavorite ? 'active' : ''}" onclick="portal.toggleFavorite('${doc.id || 'manifest_' + (doc.titulo || doc.nombre)}')" title="${isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos'}">
                             <span class="favorite-icon">${isFavorite ? '⭐' : '☆'}</span>
                         </button>
                     <div class="document-status ${status}">${doc.estado || 'Aprobado'}</div>
@@ -907,14 +907,14 @@ class PortalCalidad {
                     </div>
                 ` : ''}
                 <div class="document-actions">
-                    <button class="btn-primary" onclick="portal.showViewer('${doc.id || 'manifest_' + doc.titulo}')">
+                    <button class="btn-primary" onclick="portal.showViewer('${doc.id || 'manifest_' + (doc.titulo || doc.nombre)}')">
                         <span class="btn-icon">${isExternal ? '🔗' : '👁️'}</span>
                         <span class="btn-text">${isExternal ? 'Abrir Externo' : 'Ver Documento'}</span>
                     </button>
-                    <button class="btn-secondary" onclick="portal.editDocument('${doc.id || 'manifest_' + doc.titulo}')" title="Editar">
+                    <button class="btn-secondary" onclick="portal.editDocument('${doc.id || 'manifest_' + (doc.titulo || doc.nombre)}')" title="Editar">
                         <span class="btn-icon">✏️</span>
                         </button>
-                    <button class="btn-danger btn-icon-only" onclick="portal.deleteDocument('${doc.id || 'manifest_' + doc.titulo}')" title="Eliminar">
+                    <button class="btn-danger btn-icon-only" onclick="portal.deleteDocument('${doc.id || 'manifest_' + (doc.titulo || doc.nombre)}')" title="Eliminar">
                         <span class="btn-icon">🗑️</span>
                     </button>
                 </div>
@@ -2158,18 +2158,43 @@ class PortalCalidad {
         // Procurar documento no manifest
         if (this.manifest && this.manifest.secciones) {
             for (const section of this.manifest.secciones) {
-                if (section.documentos) {
-                    for (const manifestDoc of section.documentos) {
-                        const manifestDocId = 'manifest_' + manifestDoc.titulo;
+                // Procurar em section.items (documentos principais)
+                if (section.items) {
+                    for (const manifestDoc of section.items) {
+                        const manifestDocId = 'manifest_' + manifestDoc.nombre;
                         if (manifestDocId === docId) {
                             this.currentDocument = {
                                 ...manifestDoc,
+                                titulo: manifestDoc.nombre,
                                 id: manifestDocId,
                                 chapter: section.codigo
                             };
                             this.addToViewHistory(docId);
                             this.showViewerModal();
                             return;
+                        }
+                    }
+                }
+                
+                // Procurar em subcapítulos
+                if (section.subcapitulos) {
+                    for (const subchapter of section.subcapitulos) {
+                        if (subchapter.items) {
+                            for (const manifestDoc of subchapter.items) {
+                                const manifestDocId = 'manifest_' + manifestDoc.nombre;
+                                if (manifestDocId === docId) {
+                                    this.currentDocument = {
+                                        ...manifestDoc,
+                                        titulo: manifestDoc.nombre,
+                                        id: manifestDocId,
+                                        chapter: section.codigo,
+                                        subchapter: subchapter.codigo
+                                    };
+                                    this.addToViewHistory(docId);
+                                    this.showViewerModal();
+                                    return;
+                                }
+                            }
                         }
                     }
                 }
