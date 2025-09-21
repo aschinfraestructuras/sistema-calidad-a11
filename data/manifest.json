@@ -229,7 +229,14 @@
         {
           "codigo": "08-05",
           "titulo": "05 Registros de Calibración",
-          "items": []
+          "items": [
+            {
+              "nombre": "Registro de Calibración de Equipos",
+              "tipo": "html",
+              "ruta": "docs/08_Calibracion_Equipos/registro-calibracion-equipos.html",
+              "descripcion": "Sistema completo de control de calibración de equipos con códigos automáticos, parámetros de medición, certificados y trazabilidad según normativas UNE-EN ISO 9001:2015"
+            }
+          ]
         }
       ]
     },

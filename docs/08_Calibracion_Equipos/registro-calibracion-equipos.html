@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Calibración de Equipos - Sistema de Control de Calidad</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 95%;
+            width: 95%;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #1e3a8a;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .logo-space {
+            width: 150px;
+            height: 80px;
+            border: 2px dashed #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .logo-space img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .logo-space.with-image {
+            border: none;
+            background: white;
+        }
+        
+        .logo-upload {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 2px 4px;
+            font-size: 8px;
+            border-radius: 2px;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        
+        .logo-upload:hover {
+            opacity: 1;
+        }
+        
+        .header-content {
+            text-align: center;
+            flex: 1;
+            margin: 0 20px;
+        }
+        
+        .header-content h1 {
+            margin: 0;
+            font-size: 18px;
+            color: #1e3a8a;
+        }
+        
+        .header-info {
+            text-align: right;
+            font-size: 12px;
+        }
+        
+        .obra-info {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            background: #1e3a8a;
+            color: white;
+            padding: 10px 15px;
+            margin: 0 0 15px 0;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .field-row {
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            gap: 15px;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+        
+        .field-row.full {
+            grid-template-columns: 1fr;
+        }
+        
+        .field-row.two-cols {
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        .field-label {
+            font-weight: bold;
+            color: #374151;
+            font-size: 13px;
+        }
+        
+        .field-input {
+            border: 1px solid #d1d5db;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .field-input.editable {
+            background: #eff6ff;
+            border: 2px dashed #3b82f6;
+            min-height: 20px;
+            cursor: text;
+        }
+        
+        .field-input.textarea {
+            min-height: 60px;
+            resize: vertical;
+        }
+        
+        .equipment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 12px;
+            table-layout: fixed;
+        }
+        
+        .equipment-table th,
+        .equipment-table td {
+            border: 1px solid #d1d5db;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        .equipment-table th {
+            background: #f3f4f6;
+            font-weight: bold;
+            color: #374151;
+        }
+        
+        .equipment-table .editable-cell {
+            background: #eff6ff;
+            border: 2px dashed #3b82f6;
+            min-height: 20px;
+            cursor: text;
+        }
+        
+        .add-row-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        
+        .add-row-btn:hover {
+            background: #059669;
+        }
+        
+        .delete-row-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 10px;
+        }
+        
+        .delete-row-btn:hover {
+            background: #dc2626;
+        }
+        
+        .signatures {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .signature-box {
+            border: 1px solid #d1d5db;
+            padding: 20px;
+            text-align: center;
+            min-height: 120px;
+        }
+        
+        .signature-line {
+            border-bottom: 1px solid #000;
+            height: 40px;
+            margin: 20px 0;
+        }
+        
+        .control-banner {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 12px;
+            color: #92400e;
+        }
+        
+        .code-section {
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        
+        .code-generator {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .code-display {
+            background: #1e3a8a;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+        
+        .btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+        
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+        }
+        
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+            .add-row-btn, .delete-row-btn, .logo-upload { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-space" id="logoSpace">
+                LOGOTIPO
+                <input type="file" id="logoInput" accept="image/*" style="display: none;" onchange="uploadLogo(this)">
+                <button class="logo-upload" onclick="document.getElementById('logoInput').click()">📷</button>
+            </div>
+            <div class="header-content">
+                <h1>REGISTRO DE CALIBRACIÓN DE EQUIPOS</h1>
+                <div style="font-size: 11px; color: #6b7280; margin-top: 5px;">CONTROL DE CALIBRACIÓN Y TRAZABILIDAD</div>
+            </div>
+            <div class="header-info">
+                <div><strong>REVISIÓN Nº:</strong> <span contenteditable="true" style="border-bottom: 1px solid #ccc;">01</span></div>
+                <div style="margin-top: 5px;"><strong>HOJA:</strong> 1 DE 1</div>
+                <div style="margin-top: 5px;"><strong>CÓDIGO:</strong> <span contenteditable="true" style="border-bottom: 1px solid #ccc;">REG-CAL-001</span></div>
+            </div>
+        </div>
+        
+        <div class="obra-info">
+            <strong>OBRA:</strong> AUTOVÍA DEL DUERO (A-11). TRAMO: VARIANTE DE LANGA DE DUERO – VARIANTE DE ARANDA DE DUERO. CLAVE: 12-BU-4690
+        </div>
+        
+        <div class="control-banner">
+            <strong>SISTEMA DE CONTROL:</strong> Este documento registra la calibración de todos los equipos de medición utilizados en obra. Complete la información y mantenga actualizado el estado de calibración de cada equipo según normativas UNE-EN ISO 9001:2015 y UNE-EN ISO/IEC 17025:2017.
+        </div>
+        
+        <div class="section">
+            <div class="section-title">1. INFORMACIÓN BÁSICA DEL EQUIPO</div>
+            
+            <div class="field-row">
+                <div class="field-label">CONTRATISTA:</div>
+                <div class="field-input editable" contenteditable="true">UTE A-11 LANGA-ARANDA</div>
+            </div>
+            <div class="field-row">
+                <div class="field-label">FECHA REGISTRO:</div>
+                <div class="field-input editable" contenteditable="true" id="fechaRegistro"></div>
+            </div>
+            <div class="field-row">
+                <div class="field-label">CÓDIGO DE EQUIPO:</div>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <input type="text" id="codigoEquipoManual" placeholder="Introducir código de equipo" class="field-input" style="flex: 1;" oninput="updateCodigoEquipo()">
+                    <button class="btn btn-secondary" onclick="generateAutoCode()">Auto</button>
+                    <button class="btn btn-primary" onclick="validateCode()">OK</button>
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field-label">CÓDIGO APLICADO:</div>
+                <div class="field-input editable" contenteditable="true" id="codigoAplicado">[Pendiente de asignación]</div>
+            </div>
+            <div class="field-row">
+                <div class="field-label">RESPONSABLE CALIBRACIÓN:</div>
+                <div class="field-input editable" contenteditable="true"></div>
+            </div>
+            <div class="field-row">
+                <div class="field-label">LABORATORIO CALIBRADOR:</div>
+                <div class="field-input editable" contenteditable="true"></div>
+            </div>
+        </div>
+        
+        <div class="code-section">
+            <div style="font-weight: bold; color: #059669; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                SISTEMA DE CODIFICACIÓN DE EQUIPOS
+                <button class="btn btn-success" onclick="manageEquipment()">Gestionar Equipos</button>
+            </div>
+            
+            <div style="background: #f8fafc; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
+                <strong>CATÁLOGO DE EQUIPOS DE MEDICIÓN:</strong>
+                
+                <div class="field-row" style="margin-top: 10px;">
+                    <div class="field-label">TIPO DE EQUIPO:</div>
+                    <select class="field-input" onchange="updateEquipmentCode()">
+                        <option value="">Seleccionar...</option>
+                        <option value="flexometro">FLEXÓMETRO</option>
+                        <option value="nivel">NIVEL ÓPTICO</option>
+                        <option value="teodolito">TEODOLITO</option>
+                        <option value="estacion">ESTACIÓN TOTAL</option>
+                        <option value="gps">GPS</option>
+                        <option value="termometro">TERMÓMETRO</option>
+                        <option value="manometro">MANÓMETRO</option>
+                        <option value="balanza">BALANZA</option>
+                        <option value="cronometro">CRONÓMETRO</option>
+                        <option value="luxometro">LUXÓMETRO</option>
+                        <option value="sonometro">SONÓMETRO</option>
+                        <option value="vibrometro">VIBRÓMETRO</option>
+                        <option value="espesimetro">ESPESÍMETRO</option>
+                        <option value="dureza">DURÓMETRO</option>
+                        <option value="otros">OTROS</option>
+                    </select>
+                </div>
+                
+                <div class="field-row">
+                    <div class="field-label">MARCA/MODELO:</div>
+                    <input type="text" class="field-input" placeholder="ej: LEICA TS06, BOSCH GLL 3-80, etc." onchange="updateEquipmentCode()">
+                </div>
+                
+                <div class="field-row">
+                    <div class="field-label">NÚMERO DE SERIE:</div>
+                    <input type="text" class="field-input" placeholder="Número de serie del equipo" onchange="updateEquipmentCode()">
+                </div>
+                
+                <div class="field-row">
+                    <div class="field-label">CÓDIGO GENERADO:</div>
+                    <div class="code-display" id="equipmentCode">[Seleccione las opciones arriba]</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">2. REGISTRO DE CALIBRACIÓN</div>
+            
+            <table class="equipment-table" id="calibrationTable">
+                <thead>
+                    <tr>
+                        <th style="width: 12%;">CÓDIGO</th>
+                        <th style="width: 20%;">EQUIPO</th>
+                        <th style="width: 15%;">MARCA/MODELO</th>
+                        <th style="width: 12%;">FECHA CALIBRACIÓN</th>
+                        <th style="width: 12%;">PRÓXIMA CALIBRACIÓN</th>
+                        <th style="width: 10%;">ESTADO</th>
+                        <th style="width: 10%;">CERTIFICADO</th>
+                        <th style="width: 9%;">ACCIÓN</th>
+                    </tr>
+                </thead>
+                <tbody id="calibrationTableBody">
+                    <tr>
+                        <td class="editable-cell" contenteditable="true" style="font-weight: bold; color: #1e3a8a;">CAL-001</td>
+                        <td class="editable-cell" contenteditable="true">FLEXÓMETRO</td>
+                        <td class="editable-cell" contenteditable="true">STANLEY 8M</td>
+                        <td class="editable-cell" contenteditable="true">15/09/2025</td>
+                        <td class="editable-cell" contenteditable="true">15/09/2026</td>
+                        <td>
+                            <select class="field-input" style="font-size: 10px; padding: 4px;">
+                                <option value="calibrado">CALIBRADO</option>
+                                <option value="vencido">VENCIDO</option>
+                                <option value="pendiente">PENDIENTE</option>
+                                <option value="rechazado">RECHAZADO</option>
+                            </select>
+                        </td>
+                        <td class="editable-cell" contenteditable="true">CAL-2025-001</td>
+                        <td><button class="delete-row-btn" onclick="deleteRow(this)">×</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <button class="add-row-btn" onclick="addCalibrationRow()">+ Añadir Equipo</button>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">3. PARÁMETROS DE CALIBRACIÓN</div>
+            
+            <table class="equipment-table" id="parametersTable">
+                <thead>
+                    <tr>
+                        <th style="width: 15%;">EQUIPO</th>
+                        <th style="width: 20%;">PARÁMETRO MEDIDO</th>
+                        <th style="width: 15%;">RANGO</th>
+                        <th style="width: 15%;">PRECISIÓN</th>
+                        <th style="width: 15%;">INCERTIDUMBRE</th>
+                        <th style="width: 10%;">UNIDAD</th>
+                        <th style="width: 10%;">ACCIÓN</th>
+                    </tr>
+                </thead>
+                <tbody id="parametersTableBody">
+                    <tr>
+                        <td class="editable-cell" contenteditable="true">FLEXÓMETRO</td>
+                        <td class="editable-cell" contenteditable="true">LONGITUD</td>
+                        <td class="editable-cell" contenteditable="true">0-8 m</td>
+                        <td class="editable-cell" contenteditable="true">±1 mm</td>
+                        <td class="editable-cell" contenteditable="true">±0.5 mm</td>
+                        <td class="editable-cell" contenteditable="true">mm</td>
+                        <td><button class="delete-row-btn" onclick="deleteRow(this)">×</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <button class="add-row-btn" onclick="addParameterRow()">+ Añadir Parámetro</button>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">4. CERTIFICADOS Y DOCUMENTACIÓN</div>
+            <div class="field-row full">
+                <div class="field-label">CERTIFICADOS DE CALIBRACIÓN ADJUNTOS:</div>
+                <div class="field-input editable textarea" contenteditable="true" style="min-height: 80px;"></div>
+            </div>
+            <div class="field-row full">
+                <div class="field-label">ACREDITACIÓN DEL LABORATORIO:</div>
+                <div class="field-input editable textarea" contenteditable="true" style="min-height: 60px;"></div>
+            </div>
+            <div class="field-row full">
+                <div class="field-label">NORMATIVAS APLICABLES:</div>
+                <div class="field-input editable textarea" contenteditable="true" style="min-height: 60px;"></div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">5. CONTROL DE TRAZABILIDAD</div>
+            <div class="field-row">
+                <div class="field-label">PATRÓN DE REFERENCIA:</div>
+                <div class="field-input editable" contenteditable="true"></div>
+            </div>
+            <div class="field-row">
+                <div class="field-label">FECHA ÚLTIMA VERIFICACIÓN:</div>
+                <div class="field-input editable" contenteditable="true"></div>
+            </div>
+            <div class="field-row">
+                <div class="field-label">PRÓXIMA VERIFICACIÓN:</div>
+                <div class="field-input editable" contenteditable="true"></div>
+            </div>
+            <div class="field-row full">
+                <div class="field-label">OBSERVACIONES DE CALIBRACIÓN:</div>
+                <div class="field-input editable textarea" contenteditable="true" style="min-height: 80px;"></div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">6. SEGUIMIENTO Y MANTENIMIENTO</div>
+            <div class="field-row full">
+                <div class="field-label">PLAN DE MANTENIMIENTO:</div>
+                <div class="field-input editable textarea" contenteditable="true" style="min-height: 80px;"></div>
+            </div>
+            <div class="field-row full">
+                <div class="field-label">HISTORIAL DE INCIDENCIAS:</div>
+                <div class="field-input editable textarea" contenteditable="true" style="min-height: 60px;"></div>
+            </div>
+            <div class="field-row full">
+                <div class="field-label">ACCIONES CORRECTIVAS:</div>
+                <div class="field-input editable textarea" contenteditable="true" style="min-height: 60px;"></div>
+            </div>
+        </div>
+        
+        <div class="signatures">
+            <div class="signature-box">
+                <div style="font-weight: bold; margin-bottom: 10px;">CALIBRADO POR</div>
+                <div class="signature-line">Firma y fecha</div>
+                <div style="margin-top: 10px; font-size: 11px;">
+                    <span contenteditable="true" style="border-bottom: 1px dashed #ccc; padding: 2px;">Nombre</span>
+                </div>
+            </div>
+            
+            <div class="signature-box">
+                <div style="font-weight: bold; margin-bottom: 10px;">VERIFICADO POR</div>
+                <div class="signature-line">Firma y fecha</div>
+                <div style="margin-top: 10px; font-size: 11px;">
+                    <span contenteditable="true" style="border-bottom: 1px dashed #ccc; padding: 2px;">José Antunes</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuración inicial
+        document.addEventListener('DOMContentLoaded', function() {
+            setCurrentDate();
+            generateAutoCode();
+        });
+
+        // Establecer fecha actual
+        function setCurrentDate() {
+            const today = new Date();
+            const dateStr = today.toLocaleDateString('es-ES');
+            document.getElementById('fechaRegistro').textContent = dateStr;
+        }
+
+        // Generar código automático
+        function generateAutoCode() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+            
+            const autoCode = `CAL-${year}${month}${day}-${random}`;
+            document.getElementById('codigoEquipoManual').value = autoCode;
+            updateCodigoEquipo();
+        }
+
+        // Actualizar código del equipo
+        function updateCodigoEquipo() {
+            const manualCode = document.getElementById('codigoEquipoManual').value;
+            if (manualCode) {
+                document.getElementById('codigoAplicado').textContent = manualCode;
+            }
+        }
+
+        // Validar código
+        function validateCode() {
+            const code = document.getElementById('codigoEquipoManual').value;
+            if (code) {
+                alert(`Código validado: ${code}`);
+                updateCodigoEquipo();
+            } else {
+                alert('Por favor, introduzca un código de equipo');
+            }
+        }
+
+        // Actualizar código del equipo en el catálogo
+        function updateEquipmentCode() {
+            const tipo = document.querySelector('select').value;
+            const marca = document.querySelector('input[placeholder*="LEICA"]').value;
+            const serie = document.querySelector('input[placeholder*="serie"]').value;
+            
+            if (tipo && marca && serie) {
+                const code = `${tipo.toUpperCase().substr(0,3)}-${marca.toUpperCase().substr(0,3)}-${serie.toUpperCase().substr(0,3)}`;
+                document.getElementById('equipmentCode').textContent = code;
+            } else {
+                document.getElementById('equipmentCode').textContent = '[Seleccione las opciones arriba]';
+            }
+        }
+
+        // Gestionar equipos
+        function manageEquipment() {
+            alert('Sistema de gestión de equipos - Funcionalidad en desarrollo');
+        }
+
+        // Añadir fila de calibración
+        function addCalibrationRow() {
+            const tableBody = document.getElementById('calibrationTableBody');
+            const newRow = tableBody.insertRow();
+            
+            const code = `CAL-${String(Date.now()).slice(-6)}`;
+            
+            newRow.innerHTML = `
+                <td class="editable-cell" contenteditable="true" style="font-weight: bold; color: #1e3a8a;">${code}</td>
+                <td class="editable-cell" contenteditable="true">NUEVO EQUIPO</td>
+                <td class="editable-cell" contenteditable="true">MARCA/MODELO</td>
+                <td class="editable-cell" contenteditable="true">${new Date().toLocaleDateString('es-ES')}</td>
+                <td class="editable-cell" contenteditable="true">${new Date(Date.now() + 365*24*60*60*1000).toLocaleDateString('es-ES')}</td>
+                <td>
+                    <select class="field-input" style="font-size: 10px; padding: 4px;">
+                        <option value="pendiente">PENDIENTE</option>
+                        <option value="calibrado">CALIBRADO</option>
+                        <option value="vencido">VENCIDO</option>
+                        <option value="rechazado">RECHAZADO</option>
+                    </select>
+                </td>
+                <td class="editable-cell" contenteditable="true">CERT-${code}</td>
+                <td><button class="delete-row-btn" onclick="deleteRow(this)">×</button></td>
+            `;
+        }
+
+        // Añadir fila de parámetros
+        function addParameterRow() {
+            const tableBody = document.getElementById('parametersTableBody');
+            const newRow = tableBody.insertRow();
+            
+            newRow.innerHTML = `
+                <td class="editable-cell" contenteditable="true">EQUIPO</td>
+                <td class="editable-cell" contenteditable="true">PARÁMETRO</td>
+                <td class="editable-cell" contenteditable="true">RANGO</td>
+                <td class="editable-cell" contenteditable="true">PRECISIÓN</td>
+                <td class="editable-cell" contenteditable="true">INCERTIDUMBRE</td>
+                <td class="editable-cell" contenteditable="true">UNIDAD</td>
+                <td><button class="delete-row-btn" onclick="deleteRow(this)">×</button></td>
+            `;
+        }
+
+        // Eliminar fila
+        function deleteRow(button) {
+            if (confirm('¿Está seguro de que desea eliminar esta fila?')) {
+                button.closest('tr').remove();
+            }
+        }
+
+        // Subir logo
+        function uploadLogo(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const logoSpace = document.getElementById('logoSpace');
+                    logoSpace.innerHTML = `<img src="${e.target.result}" alt="Logo">`;
+                    logoSpace.classList.add('with-image');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Guardar datos en localStorage
+        function saveData() {
+            const formData = {
+                fecha: document.getElementById('fechaRegistro').textContent,
+                codigo: document.getElementById('codigoAplicado').textContent,
+                timestamp: new Date().toISOString()
+            };
+            
+            localStorage.setItem('calibrationData', JSON.stringify(formData));
+            alert('Datos guardados correctamente');
+        }
+
+        // Cargar datos del localStorage
+        function loadData() {
+            const savedData = localStorage.getItem('calibrationData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                document.getElementById('fechaRegistro').textContent = data.fecha;
+                document.getElementById('codigoAplicado').textContent = data.codigo;
+            }
+        }
+
+        // Cargar datos al iniciar
+        loadData();
+
+        // Auto-guardar cada 30 segundos
+        setInterval(saveData, 30000);
+    </script>
+</body>
+</html>
