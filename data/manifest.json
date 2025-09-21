@@ -767,8 +767,50 @@
     },
     {
       "codigo": "21",
-      "titulo": "Informes Mensuales",
-      "items": []
+      "titulo": "Informes y Seguimiento",
+      "items": [],
+      "subcapitulos": [
+        {
+          "codigo": "21-01",
+          "titulo": "01 Informes Mensuales",
+          "items": []
+        },
+        {
+          "codigo": "21-02",
+          "titulo": "02 Informes Trimestrales",
+          "items": []
+        },
+        {
+          "codigo": "21-03",
+          "titulo": "03 Informes Anuales",
+          "items": []
+        },
+        {
+          "codigo": "21-04",
+          "titulo": "04 Informes de Progreso de Obra",
+          "items": []
+        },
+        {
+          "codigo": "21-05",
+          "titulo": "05 Seguimiento de Hitos y Plazos",
+          "items": []
+        },
+        {
+          "codigo": "21-06",
+          "titulo": "06 Presentaciones de Gestión",
+          "items": []
+        },
+        {
+          "codigo": "21-07",
+          "titulo": "07 Cuadros de Mando y KPIs",
+          "items": []
+        },
+        {
+          "codigo": "21-08",
+          "titulo": "08 Informes de Desviaciones",
+          "items": []
+        }
+      ]
     }
   ]
 }
