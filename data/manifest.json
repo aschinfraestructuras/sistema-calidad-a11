@@ -175,7 +175,14 @@
         {
           "codigo": "07-02",
           "titulo": "02 Equipos y Maquinaria",
-          "items": []
+          "items": [
+            {
+              "nombre": "Registro de Equipos y Maquinaria por Tajo",
+              "tipo": "html",
+              "ruta": "docs/07_Equipos_Maquinaria_Tajos/registro-equipos-maquinaria-tajos.html",
+              "descripcion": "Sistema completo de control de recursos de obra con códigos automáticos, tabelas editáveis, gestão de pessoal e equipamentos"
+            }
+          ]
         },
         {
           "codigo": "07-03",
