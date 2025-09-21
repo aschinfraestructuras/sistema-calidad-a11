@@ -334,13 +334,13 @@ class PortalCalidad {
         this.showDocumentsSection();
         this.updateBreadcrumb(section);
         
-        // Verificar se tem subcapítulos (separadores)
-        const hasSubchapters = section.items && section.items.some(item => item.tipo === 'separador');
+        // Verificar se tem subcapítulos
+        const hasSubchapters = section.subcapitulos && section.subcapitulos.length > 0;
         
         if (hasSubchapters) {
             this.renderSubchapters();
         } else {
-        this.renderDocuments();
+            this.renderDocuments();
         }
     }
 
@@ -497,8 +497,8 @@ class PortalCalidad {
             return;
         }
         
-        // Filtrar apenas os separadores (subcapítulos)
-        const subchapters = this.currentChapter.items ? this.currentChapter.items.filter(item => item.tipo === 'separador') : [];
+        // Usar a propriedade subcapitulos
+        const subchapters = this.currentChapter.subcapitulos || [];
         
         console.log('📁 Subcapítulos encontrados:', subchapters.length);
         
