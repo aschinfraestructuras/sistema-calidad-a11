@@ -196,7 +196,7 @@
         {
           "codigo": "07-02",
           "titulo": "02 Equipos y Maquinaria",
-          "items": [
+      "items": [
             {
               "nombre": "Registro de Equipos y Maquinaria por Tajo",
               "tipo": "html",
@@ -321,7 +321,7 @@
         {
           "codigo": "10-03",
           "titulo": "03 No Conformidades",
-          "items": [
+      "items": [
             {
               "nombre": "Gestión de No Conformidades",
               "tipo": "html",
@@ -397,7 +397,7 @@
         {
           "codigo": "12-02",
           "titulo": "02 Cálculos Estructurales",
-          "items": [
+      "items": [
             {
               "nombre": "Cálculos y Notas Técnicas",
               "tipo": "html",
@@ -436,7 +436,7 @@
         {
           "codigo": "13-01",
           "titulo": "01 Replanteos",
-          "items": [
+      "items": [
             {
               "nombre": "Control Geométrico y Topográfico",
               "tipo": "html",
@@ -537,7 +537,7 @@
         {
           "codigo": "15-05",
           "titulo": "05 Ensayos de obra - Actas y Informes",
-          "items": [
+      "items": [
             {
               "nombre": "Acta de Ensayos de Obra - Laboratorio",
               "tipo": "html",
@@ -759,7 +759,7 @@
         {
           "codigo": "16-10",
           "titulo": "10 Registros",
-          "items": [
+      "items": [
             {
               "nombre": "Registros de Obra",
               "tipo": "html",
@@ -826,7 +826,7 @@
         {
           "codigo": "17-04",
           "titulo": "04 Previsiones de Costes",
-          "items": [
+      "items": [
             {
               "nombre": "Previsiones de Costes",
               "tipo": "html",
@@ -917,7 +917,7 @@
         {
           "codigo": "18-06",
           "titulo": "06 Pliego de Obra",
-          "items": [
+      "items": [
             {
               "nombre": "Pliego de Obra",
               "tipo": "html",
@@ -1016,12 +1016,26 @@
         {
           "codigo": "20-04",
           "titulo": "04 Auditorias de Calidad",
-          "items": []
+      "items": [
+            {
+              "nombre": "Auditorías de Proveedores - Calidad",
+              "tipo": "html",
+              "ruta": "docs/20_Auditorias/auditorias-proveedores-calidad.html",
+              "descripcion": "Sistema completo de auditorías de proveedores con evaluación de criterios de calidad, gestión de no conformidades, fortalezas y oportunidades de mejora según UNE-EN ISO 9001:2015"
+            }
+          ]
         },
         {
           "codigo": "20-05",
           "titulo": "05 Auditorias Ambientales",
-          "items": []
+          "items": [
+            {
+              "nombre": "Auditorías Ambientales",
+              "tipo": "html",
+              "ruta": "docs/20_Auditorias/auditorias-ambientales.html",
+              "descripcion": "Sistema completo de auditorías ambientales con evaluación de aspectos ambientales, gestión de no conformidades, fortalezas y oportunidades de mejora según UNE-EN ISO 14001:2015"
+            }
+          ]
         },
         {
           "codigo": "20-06",
@@ -1058,7 +1072,7 @@
         {
           "codigo": "21-01",
           "titulo": "01 Informes Mensuales",
-          "items": [
+      "items": [
             {
               "nombre": "Informe de Seguimiento y Control de Calidad",
               "tipo": "html",
