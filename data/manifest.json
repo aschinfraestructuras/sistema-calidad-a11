@@ -1040,7 +1040,14 @@
         {
           "codigo": "20-06",
           "titulo": "06 Auditorias de Seguridad",
-          "items": []
+          "items": [
+            {
+              "nombre": "Auditorías de Seguridad y Salud Laboral",
+              "tipo": "html",
+              "ruta": "docs/20_Auditorias/auditorias-seguridad.html",
+              "descripcion": "Sistema completo de auditorías de seguridad y salud laboral con evaluación de riesgos, gestión de no conformidades, fortalezas y oportunidades de mejora según UNE-EN ISO 45001:2018 y normativa española"
+            }
+          ]
         },
         {
           "codigo": "20-07",
