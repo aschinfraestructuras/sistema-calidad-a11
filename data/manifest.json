@@ -980,7 +980,14 @@
         {
           "codigo": "20-01",
           "titulo": "01 Plan de Auditorias",
-          "items": []
+          "items": [
+            {
+              "nombre": "Plan de Auditorías",
+              "tipo": "html",
+              "ruta": "docs/20_Auditorias/plan-auditorias.html",
+              "descripcion": "Sistema completo de planificación de auditorías con programación, criterios, metodología, recursos necesarios y seguimiento según UNE-EN ISO 9001:2015, ISO 14001:2015 e ISO 45001:2018"
+            }
+          ]
         },
         {
           "codigo": "20-02",
@@ -997,7 +1004,14 @@
         {
           "codigo": "20-03",
           "titulo": "03 Auditorias Externas",
-          "items": []
+          "items": [
+            {
+              "nombre": "Auditorías Externas",
+              "tipo": "html",
+              "ruta": "docs/20_Auditorias/auditorias-externas.html",
+              "descripcion": "Sistema completo de gestión de auditorías externas con organismos certificadores, preparación, seguimiento y acciones correctivas según UNE-EN ISO 9001:2015, ISO 14001:2015 e ISO 45001:2018"
+            }
+          ]
         },
         {
           "codigo": "20-04",

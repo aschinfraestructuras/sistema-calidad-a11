@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditorías Externas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 95%;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="external" width="25" height="25" patternUnits="userSpaceOnUse"><rect x="0" y="0" width="25" height="25" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><rect x="5" y="5" width="15" height="15" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23external)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            border: 3px solid rgba(255,255,255,0.3);
+        }
+
+        .logo.asch {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+
+        .logo.ohla {
+            background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .project-info {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .project-info h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .project-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 30px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            background: #f8f9fa;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #8e44ad;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #8e44ad;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-icon {
+            width: 28px;
+            height: 28px;
+            background: #8e44ad;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #8e44ad;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: white;
+            font-family: inherit;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #8e44ad;
+            box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.1);
+            transform: translateY(-1px);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .external-grid {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .external-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #e9ecef;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .external-item:hover {
+            background: #e9ecef;
+            border-left-color: #8e44ad;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .external-item input, .external-item select {
+            margin: 0;
+        }
+
+        .add-external-btn {
+            background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .add-external-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(142, 68, 173, 0.3);
+        }
+
+        .signature-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .signature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .signature-box {
+            text-align: center;
+            padding: 25px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+
+        .signature-box:hover {
+            border-color: #8e44ad;
+            transform: translateY(-2px);
+        }
+
+        .signature-line {
+            border-bottom: 2px solid #333;
+            margin: 25px 0 15px;
+            height: 2px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(142, 68, 173, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(149, 165, 166, 0.3);
+        }
+
+        .code-generator {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .code-display {
+            font-weight: bold;
+            letter-spacing: 1px;
+            font-size: 18px;
+        }
+
+        .btn-generate {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-generate:hover {
+            background: #c0392b;
+            transform: translateY(-1px);
+        }
+
+        .alert {
+            padding: 18px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid;
+            font-weight: 500;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left-color: #17a2b8;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border-left-color: #ffc107;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border-left-color: #28a745;
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            border-left: 5px solid #8e44ad;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .summary-card h3 {
+            color: #8e44ad;
+            margin-bottom: 15px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .summary-card .number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .normative-reference {
+            background: #f3e5f5;
+            border-left: 5px solid #8e44ad;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .normative-reference h4 {
+            color: #8e44ad;
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .normative-reference p {
+            color: #555;
+            font-size: 14px;
+            margin: 6px 0;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .form-row, .form-row-3 {
+                grid-template-columns: 1fr;
+            }
+            
+            .external-item {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .signature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .content {
+                padding: 25px;
+            }
+
+            .logos {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .project-details {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            .action-buttons, .btn-generate, .add-external-btn {
+                display: none;
+            }
+            
+            .container {
+                box-shadow: none;
+            }
+            
+            .section {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <div class="logos">
+                    <div class="logo asch">ASCH</div>
+                    <div class="logo ohla">OHLA</div>
+                </div>
+                <h1>AUDITORÍAS EXTERNAS</h1>
+                <div class="subtitle">Gestión de Auditorías por Organismos Externos</div>
+                <div class="project-info">
+                    <h3>📋 Información del Proyecto</h3>
+                    <div class="project-details">
+                        <div><strong>Proyecto:</strong> Autovía A-11</div>
+                        <div><strong>Contratista:</strong> ASCH-OHLA</div>
+                        <div><strong>Cliente:</strong> Ministerio de Fomento</div>
+                        <div><strong>Fecha:</strong> <span id="currentDate"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Código de Documento -->
+            <div class="code-generator">
+                <div>
+                    <strong>Código Documento:</strong> <span class="code-display" id="docCode">AE-2025-001</span>
+                </div>
+                <button class="btn-generate" onclick="generateDocCode()">Generar Nuevo</button>
+            </div>
+
+            <!-- Información General -->
+            <div class="section">
+                <div class="section-title">
+                    <div class="section-icon">📋</div>
+                    Información General
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="projectName">Proyecto:</label>
+                        <input type="text" id="projectName" value="Autovía A-11" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="contractor">Contratista:</label>
+                        <input type="text" id="contractor" value="ASCH-OHLA" readonly>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="client">Cliente:</label>
+                        <input type="text" id="client" placeholder="Ministerio de Fomento">
+                    </div>
+                    <div class="form-group">
+                        <label for="auditCoordinator">Coordinador de Auditorías:</label>
+                        <input type="text" id="auditCoordinator" placeholder="Nombre del coordinador">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="documentDate">Fecha del Documento:</label>
+                        <input type="date" id="documentDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="version">Versión:</label>
+                        <input type="text" id="version" placeholder="v1.0" value="v1.0">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Descripción del Documento:</label>
+                    <textarea id="description" placeholder="Descripción detallada del documento de auditorías externas..."></textarea>
+                </div>
+            </div>
+
+            <!-- Referencias Normativas -->
+            <div class="section">
+                <div class="section-title">
+                    <div class="section-icon">📚</div>
+                    Referencias Normativas
+                </div>
+                
+                <div class="normative-reference">
+                    <h4>🏆 UNE-EN ISO 9001:2015 - Sistemas de Gestión de Calidad</h4>
+                    <p><strong>Artículo 9.2:</strong> Auditoría interna</p>
+                    <p><strong>Artículo 9.3:</strong> Revisión por la dirección</p>
+                    <p><strong>Objetivo:</strong> Verificar la conformidad del sistema de gestión de calidad</p>
+                </div>
+
+                <div class="normative-reference">
+                    <h4>🌍 UNE-EN ISO 14001:2015 - Sistemas de Gestión Ambiental</h4>
+                    <p><strong>Artículo 9.2:</strong> Auditoría interna</p>
+                    <p><strong>Artículo 9.3:</strong> Revisión por la dirección</p>
+                    <p><strong>Objetivo:</strong> Evaluar el desempeño ambiental del sistema</p>
+                </div>
+
+                <div class="normative-reference">
+                    <h4>🛡️ UNE-EN ISO 45001:2018 - Sistemas de Gestión de Seguridad y Salud</h4>
+                    <p><strong>Artículo 9.2:</strong> Auditoría interna</p>
+                    <p><strong>Artículo 9.3:</strong> Revisión por la dirección</p>
+                    <p><strong>Objetivo:</strong> Verificar la eficacia del sistema de SST</p>
+                </div>
+            </div>
+
+            <!-- Auditorías Externas Programadas -->
+            <div class="section">
+                <div class="section-title">
+                    <div class="section-icon">🏢</div>
+                    Auditorías Externas Programadas
+                </div>
+                
+                <div class="external-grid">
+                    <div class="external-item">
+                        <div>
+                            <label>Organismo Auditor</label>
+                            <input type="text" placeholder="Ej: AENOR, SGS, Bureau Veritas">
+                        </div>
+                        <div>
+                            <label>Fecha Programada</label>
+                            <input type="date">
+                        </div>
+                        <div>
+                            <label>Tipo de Auditoría</label>
+                            <select>
+                                <option value="">Seleccionar</option>
+                                <option value="certificacion">Certificación</option>
+                                <option value="recertificacion">Recertificación</option>
+                                <option value="seguimiento">Seguimiento</option>
+                                <option value="ampliacion">Ampliación</option>
+                                <option value="especial">Auditoría Especial</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Estado</label>
+                            <select>
+                                <option value="">Seleccionar</option>
+                                <option value="programada">Programada</option>
+                                <option value="en-curso">En Curso</option>
+                                <option value="completada">Completada</option>
+                                <option value="cancelada">Cancelada</option>
+                                <option value="aplazada">Aplazada</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="add-external-btn" onclick="addExternalItem()">
+                    ➕ Añadir Auditoría Externa
+                </button>
+
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <h3>Total Auditorías</h3>
+                        <div class="number" id="totalAudits">1</div>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Programadas</h3>
+                        <div class="number" id="scheduledAudits">0</div>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Completadas</h3>
+                        <div class="number" id="completedAudits">0</div>
+                    </div>
+                    <div class="summary-card">
+                        <h3>En Curso</h3>
+                        <div class="number" id="inProgressAudits">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preparación para Auditorías -->
+            <div class="section">
+                <div class="section-title">
+                    <div class="section-icon">⚙️</div>
+                    Preparación para Auditorías
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="preparationChecklist">Lista de Verificación de Preparación:</label>
+                        <textarea id="preparationChecklist" placeholder="Lista de elementos a verificar antes de la auditoría..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="documentationRequired">Documentación Requerida:</label>
+                        <textarea id="documentationRequired" placeholder="Documentos necesarios para la auditoría..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="teamPreparation">Preparación del Equipo:</label>
+                        <textarea id="teamPreparation" placeholder="Actividades de preparación del equipo..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="facilitiesPreparation">Preparación de Instalaciones:</label>
+                        <textarea id="facilitiesPreparation" placeholder="Preparación de las instalaciones..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seguimiento y Acciones -->
+            <div class="section">
+                <div class="section-title">
+                    <div class="section-icon">📊</div>
+                    Seguimiento y Acciones
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="followUpActions">Acciones de Seguimiento:</label>
+                        <textarea id="followUpActions" placeholder="Acciones derivadas de las auditorías externas..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="improvementOpportunities">Oportunidades de Mejora:</label>
+                        <textarea id="improvementOpportunities" placeholder="Oportunidades identificadas..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nonConformities">No Conformidades:</label>
+                        <textarea id="nonConformities" placeholder="No conformidades identificadas..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="correctiveActions">Acciones Correctivas:</label>
+                        <textarea id="correctiveActions" placeholder="Acciones correctivas implementadas..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Firmas y Aprobaciones -->
+            <div class="section">
+                <div class="section-title">
+                    <div class="section-icon">✍️</div>
+                    Firmas y Aprobaciones
+                </div>
+                
+                <div class="signature-section">
+                    <div class="signature-grid">
+                        <div class="signature-box">
+                            <h4>Responsable de Calidad</h4>
+                            <div class="signature-line"></div>
+                            <p>Nombre: <input type="text" id="qualityManagerName" placeholder="Nombre completo"></p>
+                            <p>Colegiado: <input type="text" id="qualityManagerNumber" placeholder="Nº Colegiado"></p>
+                            <p>Fecha: <input type="date" id="qualityManagerDate"></p>
+                        </div>
+                        
+                        <div class="signature-box">
+                            <h4>Director de Proyecto</h4>
+                            <div class="signature-line"></div>
+                            <p>Nombre: <input type="text" id="projectDirectorName" placeholder="Nombre completo"></p>
+                            <p>Colegiado: <input type="text" id="projectDirectorNumber" placeholder="Nº Colegiado"></p>
+                            <p>Fecha: <input type="date" id="projectDirectorDate"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="saveData()">
+                    💾 Guardar Documento
+                </button>
+                <button class="btn btn-success" onclick="approveDocument()">
+                    ✅ Aprobar Documento
+                </button>
+                <button class="btn btn-secondary" onclick="printDocument()">
+                    🖨️ Imprimir
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let externalCount = 1;
+
+        // Generar código de documento automático
+        function generateDocCode() {
+            const year = new Date().getFullYear();
+            const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+            const code = `AE-${year}-${random}`;
+            document.getElementById('docCode').textContent = code;
+        }
+
+        // Actualizar fecha actual
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('es-ES');
+        document.getElementById('documentDate').value = new Date().toISOString().split('T')[0];
+
+        // Añadir auditoría externa
+        function addExternalItem() {
+            externalCount++;
+            const externalGrid = document.querySelector('.external-grid');
+            const newExternalItem = document.createElement('div');
+            newExternalItem.className = 'external-item';
+            newExternalItem.innerHTML = `
+                <div>
+                    <label>Organismo Auditor</label>
+                    <input type="text" placeholder="Ej: AENOR, SGS, Bureau Veritas">
+                </div>
+                <div>
+                    <label>Fecha Programada</label>
+                    <input type="date">
+                </div>
+                <div>
+                    <label>Tipo de Auditoría</label>
+                    <select>
+                        <option value="">Seleccionar</option>
+                        <option value="certificacion">Certificación</option>
+                        <option value="recertificacion">Recertificación</option>
+                        <option value="seguimiento">Seguimiento</option>
+                        <option value="ampliacion">Ampliación</option>
+                        <option value="especial">Auditoría Especial</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Estado</label>
+                    <select>
+                        <option value="">Seleccionar</option>
+                        <option value="programada">Programada</option>
+                        <option value="en-curso">En Curso</option>
+                        <option value="completada">Completada</option>
+                        <option value="cancelada">Cancelada</option>
+                        <option value="aplazada">Aplazada</option>
+                    </select>
+                </div>
+            `;
+            externalGrid.appendChild(newExternalItem);
+            updateExternalSummary();
+        }
+
+        // Actualizar resumen de auditorías externas
+        function updateExternalSummary() {
+            const totalAudits = document.querySelectorAll('.external-item').length;
+            let scheduledAudits = 0;
+            let completedAudits = 0;
+            let inProgressAudits = 0;
+
+            document.querySelectorAll('.external-item').forEach(item => {
+                const status = item.querySelector('select:last-of-type').value;
+                
+                if (status === 'programada') scheduledAudits++;
+                if (status === 'completada') completedAudits++;
+                if (status === 'en-curso') inProgressAudits++;
+            });
+
+            document.getElementById('totalAudits').textContent = totalAudits;
+            document.getElementById('scheduledAudits').textContent = scheduledAudits;
+            document.getElementById('completedAudits').textContent = completedAudits;
+            document.getElementById('inProgressAudits').textContent = inProgressAudits;
+        }
+
+        // Event listeners para actualizar resumen
+        document.addEventListener('change', function(e) {
+            if (e.target.closest('.external-item')) {
+                updateExternalSummary();
+            }
+        });
+
+        // Guardar datos
+        function saveData() {
+            const data = {
+                docCode: document.getElementById('docCode').textContent,
+                projectName: document.getElementById('projectName').value,
+                contractor: document.getElementById('contractor').value,
+                client: document.getElementById('client').value,
+                auditCoordinator: document.getElementById('auditCoordinator').value,
+                documentDate: document.getElementById('documentDate').value,
+                version: document.getElementById('version').value,
+                description: document.getElementById('description').value,
+                preparationChecklist: document.getElementById('preparationChecklist').value,
+                documentationRequired: document.getElementById('documentationRequired').value,
+                teamPreparation: document.getElementById('teamPreparation').value,
+                facilitiesPreparation: document.getElementById('facilitiesPreparation').value,
+                followUpActions: document.getElementById('followUpActions').value,
+                improvementOpportunities: document.getElementById('improvementOpportunities').value,
+                nonConformities: document.getElementById('nonConformities').value,
+                correctiveActions: document.getElementById('correctiveActions').value,
+                qualityManagerName: document.getElementById('qualityManagerName').value,
+                qualityManagerNumber: document.getElementById('qualityManagerNumber').value,
+                qualityManagerDate: document.getElementById('qualityManagerDate').value,
+                projectDirectorName: document.getElementById('projectDirectorName').value,
+                projectDirectorNumber: document.getElementById('projectDirectorNumber').value,
+                projectDirectorDate: document.getElementById('projectDirectorDate').value,
+                timestamp: new Date().toISOString()
+            };
+
+            // Guardar en localStorage
+            const savedDocs = JSON.parse(localStorage.getItem('savedExternalAudits') || '[]');
+            savedDocs.push(data);
+            localStorage.setItem('savedExternalAudits', JSON.stringify(savedDocs));
+
+            // Mostrar mensaje de éxito
+            showAlert('Documento de Auditorías Externas guardado correctamente', 'success');
+        }
+
+        // Aprobar documento
+        function approveDocument() {
+            saveData();
+            showAlert('Documento aprobado y guardado', 'success');
+        }
+
+        // Imprimir documento
+        function printDocument() {
+            window.print();
+        }
+
+        // Mostrar alertas
+        function showAlert(message, type) {
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            
+            const content = document.querySelector('.content');
+            content.insertBefore(alert, content.firstChild);
+            
+            setTimeout(() => {
+                alert.remove();
+            }, 3000);
+        }
+
+        // Auto-save cada 30 segundos
+        setInterval(() => {
+            if (document.getElementById('projectName').value) {
+                saveData();
+            }
+        }, 30000);
+
+        // Cargar datos guardados
+        function loadSavedData() {
+            const savedDocs = JSON.parse(localStorage.getItem('savedExternalAudits') || '[]');
+            if (savedDocs.length > 0) {
+                const lastDoc = savedDocs[savedDocs.length - 1];
+                // Cargar datos del último documento guardado
+                Object.keys(lastDoc).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        element.value = lastDoc[key];
+                    }
+                });
+            }
+        }
+
+        // Cargar datos al iniciar
+        loadSavedData();
+    </script>
+</body>
+</html>
