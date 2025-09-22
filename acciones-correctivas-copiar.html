@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acciones Correctivas - Sistema Integral</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 95%;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            background: rgba(255,255,255,0.2);
+            padding: 15px 25px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            font-weight: bold;
+            font-size: 18px;
+            animation: logoGlow 3s ease-in-out infinite;
+            min-width: 120px;
+        }
+
+        @keyframes logoGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255,255,255,0.3); }
+            50% { box-shadow: 0 0 30px rgba(255,255,255,0.6); }
+        }
+
+        .title-section {
+            flex: 1;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 5px solid #f39c12;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #f39c12;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: '🔧';
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-row-4 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #f39c12;
+            box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e1e5e9;
+        }
+
+        th {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+        }
+
+        .metric-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            border-left: 5px solid #f39c12;
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+
+        .metric-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #f39c12;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .signature-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        .signature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .signature-box {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 2px dashed #f39c12;
+        }
+
+        .signature-line {
+            border-bottom: 2px solid #333;
+            margin: 40px 0 10px 0;
+            height: 2px;
+        }
+
+        .auto-save {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-size: 12px;
+            font-weight: 600;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .auto-save.show {
+            opacity: 1;
+        }
+
+        .normative-reference {
+            background: #fef9e7;
+            border-left: 4px solid #f39c12;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .normative-reference h4 {
+            color: #d68910;
+            margin-bottom: 8px;
+        }
+
+        .normative-reference p {
+            color: #34495e;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-pendiente { background: #f39c12; color: white; }
+        .status-en-proceso { background: #3498db; color: white; }
+        .status-implementada { background: #27ae60; color: white; }
+        .status-verificada { background: #9b59b6; color: white; }
+        .status-cerrada { background: #95a5a6; color: white; }
+
+        @media (max-width: 768px) {
+            .form-row, .form-row-3, .form-row-4 {
+                grid-template-columns: 1fr;
+            }
+            
+            .signature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .container {
+                margin: 10px;
+                max-width: calc(100% - 20px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auto-save" id="autoSave">💾 Guardado automático</div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo">ASCH</div>
+                    <div class="logo">OHLA</div>
+                </div>
+                <div class="title-section">
+                    <h1 class="title">ACCIONES CORRECTIVAS</h1>
+                    <p class="subtitle">Sistema Integral de Gestión de Acciones Correctivas y Preventivas</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Información General -->
+            <div class="section">
+                <h2 class="section-title">Información General de la Acción Correctiva</h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="codigoAccion">Código de Acción:</label>
+                        <input type="text" id="codigoAccion" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaRegistro">Fecha de Registro:</label>
+                        <input type="date" id="fechaRegistro">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tipoAccion">Tipo de Acción:</label>
+                        <select id="tipoAccion">
+                            <option value="">Seleccionar tipo</option>
+                            <option value="correctiva">Acción Correctiva</option>
+                            <option value="preventiva">Acción Preventiva</option>
+                            <option value="mejora">Acción de Mejora</option>
+                            <option value="inmediata">Acción Inmediata</option>
+                            <option value="sistemica">Acción Sistémica</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="origenAccion">Origen de la Acción:</label>
+                        <select id="origenAccion">
+                            <option value="">Seleccionar origen</option>
+                            <option value="auditoria-interna">Auditoría Interna</option>
+                            <option value="auditoria-externa">Auditoría Externa</option>
+                            <option value="no-conformidad">No Conformidad</option>
+                            <option value="queja-cliente">Queja de Cliente</option>
+                            <option value="incidente">Incidente</option>
+                            <option value="revision-direccion">Revisión por la Dirección</option>
+                            <option value="analisis-riesgos">Análisis de Riesgos</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="organizacion">Organización:</label>
+                        <input type="text" id="organizacion" placeholder="Nombre de la organización">
+                    </div>
+                    <div class="form-group">
+                        <label for="areaAfectada">Área Afectada:</label>
+                        <input type="text" id="areaAfectada" placeholder="Área o departamento afectado">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Descripción del Problema -->
+            <div class="section">
+                <h2 class="section-title">Descripción del Problema o No Conformidad</h2>
+                
+                <div class="form-group">
+                    <label for="descripcionProblema">Descripción Detallada del Problema:</label>
+                    <textarea id="descripcionProblema" placeholder="Descripción detallada del problema, no conformidad o situación que requiere acción correctiva"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="gravedad">Gravedad del Problema:</label>
+                        <select id="gravedad">
+                            <option value="">Seleccionar gravedad</option>
+                            <option value="critica">Crítica</option>
+                            <option value="alta">Alta</option>
+                            <option value="media">Media</option>
+                            <option value="baja">Baja</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="urgencia">Urgencia de la Acción:</label>
+                        <select id="urgencia">
+                            <option value="">Seleccionar urgencia</option>
+                            <option value="inmediata">Inmediata (24h)</option>
+                            <option value="urgente">Urgente (72h)</option>
+                            <option value="alta">Alta (1 semana)</option>
+                            <option value="media">Media (2 semanas)</option>
+                            <option value="baja">Baja (1 mes)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="evidencia">Evidencia Objetiva:</label>
+                    <textarea id="evidencia" placeholder="Evidencia objetiva que sustenta la necesidad de la acción correctiva"></textarea>
+                </div>
+            </div>
+
+            <!-- Análisis de Causas -->
+            <div class="section">
+                <h2 class="section-title">Análisis de Causas Raíz</h2>
+                
+                <div class="normative-reference">
+                    <h4>🔍 Metodologías de Análisis Aplicables:</h4>
+                    <p><strong>5 Porqués</strong> | <strong>Diagrama de Ishikawa</strong> | <strong>Análisis FODA</strong> | <strong>Análisis de Pareto</strong> | <strong>Brainstorming</strong></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="metodologiaAnalisis">Metodología de Análisis Utilizada:</label>
+                    <select id="metodologiaAnalisis">
+                        <option value="">Seleccionar metodología</option>
+                        <option value="5-porques">5 Porqués</option>
+                        <option value="ishikawa">Diagrama de Ishikawa</option>
+                        <option value="foda">Análisis FODA</option>
+                        <option value="pareto">Análisis de Pareto</option>
+                        <option value="brainstorming">Brainstorming</option>
+                        <option value="otra">Otra metodología</option>
+                    </select>
+                </div>
+
+                <div class="table-container">
+                    <table id="causasTable">
+                        <thead>
+                            <tr>
+                                <th>Nº</th>
+                                <th>Causa Identificada</th>
+                                <th>Tipo de Causa</th>
+                                <th>Probabilidad</th>
+                                <th>Impacto</th>
+                                <th>Prioridad</th>
+                                <th>Observaciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><input type="text" placeholder="Descripción de la causa" style="width: 200px;"></td>
+                                <td>
+                                    <select style="width: 120px;">
+                                        <option value="">Seleccionar</option>
+                                        <option value="humana">Humana</option>
+                                        <option value="material">Material</option>
+                                        <option value="metodo">Método</option>
+                                        <option value="maquina">Máquina</option>
+                                        <option value="medio-ambiente">Medio Ambiente</option>
+                                        <option value="medicion">Medición</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select style="width: 100px;">
+                                        <option value="">Seleccionar</option>
+                                        <option value="alta">Alta</option>
+                                        <option value="media">Media</option>
+                                        <option value="baja">Baja</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select style="width: 100px;">
+                                        <option value="">Seleccionar</option>
+                                        <option value="alto">Alto</option>
+                                        <option value="medio">Medio</option>
+                                        <option value="bajo">Bajo</option>
+                                    </select>
+                                </td>
+                                <td><span class="prioridad-causa">-</span></td>
+                                <td><input type="text" placeholder="Observaciones" style="width: 150px;"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <button type="button" class="btn btn-secondary" onclick="addCausa()">+ Añadir Causa</button>
+            </div>
+
+            <!-- Plan de Acción -->
+            <div class="section">
+                <h2 class="section-title">Plan de Acción Correctiva</h2>
+                
+                <div class="form-row-4">
+                    <div class="metric-card">
+                        <div class="metric-number" id="totalAcciones">0</div>
+                        <div class="metric-label">Total Acciones</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-number" id="accionesPendientes">0</div>
+                        <div class="metric-label">Pendientes</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-number" id="accionesEnProceso">0</div>
+                        <div class="metric-label">En Proceso</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-number" id="accionesCompletadas">0</div>
+                        <div class="metric-label">Completadas</div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table id="accionesTable">
+                        <thead>
+                            <tr>
+                                <th>Nº</th>
+                                <th>Acción Correctiva</th>
+                                <th>Responsable</th>
+                                <th>Fecha Inicio</th>
+                                <th>Fecha Límite</th>
+                                <th>Estado</th>
+                                <th>Recursos</th>
+                                <th>Evidencia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><input type="text" placeholder="Descripción de la acción" style="width: 250px;"></td>
+                                <td><input type="text" placeholder="Responsable" style="width: 150px;"></td>
+                                <td><input type="date" style="width: 120px;"></td>
+                                <td><input type="date" style="width: 120px;"></td>
+                                <td>
+                                    <select style="width: 120px;">
+                                        <option value="">Estado</option>
+                                        <option value="pendiente">Pendiente</option>
+                                        <option value="en-proceso">En Proceso</option>
+                                        <option value="implementada">Implementada</option>
+                                        <option value="verificada">Verificada</option>
+                                        <option value="cerrada">Cerrada</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" placeholder="Recursos necesarios" style="width: 150px;"></td>
+                                <td><input type="text" placeholder="Evidencia de cumplimiento" style="width: 180px;"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <button type="button" class="btn btn-secondary" onclick="addAccion()">+ Añadir Acción</button>
+            </div>
+
+            <!-- Verificación de Efectividad -->
+            <div class="section">
+                <h2 class="section-title">Verificación de Efectividad</h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fechaVerificacion">Fecha de Verificación:</label>
+                        <input type="date" id="fechaVerificacion">
+                    </div>
+                    <div class="form-group">
+                        <label for="verificador">Verificador:</label>
+                        <input type="text" id="verificador" placeholder="Nombre del verificador">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="metodoVerificacion">Método de Verificación:</label>
+                    <textarea id="metodoVerificacion" placeholder="Método utilizado para verificar la efectividad de las acciones implementadas"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="resultadoVerificacion">Resultado de la Verificación:</label>
+                        <select id="resultadoVerificacion">
+                            <option value="">Seleccionar resultado</option>
+                            <option value="efectiva">Efectiva</option>
+                            <option value="parcialmente-efectiva">Parcialmente Efectiva</option>
+                            <option value="no-efectiva">No Efectiva</option>
+                            <option value="requiere-seguimiento">Requiere Seguimiento</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaSeguimiento">Fecha de Seguimiento (si aplica):</label>
+                        <input type="date" id="fechaSeguimiento">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="evidenciaVerificacion">Evidencia de Verificación:</label>
+                    <textarea id="evidenciaVerificacion" placeholder="Evidencia que demuestra la efectividad de las acciones implementadas"></textarea>
+                </div>
+            </div>
+
+            <!-- Cierre de la Acción -->
+            <div class="section">
+                <h2 class="section-title">Cierre de la Acción Correctiva</h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fechaCierre">Fecha de Cierre:</label>
+                        <input type="date" id="fechaCierre">
+                    </div>
+                    <div class="form-group">
+                        <label for="estadoFinal">Estado Final:</label>
+                        <select id="estadoFinal">
+                            <option value="">Seleccionar estado</option>
+                            <option value="cerrada-efectiva">Cerrada - Efectiva</option>
+                            <option value="cerrada-parcial">Cerrada - Parcialmente Efectiva</option>
+                            <option value="cerrada-no-efectiva">Cerrada - No Efectiva</option>
+                            <option value="en-seguimiento">En Seguimiento</option>
+                            <option value="reabierta">Reabierta</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="leccionesAprendidas">Lecciones Aprendidas:</label>
+                    <textarea id="leccionesAprendidas" placeholder="Lecciones aprendidas y mejoras identificadas durante el proceso"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="recomendaciones">Recomendaciones para el Futuro:</label>
+                    <textarea id="recomendaciones" placeholder="Recomendaciones para prevenir la recurrencia del problema"></textarea>
+                </div>
+            </div>
+
+            <!-- Firmas y Aprobaciones -->
+            <div class="signature-section">
+                <h2 class="section-title">Firmas y Aprobaciones</h2>
+                
+                <div class="signature-grid">
+                    <div class="signature-box">
+                        <h4>Responsable de la Acción</h4>
+                        <div class="signature-line"></div>
+                        <p>Nombre y Firma</p>
+                        <input type="text" placeholder="Nombre del responsable" style="margin-top: 10px; text-align: center; border: none; border-bottom: 1px solid #ccc;">
+                    </div>
+                    
+                    <div class="signature-box">
+                        <h4>Verificador</h4>
+                        <div class="signature-line"></div>
+                        <p>Nombre y Firma</p>
+                        <input type="text" placeholder="Nombre del verificador" style="margin-top: 10px; text-align: center; border: none; border-bottom: 1px solid #ccc;">
+                    </div>
+
+                    <div class="signature-box">
+                        <h4>Responsable de Calidad</h4>
+                        <div class="signature-line"></div>
+                        <p>Nombre y Firma</p>
+                        <input type="text" placeholder="Nombre del responsable" style="margin-top: 10px; text-align: center; border: none; border-bottom: 1px solid #ccc;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div style="text-align: center; margin-top: 40px;">
+                <button type="button" class="btn" onclick="saveData()">💾 Guardar Datos</button>
+                <button type="button" class="btn btn-secondary" onclick="printDocument()">🖨️ Imprimir</button>
+                <button type="button" class="btn btn-success" onclick="exportData()">📤 Exportar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Generar código automático
+        function generateCode() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+            
+            return `ACC-CORR-${year}${month}${day}-${random}`;
+        }
+
+        // Inicializar código
+        document.getElementById('codigoAccion').value = generateCode();
+
+        // Calcular prioridad de causa
+        function calculatePrioridad(probabilidad, impacto) {
+            if (probabilidad === 'alta' && impacto === 'alto') return { prioridad: 'ALTA', color: '#e74c3c' };
+            if (probabilidad === 'alta' && impacto === 'medio') return { prioridad: 'ALTA', color: '#e74c3c' };
+            if (probabilidad === 'media' && impacto === 'alto') return { prioridad: 'ALTA', color: '#e74c3c' };
+            if (probabilidad === 'alta' && impacto === 'bajo') return { prioridad: 'MEDIA', color: '#f39c12' };
+            if (probabilidad === 'media' && impacto === 'medio') return { prioridad: 'MEDIA', color: '#f39c12' };
+            if (probabilidad === 'baja' && impacto === 'alto') return { prioridad: 'MEDIA', color: '#f39c12' };
+            return { prioridad: 'BAJA', color: '#27ae60' };
+        }
+
+        // Actualizar prioridad de causa
+        function updatePrioridad(row) {
+            const probabilidad = row.querySelector('td:nth-child(4) select').value;
+            const impacto = row.querySelector('td:nth-child(5) select').value;
+            const prioridadSpan = row.querySelector('.prioridad-causa');
+            
+            if (probabilidad && impacto) {
+                const prioridad = calculatePrioridad(probabilidad, impacto);
+                prioridadSpan.textContent = prioridad.prioridad;
+                prioridadSpan.style.color = prioridad.color;
+                prioridadSpan.style.fontWeight = 'bold';
+            } else {
+                prioridadSpan.textContent = '-';
+                prioridadSpan.style.color = '#666';
+            }
+        }
+
+        // Calcular métricas de acciones
+        function calculateAcciones() {
+            const rows = document.querySelectorAll('#accionesTable tbody tr');
+            let totalAcciones = rows.length;
+            let accionesPendientes = 0;
+            let accionesEnProceso = 0;
+            let accionesCompletadas = 0;
+
+            rows.forEach(row => {
+                const estado = row.querySelector('td:nth-child(6) select').value;
+                if (estado === 'pendiente') accionesPendientes++;
+                else if (estado === 'en-proceso') accionesEnProceso++;
+                else if (estado === 'implementada' || estado === 'verificada' || estado === 'cerrada') accionesCompletadas++;
+            });
+
+            document.getElementById('totalAcciones').textContent = totalAcciones;
+            document.getElementById('accionesPendientes').textContent = accionesPendientes;
+            document.getElementById('accionesEnProceso').textContent = accionesEnProceso;
+            document.getElementById('accionesCompletadas').textContent = accionesCompletadas;
+        }
+
+        // Añadir causa
+        function addCausa() {
+            const table = document.getElementById('causasTable').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+            const rowNumber = table.rows.length;
+            
+            newRow.innerHTML = `
+                <td>${rowNumber}</td>
+                <td><input type="text" placeholder="Descripción de la causa" style="width: 200px;"></td>
+                <td>
+                    <select style="width: 120px;">
+                        <option value="">Seleccionar</option>
+                        <option value="humana">Humana</option>
+                        <option value="material">Material</option>
+                        <option value="metodo">Método</option>
+                        <option value="maquina">Máquina</option>
+                        <option value="medio-ambiente">Medio Ambiente</option>
+                        <option value="medicion">Medición</option>
+                    </select>
+                </td>
+                <td>
+                    <select style="width: 100px;">
+                        <option value="">Seleccionar</option>
+                        <option value="alta">Alta</option>
+                        <option value="media">Media</option>
+                        <option value="baja">Baja</option>
+                    </select>
+                </td>
+                <td>
+                    <select style="width: 100px;">
+                        <option value="">Seleccionar</option>
+                        <option value="alto">Alto</option>
+                        <option value="medio">Medio</option>
+                        <option value="bajo">Bajo</option>
+                    </select>
+                </td>
+                <td><span class="prioridad-causa">-</span></td>
+                <td><input type="text" placeholder="Observaciones" style="width: 150px;"></td>
+            `;
+            
+            // Añadir event listeners
+            const selects = newRow.querySelectorAll('select');
+            selects.forEach(select => {
+                select.addEventListener('change', () => updatePrioridad(newRow));
+            });
+        }
+
+        // Añadir acción
+        function addAccion() {
+            const table = document.getElementById('accionesTable').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+            const rowNumber = table.rows.length;
+            
+            newRow.innerHTML = `
+                <td>${rowNumber}</td>
+                <td><input type="text" placeholder="Descripción de la acción" style="width: 250px;"></td>
+                <td><input type="text" placeholder="Responsable" style="width: 150px;"></td>
+                <td><input type="date" style="width: 120px;"></td>
+                <td><input type="date" style="width: 120px;"></td>
+                <td>
+                    <select style="width: 120px;">
+                        <option value="">Estado</option>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="en-proceso">En Proceso</option>
+                        <option value="implementada">Implementada</option>
+                        <option value="verificada">Verificada</option>
+                        <option value="cerrada">Cerrada</option>
+                    </select>
+                </td>
+                <td><input type="text" placeholder="Recursos necesarios" style="width: 150px;"></td>
+                <td><input type="text" placeholder="Evidencia de cumplimiento" style="width: 180px;"></td>
+            `;
+            
+            // Añadir event listener para recalcular métricas
+            const select = newRow.querySelector('td:nth-child(6) select');
+            select.addEventListener('change', calculateAcciones);
+        }
+
+        // Guardar datos
+        function saveData() {
+            const data = {
+                codigoAccion: document.getElementById('codigoAccion').value,
+                fechaRegistro: document.getElementById('fechaRegistro').value,
+                tipoAccion: document.getElementById('tipoAccion').value,
+                origenAccion: document.getElementById('origenAccion').value,
+                organizacion: document.getElementById('organizacion').value,
+                areaAfectada: document.getElementById('areaAfectada').value,
+                descripcionProblema: document.getElementById('descripcionProblema').value,
+                gravedad: document.getElementById('gravedad').value,
+                urgencia: document.getElementById('urgencia').value,
+                evidencia: document.getElementById('evidencia').value,
+                metodologiaAnalisis: document.getElementById('metodologiaAnalisis').value,
+                fechaVerificacion: document.getElementById('fechaVerificacion').value,
+                verificador: document.getElementById('verificador').value,
+                metodoVerificacion: document.getElementById('metodoVerificacion').value,
+                resultadoVerificacion: document.getElementById('resultadoVerificacion').value,
+                fechaSeguimiento: document.getElementById('fechaSeguimiento').value,
+                evidenciaVerificacion: document.getElementById('evidenciaVerificacion').value,
+                fechaCierre: document.getElementById('fechaCierre').value,
+                estadoFinal: document.getElementById('estadoFinal').value,
+                leccionesAprendidas: document.getElementById('leccionesAprendidas').value,
+                recomendaciones: document.getElementById('recomendaciones').value,
+                timestamp: new Date().toISOString()
+            };
+
+            localStorage.setItem('accionCorrectiva_' + data.codigoAccion, JSON.stringify(data));
+            showAutoSave();
+            console.log('Datos de acción correctiva guardados correctamente');
+        }
+
+        // Mostrar auto-save
+        function showAutoSave() {
+            const autoSave = document.getElementById('autoSave');
+            autoSave.classList.add('show');
+            setTimeout(() => {
+                autoSave.classList.remove('show');
+            }, 2000);
+        }
+
+        // Imprimir documento
+        function printDocument() {
+            window.print();
+        }
+
+        // Exportar datos
+        function exportData() {
+            const data = {
+                codigoAccion: document.getElementById('codigoAccion').value,
+                fechaRegistro: document.getElementById('fechaRegistro').value,
+                tipoAccion: document.getElementById('tipoAccion').value,
+                // ... otros campos
+            };
+
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'accion_correctiva_' + data.codigoAccion + '.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Calcular prioridades cuando cambien las causas
+            document.querySelectorAll('#causasTable tbody tr').forEach(row => {
+                const selects = row.querySelectorAll('select');
+                selects.forEach(select => {
+                    select.addEventListener('change', () => updatePrioridad(row));
+                });
+            });
+
+            // Calcular métricas cuando cambien las acciones
+            document.querySelectorAll('#accionesTable tbody select').forEach(select => {
+                select.addEventListener('change', calculateAcciones);
+            });
+
+            // Auto-save cada 30 segundos
+            setInterval(saveData, 30000);
+
+            // Cargar datos guardados si existen
+            const codigo = document.getElementById('codigoAccion').value;
+            const savedData = localStorage.getItem('accionCorrectiva_' + codigo);
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                Object.keys(data).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        element.value = data[key];
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
