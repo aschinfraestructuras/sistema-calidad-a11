@@ -1088,7 +1088,14 @@
         {
           "codigo": "20-10",
           "titulo": "10 Certificaciones de Auditoria",
-          "items": []
+          "items": [
+            {
+              "nombre": "Certificaciones de Auditoría - Sistema Integral",
+              "tipo": "html",
+              "ruta": "docs/20_Auditorias/certificaciones-auditoria.html",
+              "descripcion": "Sistema integral de gestión de certificaciones y acreditaciones con seguimiento, renovación, historial de auditorías y métricas automáticas según normativas ISO 9001:2015, ISO 14001:2015, ISO 45001:2018"
+            }
+          ]
         }
       ]
     },
