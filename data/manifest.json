@@ -1076,7 +1076,14 @@
         {
           "codigo": "20-09",
           "titulo": "09 Seguimiento de NC",
-          "items": []
+          "items": [
+            {
+              "nombre": "Seguimiento de No Conformidades - Sistema Integral",
+              "tipo": "html",
+              "ruta": "docs/20_Auditorias/seguimiento-nc.html",
+              "descripcion": "Sistema integral de seguimiento y control de no conformidades con análisis de causas raíz, plan de acción, verificación de efectividad y historial de seguimiento según UNE-EN ISO 9001:2015"
+            }
+          ]
         },
         {
           "codigo": "20-10",
