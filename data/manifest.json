@@ -1052,7 +1052,14 @@
         {
           "codigo": "20-07",
           "titulo": "07 Informes de Auditoria",
-          "items": []
+          "items": [
+            {
+              "nombre": "Informes de Auditoría - Sistema Integral",
+              "tipo": "html",
+              "ruta": "docs/20_Auditorias/informes-auditoria.html",
+              "descripcion": "Sistema integral de elaboración y gestión de informes de auditoría con análisis de cumplimiento, métricas automáticas, normativas españolas y europeas según UNE-EN ISO 9001:2015, ISO 14001:2015, ISO 45001:2018"
+            }
+          ]
         },
         {
           "codigo": "20-08",
