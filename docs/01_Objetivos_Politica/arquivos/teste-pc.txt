@@ -1,0 +1,10 @@
+TESTE: ARQUIVO CRIADO NO PC
+============================
+
+Este arquivo foi criado no seu PC e será:
+1. Enviado para GitHub via push
+2. Deploy automático para Vercel
+3. Ficará online automaticamente
+
+Data: 23/09/2025
+Método: PC → GitHub → Vercel
