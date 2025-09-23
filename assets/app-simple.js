@@ -1730,12 +1730,16 @@ class PortalCalidad {
             else if (fileExt === 'pdf') {
                 console.log('📄 Visualizando PDF:', this.currentDocument.titulo);
                 console.log('📄 Dados do arquivo:', this.currentDocument.fileData ? 'Presente' : 'Ausente');
-                console.log('📄 Tipo de dados:', typeof this.currentDocument.fileData);
-                console.log('📄 Início dos dados:', this.currentDocument.fileData ? this.currentDocument.fileData.substring(0, 100) : 'N/A');
+                console.log('📄 Ruta do arquivo:', this.currentDocument.ruta);
                 
-                // Usar fallback nativo diretamente (mais confiável que PDF.js)
-                console.log('🔄 Usando visualização nativa do navegador...');
-                this.renderPDFFallback();
+                // Verificar se é PDF externo (com ruta) ou upload (com fileData)
+                if (this.currentDocument.ruta && !this.currentDocument.fileData) {
+                    console.log('🔄 PDF externo detectado, usando visualização direta...');
+                    this.renderExternalPDF();
+                } else {
+                    console.log('🔄 PDF de upload detectado, usando processamento...');
+                    this.renderPDFFallback();
+                }
             }
             // Para Excel
             else if (['xls', 'xlsx'].includes(fileExt)) {
@@ -3886,6 +3890,139 @@ class PortalCalidad {
         }
     }
     
+    renderExternalPDF() {
+        console.log('🔄 Renderizando PDF externo:', this.currentDocument.ruta);
+        const frame = document.getElementById('documentFrame');
+        
+        try {
+            // Configurar iframe para visualização de PDF
+            frame.style.width = '100%';
+            frame.style.height = '100%';
+            frame.style.border = 'none';
+            frame.style.background = 'white';
+            
+            // Construir URL completa se necessário
+            let pdfUrl = this.currentDocument.ruta;
+            if (!pdfUrl.startsWith('http') && !pdfUrl.startsWith('/')) {
+                // Se é uma URL relativa, construir URL completa
+                const baseUrl = window.location.origin;
+                pdfUrl = `${baseUrl}/${pdfUrl}`;
+            }
+            
+            console.log('📄 URL completa do PDF:', pdfUrl);
+            
+            // Carregar PDF diretamente no iframe
+            frame.src = pdfUrl;
+            
+            // Verificar se carregou
+            frame.onload = () => {
+                console.log('✅ PDF externo carregado com sucesso');
+            };
+            
+            frame.onerror = (error) => {
+                console.error('❌ Erro ao carregar PDF externo:', error);
+                this.showPDFError();
+            };
+            
+            // Timeout para detectar se não carregou
+            setTimeout(() => {
+                try {
+                    const iframeDoc = frame.contentDocument || frame.contentWindow.document;
+                    if (!iframeDoc || iframeDoc.body.innerHTML.includes('error') || iframeDoc.body.innerHTML.includes('Error')) {
+                        console.log('⚠️ PDF pode não ter carregado corretamente, mostrando opções...');
+                        this.showPDFOptions();
+                    }
+                } catch (e) {
+                    // Cross-origin, não conseguimos verificar - assumir que está OK
+                    console.log('📄 PDF carregado (cross-origin, não é possível verificar conteúdo)');
+                }
+            }, 3000);
+            
+        } catch (error) {
+            console.error('❌ Erro no processamento do PDF externo:', error);
+            this.showPDFError();
+        }
+    }
+    
+    showPDFOptions() {
+        const frame = document.getElementById('documentFrame');
+        frame.src = 'about:blank';
+        frame.onload = () => {
+            const iframeDoc = frame.contentDocument || frame.contentWindow.document;
+            iframeDoc.body.innerHTML = `
+                <div style="padding: 40px; text-align: center; font-family: Arial, sans-serif; background: white; min-height: 100vh;">
+                    <div style="font-size: 4rem; margin-bottom: 20px;">📄</div>
+                    <h2 style="color: #1e3a8a; margin-bottom: 20px;">${this.currentDocument.titulo}</h2>
+                    <p style="color: #666; margin-bottom: 30px;">Escolha como visualizar este documento:</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 800px; margin: 0 auto;">
+                        <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                            <div style="font-size: 2rem; margin-bottom: 10px;">🌐</div>
+                            <h3 style="color: #1e3a8a; margin-bottom: 10px;">Visualizar Online</h3>
+                            <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 15px;">Abrir PDF diretamente no navegador</p>
+                            <button onclick="window.open('${this.currentDocument.ruta}', '_blank')" style="background: #3b82f6; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; width: 100%;">
+                                Abrir PDF
+                            </button>
+                        </div>
+                        
+                        <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                            <div style="font-size: 2rem; margin-bottom: 10px;">📥</div>
+                            <h3 style="color: #1e3a8a; margin-bottom: 10px;">Download</h3>
+                            <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 15px;">Baixar arquivo para seu computador</p>
+                            <button onclick="portal.downloadExternalPDF()" style="background: #10b981; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; width: 100%;">
+                                Baixar PDF
+                            </button>
+                        </div>
+                        
+                        <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                            <div style="font-size: 2rem; margin-bottom: 10px;">🖨️</div>
+                            <h3 style="color: #1e3a8a; margin-bottom: 10px;">Imprimir</h3>
+                            <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 15px;">Imprimir documento diretamente</p>
+                            <button onclick="portal.printExternalPDF()" style="background: #f59e0b; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; width: 100%;">
+                                Imprimir PDF
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 30px;">
+                        <button onclick="portal.hideViewer()" style="background: #6c757d; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; margin: 8px; font-size: 14px;">
+                            ✕ Fechar
+                        </button>
+                    </div>
+                </div>
+            `;
+        };
+    }
+    
+    downloadExternalPDF() {
+        if (!this.currentDocument || !this.currentDocument.ruta) return;
+        
+        // Criar link de download
+        const link = document.createElement('a');
+        link.href = this.currentDocument.ruta;
+        link.download = this.currentDocument.titulo + '.pdf';
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        this.showToast('Download iniciado!', 'success');
+    }
+    
+    printExternalPDF() {
+        if (!this.currentDocument || !this.currentDocument.ruta) return;
+        
+        // Abrir PDF em nova janela para impressão
+        const printWindow = window.open(this.currentDocument.ruta, '_blank');
+        if (printWindow) {
+            printWindow.onload = () => {
+                printWindow.print();
+            };
+        } else {
+            this.showToast('Não foi possível abrir para impressão. Tente o download.', 'warning');
+        }
+    }
+
     showPDFError() {
         const frame = document.getElementById('documentFrame');
         frame.src = 'about:blank';
