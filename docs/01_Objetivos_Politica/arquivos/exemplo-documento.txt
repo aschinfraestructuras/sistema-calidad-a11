@@ -1,0 +1,25 @@
+MANUAL DE CALIDAD - SISTEMA A-11
+================================
+
+Este é um exemplo de documento que pode ser substituído por:
+- PDFs reais
+- Arquivos Word (.docx)
+- Planilhas Excel (.xlsx)
+- Apresentações PowerPoint (.pptx)
+- Imagens (.jpg, .png)
+- Vídeos (.mp4)
+- Arquivos ZIP (.zip)
+
+INSTRUÇÕES:
+1. Substitua este arquivo pelo seu documento real
+2. Mantenha o mesmo nome ou renomeie
+3. Faça deploy com: npx vercel --prod
+4. Acesse via URL direta
+
+EXEMPLO DE URL:
+https://sistema-calidad-a11-qw84qqqr8-joses-projects-fbd23352.vercel.app/docs/01_Objetivos_Politica/arquivos/exemplo-documento.txt
+
+LIMITES:
+- Arquivo individual: máximo 50MB
+- Total: máximo 100GB
+- Bandwidth: 100GB/mês
