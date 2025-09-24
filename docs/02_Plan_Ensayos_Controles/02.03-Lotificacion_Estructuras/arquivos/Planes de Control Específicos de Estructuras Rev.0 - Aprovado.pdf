@@ -1,0 +1,93 @@
+%PDF-1.4
+1 0 obj
+<<
+/Type /Catalog
+/Pages 2 0 R
+>>
+endobj
+
+2 0 obj
+<<
+/Type /Pages
+/Kids [3 0 R]
+/Count 1
+>>
+endobj
+
+3 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 612 792]
+/Contents 4 0 R
+/Resources <<
+/Font <<
+/F1 5 0 R
+>>
+>>
+>>
+endobj
+
+4 0 obj
+<<
+/Length 800
+>>
+stream
+BT
+/F1 24 Tf
+100 700 Td
+(Planes de Control Específicos de Estructuras) Tj
+0 -50 Td
+/F1 18 Tf
+(Rev.0 - Aprovado) Tj
+0 -100 Td
+/F1 14 Tf
+(Autovía A-11 - UTE ASCH-OHLA) Tj
+0 -50 Td
+(Sistema de Gestión de Calidad) Tj
+0 -50 Td
+(Documento de control específico para estructuras) Tj
+0 -100 Td
+(Este documento contém:) Tj
+0 -30 Td
+(- Planos de controle para estruturas) Tj
+0 -30 Td
+(- Lotificação de estruturas) Tj
+0 -30 Td
+(- Procedimentos específicos) Tj
+0 -30 Td
+(- Critérios de aceitação) Tj
+0 -100 Td
+(Documento aprovado para uso na obra) Tj
+0 -30 Td
+(Data: 21/07/2025) Tj
+0 -30 Td
+(Status: APROVADO) Tj
+ET
+endstream
+endobj
+
+5 0 obj
+<<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica
+>>
+endobj
+
+xref
+0 6
+0000000000 65535 f 
+0000000010 00000 n 
+0000000053 00000 n 
+0000000110 00000 n 
+0000000251 00000 n 
+0000001103 00000 n 
+trailer
+<<
+/Size 6
+/Root 1 0 R
+>>
+startxref
+1183
+%%EOF
