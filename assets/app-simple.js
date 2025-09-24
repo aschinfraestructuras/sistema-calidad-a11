@@ -903,6 +903,11 @@ class PortalCalidad {
                         <button class="favorite-btn ${isFavorite ? 'active' : ''}" onclick="portal.toggleFavorite('${doc.id || 'manifest_' + (doc.titulo || doc.nombre)}')" title="${isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos'}">
                             <span class="favorite-icon">${isFavorite ? '⭐' : '☆'}</span>
                         </button>
+                        ${isUploaded ? `
+                            <button class="delete-btn" onclick="portal.deleteDocument('${doc.id}')" title="Eliminar documento">
+                                <span class="delete-icon">🗑️</span>
+                            </button>
+                        ` : ''}
                     <div class="document-status ${status}">${doc.estado || 'Aprobado'}</div>
                     </div>
                 </div>
@@ -1946,6 +1951,60 @@ class PortalCalidad {
         } catch (error) {
             console.error('❌ Erro ao eliminar documento:', error);
             this.showToast('Erro ao eliminar documento: ' + error.message, 'error');
+        }
+    }
+
+    // Método para eliminar um documento específico
+    async deleteDocument(docId) {
+        if (!docId) {
+            console.error('❌ ID do documento não fornecido');
+            return;
+        }
+        
+        // Encontrar o documento
+        const doc = this.uploadedDocuments.find(d => d.id === docId);
+        if (!doc) {
+            console.error('❌ Documento não encontrado:', docId);
+            this.showToast('Documento não encontrado', 'error');
+            return;
+        }
+        
+        // Confirmação
+        const confirmMessage = `¿Estás seguro de que quieres eliminar el documento "${doc.titulo || doc.nombre}"?\n\nEsta acción no se puede deshacer.`;
+        if (!confirm(confirmMessage)) {
+            return;
+        }
+        
+        try {
+            this.showLoading(true, 'Eliminando documento...');
+            
+            // Eliminar do IndexedDB
+            const db = await this.getDB();
+            const transaction = db.transaction(['documents'], 'readwrite');
+            const store = transaction.objectStore('documents');
+            await store.delete(docId);
+            
+            // Remover do array local
+            this.uploadedDocuments = this.uploadedDocuments.filter(d => d.id !== docId);
+            this.saveUploadedDocuments();
+            
+            // Remover dos favoritos se estiver lá
+            this.removeFromFavorites(docId);
+            
+            this.showToast(`Documento "${doc.titulo || doc.nombre}" eliminado permanentemente!`, 'success');
+            this.updateStats();
+            
+            // Recarregar a vista actual
+            if (this.currentChapter) {
+                this.renderDocuments();
+            }
+            
+            console.log('✅ Documento eliminado:', doc.titulo || doc.nombre);
+        } catch (error) {
+            console.error('❌ Erro ao eliminar documento:', error);
+            this.showToast('Erro ao eliminar documento: ' + error.message, 'error');
+        } finally {
+            this.showLoading(false);
         }
     }
 
