@@ -2207,6 +2207,14 @@ class PortalCalidad {
                     
                     request.onsuccess = function(event) {
                         const db = event.target.result;
+                        
+                        // Verificar se a base de dados tem as tabelas necessárias
+                        if (!db.objectStoreNames.contains('documents')) {
+                            console.log('⚠️ Base de dados não tem tabela documents, usando localStorage');
+                            resolve([]);
+                            return;
+                        }
+                        
                         const transaction = db.transaction(['documents'], 'readonly');
                         const store = transaction.objectStore('documents');
                         const getRequest = store.get('all_documents');
