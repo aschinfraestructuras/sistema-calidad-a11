@@ -53,7 +53,14 @@
         {
           "codigo": "02-03",
           "titulo": "03 Lotificación Estructuras",
-          "items": []
+          "items": [
+            {
+              "nombre": "Planes de Control Específicos de Estructuras Rev.0 - Aprovado",
+              "tipo": "pdf",
+              "ruta": "02_Plan_Ensayos_Controles/02.03-Lotificación_estructuras/arquivos/Planes de Control Específicos de Estructuras Rev.0 - Aprovado.pdf",
+              "descripcion": "Planes de Control Específicos de Estructuras - Revisión 0 - Documento aprovado com planos de control para estruturas da Autovía A-11"
+            }
+          ]
         }
       ]
     },
