@@ -1,23 +1,24 @@
 {
-  "buildCommand": "echo 'Static site'",
+  "version": 2,
+  "buildCommand": "echo 'FORCE CLEAN DEPLOY - NO CACHE'",
   "outputDirectory": ".",
   "framework": null,
+  "functions": {},
   "headers": [
     {
-      "source": "/(.*\\.html)",
+      "source": "/(.*)",
       "headers": [
         {
-          "key": "Content-Type",
-          "value": "text/html; charset=utf-8"
-        }
-      ]
-    },
-    {
-      "source": "/(.*\\.json)",
-      "headers": [
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate, max-age=0"
+        },
         {
-          "key": "Content-Type",
-          "value": "application/json; charset=utf-8"
+          "key": "Pragma",
+          "value": "no-cache"
+        },
+        {
+          "key": "Expires",
+          "value": "Thu, 01 Jan 1970 00:00:00 GMT"
         }
       ]
     }
