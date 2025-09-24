@@ -1757,7 +1757,7 @@ class PortalCalidad {
                         <div style="padding: 20px; text-align: center; font-family: Arial, sans-serif;">
                             <h2>📄 ${this.currentDocument.titulo}</h2>
                             <p><strong>Tipo de archivo:</strong> ${fileExt.toUpperCase()}</p>
-                            <p><strong>Tamaño:</strong> ${this.formatFileSize(this.currentDocument.fileSize || 0)}</p>
+                            <p><strong>Tamaño:</strong> ${this.currentDocument.fileSize ? this.formatFileSize(this.currentDocument.fileSize) : 'N/A'}</p>
                             <p>Este tipo de archivo no se puede visualizar directamente en el navegador.</p>
                             <p>Use el botón "Descargar" para abrir el archivo con la aplicación apropiada.</p>
                             <div style="margin-top: 20px;">
@@ -2211,6 +2211,15 @@ class PortalCalidad {
                         // Verificar se a base de dados tem as tabelas necessárias
                         if (!db.objectStoreNames.contains('documents')) {
                             console.log('⚠️ Base de dados não tem tabela documents, usando localStorage');
+                            resolve([]);
+                            return;
+                        }
+                        
+                        // Verificar se a transação pode ser criada
+                        try {
+                            const transaction = db.transaction(['documents'], 'readonly');
+                        } catch (error) {
+                            console.log('⚠️ Erro ao criar transação, usando localStorage');
                             resolve([]);
                             return;
                         }
