@@ -2,9 +2,20 @@
   "buildCommand": "echo 'Static site'",
   "outputDirectory": ".",
   "framework": null,
+  "headers": [
+    {
+      "source": "/(.*\\.pdf)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/pdf"
+        }
+      ]
+    }
+  ],
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!docs|assets|data).*)",
       "destination": "/index.html"
     }
   ]
