@@ -38,7 +38,7 @@
                             <!-- ASCH Text -->
                             <text x="0" y="20" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#000000">A</text>
                             
-                            <!-- ASCH S (Red Wave) - Smaller and positioned better -->
+                            <!-- ASCH S (Red Wave) -->
                             <path d="M 12 8 Q 16 8, 20 12 Q 24 16, 20 20 Q 16 24, 12 24 Q 8 24, 6 20 Q 4 16, 8 12 Q 12 8, 16 8" 
                                   fill="#DC2626" stroke="none"/>
                             
@@ -70,63 +70,27 @@
                 </button>
                 
                 <div class="login-error" id="loginError" style="display: none;">
-                    <span class="error-icon">❌</span>
+                    <span class="error-icon">⚠️</span>
                     <span class="error-text">Contraseña incorrecta. Intente nuevamente.</span>
                 </div>
             </div>
             
             <div class="login-footer">
-                <p class="footer-text">Sistema de Gestión de Calidad • ASCH-OHLA</p>
+                <p class="footer-text">Sistema de Gestión de Calidad • UTE A11 LANGA-ARANDA</p>
             </div>
         </div>
     </div>
 
+    <!-- Main App -->
+    <div id="app" class="app-container">
     <!-- Header -->
     <header class="header">
-        <div class="header-container">
-            <!-- Menu hambúrguer para mobile -->
-            <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="portal.toggleMobileMenu()">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-            </button>
-            
-            <div class="logo-section" onclick="portal.showDashboard()" style="cursor: pointer;">
+            <div class="header-content">
+                <div class="header-left">
                 <div class="logo">
-                    <svg width="120" height="60" viewBox="0 0 250 60" xmlns="http://www.w3.org/2000/svg">
-                        <!-- OHLA Logo -->
-                        <g transform="translate(0, 0)">
-                            <!-- OHLA Buildings -->
-                            <rect x="5" y="25" width="3" height="20" fill="#1E3A8A"/>
-                            <rect x="9" y="20" width="3" height="25" fill="#1E3A8A"/>
-                            <rect x="13" y="15" width="3" height="30" fill="#1E3A8A"/>
-                            <rect x="17" y="10" width="3" height="35" fill="#1E3A8A"/>
-                            <rect x="21" y="5" width="3" height="40" fill="#1E3A8A"/>
-                            
-                            <rect x="30" y="20" width="3" height="25" fill="#0EA5E9"/>
-                            <rect x="34" y="15" width="3" height="30" fill="#0EA5E9"/>
-                            <rect x="38" y="10" width="3" height="35" fill="#0EA5E9"/>
-                            <rect x="42" y="5" width="3" height="40" fill="#0EA5E9"/>
-                            
-                            <!-- OHLA Text -->
-                            <text x="50" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1E3A8A">OHLA</text>
-                            <text x="50" y="40" font-family="Arial, sans-serif" font-size="8" fill="#0EA5E9">Progress Enablers</text>
-                        </g>
-                        
-                        <!-- ASCH Logo -->
-                        <g transform="translate(120, 0)">
-                            <!-- ASCH Text -->
-                            <text x="0" y="20" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#000000">A</text>
-                            
-                            <!-- ASCH S (Red Wave) -->
-                            <path d="M 12 8 Q 16 8, 20 12 Q 24 16, 20 20 Q 16 24, 12 24 Q 8 24, 6 20 Q 4 16, 8 12 Q 12 8, 16 8" 
-                                  fill="#DC2626" stroke="none"/>
-                            
-                            <text x="22" y="20" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#000000">CH</text>
-                            
-                            <!-- ASCH Tagline -->
-                            <text x="0" y="40" font-family="Arial, sans-serif" font-size="6" fill="#374151">INFRAESTRUCTURAS Y SERVICIOS</text>
-                        </g>
+                        <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="40" height="40" rx="8" fill="#1E3A8A"/>
+                            <text x="20" y="26" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">A</text>
                     </svg>
                 </div>
                 <div class="title-section">
@@ -151,598 +115,102 @@
                     <span class="btn-icon">📊</span>
                     <span class="btn-text">Dashboard</span>
                 </button>
-                <button id="themeToggleBtn" class="theme-toggle-btn" onclick="portal.toggleTheme()" title="Cambiar Tema">
-                    <span class="btn-icon">🌙</span>
-                    <span class="btn-text">Tema</span>
-                </button>
-                <button id="logoutBtn" class="logout-btn" onclick="portal.logout()" title="Cerrar Sesión">
-                    <span class="btn-icon">🚪</span>
-                    <span class="btn-text">Salir</span>
-                </button>
-            </div>
+                </div>
         </div>
     </header>
 
-    <!-- Main Layout -->
-    <div class="main-layout">
+        <!-- Main Content -->
+        <main class="main-content">
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-header">
                 <h3>Capítulos de Calidad</h3>
                 <div class="chapter-count" id="chapterCount">21 capítulos</div>
             </div>
-            
             <div class="chapters-list" id="chaptersList">
-                <!-- Capítulos serão carregados dinamicamente -->
+                    <!-- Chapters will be loaded here -->
             </div>
-            
             <div class="sidebar-footer">
-                <div class="quick-stats">
+                    <div class="stats">
                     <div class="stat-item">
-                        <span class="stat-number" id="totalDocs">0</span>
+                            <span class="stat-number" id="totalDocuments">0</span>
                         <span class="stat-label">Documentos</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number" id="uploadedDocs">0</span>
+                            <span class="stat-number" id="uploadedDocuments">0</span>
                         <span class="stat-label">Subidos</span>
-                    </div>
+                        </div>
                 </div>
             </div>
         </aside>
 
-        <!-- Main Content -->
-        <main class="main-content">
+            <!-- Content Area -->
+            <div class="content-area">
             <!-- Welcome Section -->
             <div id="welcomeSection" class="welcome-section">
                 <div class="welcome-content">
-                    <h2>Dashboard de Calidad ASCH-OHLA</h2>
-                    <p>Sistema de Gestión de Calidad - UTE A11 LANGA-ARANDA</p>
-                    <div class="quality-control-container">
-                        <div class="quality-control-element">
-                            <div class="construction-icon">🏗️</div>
-                            <div class="quality-control-text">AUTOVÍA A-11</div>
-                            <div class="quality-icon">📊</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Informações da Obra -->
-                    <div class="work-info-section">
-                        <h3>🏗️ Información de la Obra</h3>
-                        <div class="work-info-grid">
-                            <div class="work-info-card a11-highlight">
-                                <div class="info-icon road-icon">🛣️</div>
-                                <div class="info-content">
-                                    <h4>Autovía A-11</h4>
-                                    <p>Tramo: Variante de Langa de Duero - Variante de Aranda de Duero</p>
-                                </div>
-                            </div>
-                            <div class="work-info-card">
-                                <div class="info-icon">🤝</div>
-                                <div class="info-content">
-                                    <h4>UTE A11 LANGA-ARANDA</h4>
-                                    <p>Contratista: OHLA - ASCH</p>
-                                </div>
-                            </div>
-                            <div class="work-info-card">
-                                <div class="info-icon">📅</div>
-                                <div class="info-content">
-                                    <h4>Estado del Proyecto</h4>
-                                    <p>En ejecución • Fase: Construcción</p>
-                                </div>
-                            </div>
-                            <div class="work-info-card">
-                                <div class="info-icon">👷</div>
-                                <div class="info-content">
-                                    <h4>Responsable de Calidad</h4>
-                                    <p>José Antunes • Técnico de Calidad</p>
-                                </div>
-                            </div>
-                            <div class="work-info-card">
-                                <div class="info-icon">👨‍💼</div>
-                                <div class="info-content">
-                                    <h4>Jefe de Obra</h4>
-                                    <p>Pedro Maillo • Director de Obra</p>
-                                </div>
-                            </div>
-                            <div class="work-info-card">
-                                <div class="info-icon">👔</div>
-                                <div class="info-content">
-                                    <h4>Gerente</h4>
-                                    <p>Isaac López Brea • Gerente de Proyecto</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Cronograma del Proyecto - Compacto -->
-                    <div class="project-timeline-compact">
-                        <div class="timeline-header">
-                            <div class="timeline-title">
-                                <h3>📅 Cronograma del Proyecto</h3>
-                                <div class="current-date" id="currentDate"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="timeline-horizontal">
-                            <div class="timeline-milestones">
-                                <div class="milestone">
-                                    <div class="milestone-icon">🚀</div>
-                                    <div class="milestone-text">
-                                        <span class="milestone-label">Inicio</span>
-                                        <span class="milestone-date">Feb 2025</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="milestone current">
-                                    <div class="milestone-icon">📍</div>
-                                    <div class="milestone-text">
-                                        <span class="milestone-label">Actual</span>
-                                        <span class="milestone-date" id="currentMonth">Sep 2025</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="milestone">
-                                    <div class="milestone-icon">🏁</div>
-                                    <div class="milestone-text">
-                                        <span class="milestone-label">Final</span>
-                                        <span class="milestone-date" id="estimatedEnd">Mar 2028</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="progress-compact">
-                                <div class="progress-info">
-                                    <span class="progress-label">Progreso</span>
-                                    <span class="progress-percentage" id="progressPercentage">0%</span>
-                                </div>
-                                <div class="progress-bar-compact">
-                                    <div class="progress-fill-compact" id="progressFill"></div>
-                                </div>
-                                <div class="progress-stats">
-                                    <span id="monthsElapsed">0 meses</span>
-                                    <span class="progress-reference">de 37 legales (máx. 50)</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Indicadores de Estatísticas -->
-                    <div class="stats-grid">
-                        <div class="stat-card primary">
-                            <div class="stat-icon">📚</div>
-                            <div class="stat-number" id="totalChapters">21</div>
-                            <div class="stat-label">Capítulos de Calidad</div>
-                        </div>
-                        <div class="stat-card secondary">
-                            <div class="stat-icon">📁</div>
-                            <div class="stat-number" id="totalSubchapters">0</div>
-                            <div class="stat-label">Subcapítulos</div>
-                        </div>
-                        <div class="stat-card success">
-                            <div class="stat-icon">📄</div>
-                            <div class="stat-number" id="totalDocuments">0</div>
-                            <div class="stat-label">Documentos Totales</div>
-                        </div>
-                        <div class="stat-card info">
-                            <div class="stat-icon">📤</div>
-                            <div class="stat-number" id="uploadedDocuments">0</div>
-                            <div class="stat-label">Documentos Subidos</div>
-                        </div>
-                        <div class="stat-card warning">
-                            <div class="stat-icon">🕒</div>
-                            <div class="stat-number" id="recentDocuments">0</div>
-                            <div class="stat-label">Esta Semana</div>
-                        </div>
-                        <div class="stat-card purple">
-                            <div class="stat-icon">📋</div>
-                            <div class="stat-number" id="filledChapters">0</div>
-                            <div class="stat-label">Capítulos Completados</div>
-                        </div>
-                        <div class="stat-card orange">
-                            <div class="stat-icon">📊</div>
-                            <div class="stat-number" id="completionRate">0%</div>
-                            <div class="stat-label">Tasa de Completitud</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Documentos Favoritos -->
-                    <div class="favorite-documents">
-                        <div class="favorite-docs-header">
-                            <h3>⭐ Documentos Favoritos</h3>
-                            <div class="favorite-actions">
-                                <button class="btn-refresh" onclick="portal.refreshFavorites()" title="Actualizar">
-                                    <span class="btn-icon">🔄</span>
-                                </button>
-                                <button class="btn-clear" onclick="portal.clearAllFavorites()" title="Limpiar Favoritos">
-                                    <span class="btn-icon">🗑️</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="favorite-docs-grid" id="favoriteDocsList">
-                            <div class="empty-state">
-                                <div class="empty-icon">⭐</div>
-                                <p>No hay documentos favoritos</p>
-                                <small>Haz clic en la estrella de un documento para añadirlo a favoritos</small>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Documentos Vistos Recentemente -->
-                    <div class="recent-documents">
-                        <div class="recent-docs-header">
-                            <h3>👁️ Documentos Vistos Recientemente</h3>
-                            <div class="recent-actions">
-                                <button class="btn-refresh" onclick="portal.refreshRecentDocuments()" title="Actualizar">
-                                    <span class="btn-icon">🔄</span>
-                                </button>
-                                <button class="btn-clear" onclick="portal.clearViewHistory()" title="Limpiar Historial">
-                                    <span class="btn-icon">🗑️</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="recent-docs-grid" id="recentDocsList">
-                            <div class="empty-state">
-                                <div class="empty-icon">👁️</div>
-                                <p>No hay documentos vistos recientemente</p>
-                                <small>Los documentos que visualices aparecerán aquí</small>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Ações Rápidas -->
-                    <div class="quick-actions">
-                        <h3>⚡ Acciones Rápidas</h3>
-                        <div class="actions-grid">
-                            <button class="action-card" onclick="portal.showUpload()">
-                                <div class="action-icon">📤</div>
-                                <div class="action-text">Subir Documento</div>
-                            </button>
-                            <button class="action-card" onclick="portal.selectChapter(portal.manifest.secciones[0])">
-                                <div class="action-icon">📋</div>
-                                <div class="action-text">Ver Capítulo 01</div>
-                            </button>
-                            <button class="action-card" onclick="portal.selectChapter(portal.manifest.secciones[5])">
-                                <div class="action-icon">🔍</div>
-                                <div class="action-text">Ver PPI (Cap. 06)</div>
-                            </button>
-                            <button class="action-card" onclick="portal.selectChapter(portal.manifest.secciones[14])">
-                                <div class="action-icon">🧪</div>
-                                <div class="action-text">Ver Laboratorio (Cap. 15)</div>
-                            </button>
-                        </div>
-                    </div>
+                        <h1>Bienvenido al Portal de Calidad</h1>
+                        <p>Seleccione un capítulo para comenzar a gestionar los documentos de calidad.</p>
                 </div>
             </div>
 
             <!-- Documents Section -->
             <div id="documentsSection" class="documents-section hidden">
                 <div class="section-header">
-                    <div class="breadcrumb" id="breadcrumb">
-                        <span class="breadcrumb-item" onclick="portal.showDashboard()" style="cursor: pointer; color: var(--primary); text-decoration: underline;">🏠 Dashboard</span>
-                        <span class="breadcrumb-separator">›</span>
-                        <span class="breadcrumb-item active" id="currentSection">Capítulo</span>
-                    </div>
-                    <div class="section-title">
+                        <div class="section-info">
                         <h2 id="sectionTitle">Documentos</h2>
                         <div class="section-meta">
-                            <span id="sectionCode"></span>
-                            <span id="documentCount">0 documentos</span>
-                        </div>
+                                <span id="sectionCode" class="section-code"></span>
+                                <span id="documentCount" class="document-count"></span>
+                            </div>
                     </div>
                     <div class="section-actions">
-                        <button id="addDocumentBtn" class="add-document-btn">
+                            <button id="addDocumentBtn" class="btn-primary">
                             <span class="btn-icon">➕</span>
-                            <span class="btn-text">Añadir Documento</span>
+                                <span class="btn-text">Agregar Documento</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="filters-bar">
-                    <div class="filter-group">
-                        <label for="statusFilter">Estado:</label>
-                        <select id="statusFilter" class="filter-select">
-                            <option value="">Todos</option>
-                            <option value="Aprobado">Aprobado</option>
-                            <option value="Pendiente">Pendiente</option>
-                            <option value="Revisión">Revisión</option>
-                        </select>
+                    <div class="documents-grid" id="documentsGrid">
+                        <!-- Documents will be loaded here -->
                     </div>
-                    <div class="filter-group">
-                        <label for="dateFilter">Fecha:</label>
-                        <select id="dateFilter" class="filter-select">
-                            <option value="">Todas</option>
-                            <option value="today">Hoy</option>
-                            <option value="week">Esta semana</option>
-                            <option value="month">Este mes</option>
-                        </select>
-                    </div>
-                    <button id="clearFiltersBtn" class="clear-filters-btn">Limpiar filtros</button>
-                </div>
-
-                <div class="documents-grid" id="documentsGrid">
-                    <!-- Documentos serão carregados aqui -->
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- Upload Modal -->
-    <div id="uploadModal" class="modal hidden">
-        <div class="modal-overlay"></div>
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Subir Documento</h3>
-                <button class="close-btn" id="closeUploadModal">✕</button>
-            </div>
-            <div class="modal-body">
-                <form id="uploadForm">
-                    <div class="form-group">
-                        <label for="documentTitle">Título del Documento:</label>
-                        <input type="text" id="documentTitle" required placeholder="Ej: Plan de Calidad - Semana 1">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="documentChapter">Capítulo:</label>
-                        <select id="documentChapter" required>
-                            <option value="">Seleccionar capítulo...</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="documentTags">Tags (opcional):</label>
-                        <input type="text" id="documentTags" placeholder="Ej: calidad, plan, semana1">
-                        <small>Separa las tags con comas</small>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="fileInput">Archivo:</label>
-                        <div class="file-upload-area" id="fileUploadArea">
-                            <input type="file" id="fileInput" accept=".html,.htm,.pdf,.doc,.docx,.rtf,.txt,.md,.xls,.xlsx,.csv,.ods,.ppt,.pptx,.odp,.jpg,.jpeg,.png,.gif,.bmp,.svg,.webp,.tiff,.xml,.json,.yaml,.yml,.ini,.cfg,.conf,.js,.css,.php,.py,.java,.cpp,.c,.h,.zip,.rar,.7z,.tar,.gz,.dwg,.dxf,.cad,.psd,.ai,.eps" hidden>
-                            <div class="upload-placeholder">
-                                <div class="upload-icon">📄</div>
-                                <p>Arrastra un archivo aquí o haz clic para seleccionar</p>
-                                <p class="file-types">Soporta: Documentos, Planilhas, Imagens, Código, Arquivos CAD, e muito mais!</p>
-                                <button type="button" class="select-file-btn">Seleccionar Archivo</button>
-                            </div>
-                            <div class="file-preview hidden" id="filePreview">
-                                <div class="file-info">
-                                    <span class="file-icon" id="fileIcon">📄</span>
-                                    <div class="file-details">
-                                        <div class="file-name" id="fileName"></div>
-                                        <div class="file-size" id="fileSize"></div>
-                                    </div>
-                                </div>
-                                <button type="button" class="remove-file-btn" id="removeFileBtn">✕</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button type="button" class="btn-secondary" id="cancelUpload">Cancelar</button>
-                        <button type="submit" class="btn-primary" id="submitUpload">Subir Documento</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Advanced Search Modal -->
-    <div id="advancedSearchModal" class="modal hidden">
-        <div class="modal-overlay"></div>
-        <div class="modal-content advanced-search-content">
-            <div class="modal-header">
-                <h3>🔍 Búsqueda Avanzada</h3>
-                <button class="close-btn" id="closeAdvancedSearchModal">✕</button>
-            </div>
-            <div class="modal-body">
-                <div class="advanced-search-form">
-                    <!-- Busca por texto -->
-                    <div class="search-section">
-                        <div class="section-title">
-                            <h4>📝 Búsqueda por Contenido</h4>
-                            <p>Busca en títulos, descripciones, tags y códigos</p>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="advancedSearchInput" placeholder="Escriba su búsqueda..." class="form-input">
-                        </div>
-                    </div>
-
-                    <!-- Filtros -->
-                    <div class="filters-section">
-                        <div class="section-title">
-                            <h4>🎯 Filtros</h4>
-                            <p>Refine su búsqueda con filtros específicos</p>
-                        </div>
-                        
-                        <div class="filters-grid">
-                            <!-- Filtro por tipo -->
-                            <div class="filter-group">
-                                <label for="typeFilter">Tipo de Documento:</label>
-                                <select id="typeFilter" class="filter-select">
-                                    <option value="">Todos los tipos</option>
-                                    <option value="pdf">PDF</option>
-                                    <option value="excel">Excel (.xls, .xlsx)</option>
-                                    <option value="word">Word (.doc, .docx)</option>
-                                    <option value="html">HTML</option>
-                                    <option value="externo">Documento Externo</option>
-                                </select>
-                            </div>
-
-                            <!-- Filtro por capítulo -->
-                            <div class="filter-group">
-                                <label for="chapterFilter">Capítulo:</label>
-                                <select id="chapterFilter" class="filter-select">
-                                    <option value="">Todos los capítulos</option>
-                                </select>
-                            </div>
-
-                            <!-- Filtro por estado -->
-                            <div class="filter-group">
-                                <label for="statusFilter">Estado:</label>
-                                <select id="statusFilter" class="filter-select">
-                                    <option value="">Todos los estados</option>
-                                    <option value="Aprobado">Aprobado</option>
-                                    <option value="Pendiente">Pendiente</option>
-                                    <option value="Revisión">En Revisión</option>
-                                    <option value="Borrador">Borrador</option>
-                                </select>
-                            </div>
-
-                            <!-- Filtro por fecha -->
-                            <div class="filter-group">
-                                <label for="dateFilter">Fecha:</label>
-                                <select id="dateFilter" class="filter-select">
-                                    <option value="">Todas las fechas</option>
-                                    <option value="today">Hoy</option>
-                                    <option value="week">Última semana</option>
-                                    <option value="month">Último mes</option>
-                                    <option value="quarter">Último trimestre</option>
-                                    <option value="year">Último año</option>
-                                </select>
-                            </div>
-
-                            <!-- Filtro por favoritos -->
-                            <div class="filter-group">
-                                <label for="favoritesFilter">Favoritos:</label>
-                                <select id="favoritesFilter" class="filter-select">
-                                    <option value="">Todos</option>
-                                    <option value="only">Solo favoritos</option>
-                                    <option value="exclude">Excluir favoritos</option>
-                                </select>
-                            </div>
-
-                            <!-- Filtro por tamaño -->
-                            <div class="filter-group">
-                                <label for="sizeFilter">Tamaño:</label>
-                                <select id="sizeFilter" class="filter-select">
-                                    <option value="">Cualquier tamaño</option>
-                                    <option value="small">Pequeño (< 1MB)</option>
-                                    <option value="medium">Mediano (1-10MB)</option>
-                                    <option value="large">Grande (> 10MB)</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Ordenação -->
-                    <div class="sorting-section">
-                        <div class="section-title">
-                            <h4>📊 Ordenar por</h4>
-                            <p>Seleccione cómo ordenar los resultados</p>
-                        </div>
-                        <div class="sorting-options">
-                            <div class="sort-group">
-                                <label for="sortBy">Campo:</label>
-                                <select id="sortBy" class="filter-select">
-                                    <option value="relevance">Relevancia</option>
-                                    <option value="title">Título</option>
-                                    <option value="date">Fecha</option>
-                                    <option value="type">Tipo</option>
-                                    <option value="chapter">Capítulo</option>
-                                    <option value="size">Tamaño</option>
-                                </select>
-                            </div>
-                            <div class="sort-group">
-                                <label for="sortOrder">Orden:</label>
-                                <select id="sortOrder" class="filter-select">
-                                    <option value="desc">Descendente</option>
-                                    <option value="asc">Ascendente</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Ações -->
-                    <div class="search-actions">
-                        <button class="btn-secondary" id="clearAdvancedFilters">🗑️ Limpiar Filtros</button>
-                        <button class="btn-primary" id="executeAdvancedSearch">🔍 Buscar</button>
-                    </div>
-                </div>
-
-                <!-- Resultados -->
-                <div class="search-results" id="advancedSearchResults" style="display: none;">
-                    <div class="results-header">
-                        <h4>📋 Resultados de la Búsqueda</h4>
-                        <div class="results-count" id="resultsCount">0 resultados encontrados</div>
-                    </div>
-                    <div class="results-grid" id="resultsGrid">
-                        <!-- Resultados serão carregados aqui -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Document Viewer Modal -->
-    <div id="viewerModal" class="modal hidden">
-        <div class="modal-overlay"></div>
-        <div class="modal-content viewer-content">
-            <div class="modal-header">
-                <div class="viewer-header-left">
-                    <button class="btn-back-dashboard" onclick="portal.showDashboard()" title="Voltar ao Dashboard">
-                        🏠 Dashboard
-                    </button>
+    <div id="viewerModal" class="viewer-modal hidden">
+        <div class="viewer-header">
+            <div class="viewer-title">
                     <h3 id="viewerTitle">Documento</h3>
                 </div>
                 <div class="viewer-actions">
-                    <button class="btn-secondary" id="printBtn">🖨️ Imprimir</button>
-                    <button class="btn-secondary" id="downloadBtn">📥 Descargar</button>
-                    <button class="btn-secondary" id="editBtn">✏️ Editar</button>
-                    <button class="close-btn" id="closeViewerModal">✕</button>
-                </div>
+                <button class="viewer-btn" onclick="portal.printDoc()" title="Imprimir">
+                    <span>🖨️</span>
+                    <span>Imprimir</span>
+                </button>
+                <button class="viewer-btn" onclick="portal.downloadDoc()" title="Descargar">
+                    <span>📥</span>
+                    <span>Descargar</span>
+                </button>
+                <button class="viewer-btn" onclick="portal.editDoc()" title="Editar">
+                    <span>✏️</span>
+                    <span>Editar</span>
+                </button>
+                <button class="viewer-close" onclick="portal.hideViewer()" title="Cerrar">
+                    <span>✕</span>
+                </button>
             </div>
-            <div class="modal-body">
-                <div id="viewerContent">
-                    <iframe id="documentFrame" src="about:blank"></iframe>
-                </div>
-            </div>
+        </div>
+        <div class="viewer-content">
+            <iframe id="documentFrame" class="document-frame"></iframe>
         </div>
     </div>
 
-    <!-- Toast Notifications -->
+    <!-- Toast Container -->
     <div id="toastContainer" class="toast-container"></div>
-
-    <!-- Loading Spinner -->
-    <div id="loadingSpinner" class="loading-spinner hidden">
-        <div class="spinner"></div>
-        <p>Cargando...</p>
-    </div>
-
-    <!-- Scripts -->
-    <!-- Bibliotecas para visualização de documentos -->
-    <!-- Footer Elegante -->
-    <footer class="site-footer">
-        <div class="footer-content">
-            <div class="footer-info">
-                <p class="footer-copyright">© 2025 ASCH-OHLA - Sistema de Gestión de Calidad</p>
-                <p class="footer-standards">Conformidad: ISO 9001 • EHE-08 • PG3 • RGPD</p>
-                <p class="footer-reference">Referencia Europea en Gestión de Calidad para Obra Civil</p>
-                <p class="footer-developer">
-                    Desarrollado por José Antunes 
-                    <a href="https://www.linkedin.com/in/antunesmartins/" target="_blank" class="linkedin-link">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                        </svg>
-                        LinkedIn
-                    </a>
-                </p>
-            </div>
-        </div>
-        
-        <!-- Botões flotantes -->
-        <div class="floating-actions">
-            <button class="floating-btn grid-btn" onclick="portal.showDashboard()" title="Dashboard">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M3 3h7v7H3V3zm0 11h7v7H3v-7zm11-11h7v7h-7V3zm0 11h7v7h-7v-7z"/>
-                </svg>
-            </button>
-            <button class="floating-btn scroll-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Subir">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
-                </svg>
-            </button>
-        </div>
-    </footer>
 
     <script src="config.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
