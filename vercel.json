@@ -15,7 +15,7 @@
   ],
   "rewrites": [
     {
-      "source": "/((?!docs|assets|data).*)",
+      "source": "/((?!docs|assets|data|registros|.*\\.html|.*\\.pdf|.*\\.json|.*\\.js|.*\\.css).*)",
       "destination": "/index.html"
     }
   ]
