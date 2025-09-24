@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FORÇAR LIMPEZA DE CACHE</title>
+</head>
+<body>
+    <h1>LIMPEZA FORÇADA DE CACHE</h1>
+    <script>
+        // Limpar TODOS os dados
+        console.log('🧹 LIMPEZA FORÇADA INICIADA...');
+        
+        // Limpar localStorage
+        localStorage.clear();
+        console.log('✅ localStorage limpo');
+        
+        // Limpar sessionStorage  
+        sessionStorage.clear();
+        console.log('✅ sessionStorage limpo');
+        
+        // Limpar cache do navegador
+        if ('caches' in window) {
+            caches.keys().then(function(names) {
+                for (let name of names) {
+                    caches.delete(name);
+                    console.log('✅ Cache removido:', name);
+                }
+            });
+        }
+        
+        console.log('🎉 LIMPEZA COMPLETA!');
+        alert('Cache limpo! Recarregue a página (F5)');
+        
+        // Redirecionar para o sistema
+        setTimeout(() => {
+            window.location.href = '/';
+        }, 2000);
+    </script>
+</body>
+</html>
