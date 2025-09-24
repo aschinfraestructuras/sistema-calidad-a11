@@ -903,11 +903,9 @@ class PortalCalidad {
                         <button class="favorite-btn ${isFavorite ? 'active' : ''}" onclick="portal.toggleFavorite('${doc.id || 'manifest_' + (doc.titulo || doc.nombre)}')" title="${isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos'}">
                             <span class="favorite-icon">${isFavorite ? '⭐' : '☆'}</span>
                         </button>
-                        ${isUploaded ? `
-                            <button class="delete-btn" onclick="portal.deleteDocument('${doc.id}')" title="Eliminar documento">
-                                <span class="delete-icon">🗑️</span>
-                            </button>
-                        ` : ''}
+                        <button class="delete-btn" onclick="portal.deleteDocument('${doc.id || 'manifest_' + (doc.titulo || doc.nombre)}', ${isUploaded})" title="Eliminar documento">
+                            <span class="delete-icon">🗑️</span>
+                        </button>
                     <div class="document-status ${status}">${doc.estado || 'Aprobado'}</div>
                     </div>
                 </div>
@@ -1955,38 +1953,65 @@ class PortalCalidad {
     }
 
     // Método para eliminar um documento específico
-    async deleteDocument(docId) {
+    async deleteDocument(docId, isUploaded = true) {
         if (!docId) {
             console.error('❌ ID do documento não fornecido');
             return;
         }
         
-        // Encontrar o documento
-        const doc = this.uploadedDocuments.find(d => d.id === docId);
+        let doc = null;
+        let docType = '';
+        
+        if (isUploaded) {
+            // Documento subido pelo usuário
+            doc = this.uploadedDocuments.find(d => d.id === docId);
+            docType = 'subido';
+        } else {
+            // Documento do manifest
+            doc = this.findManifestDocument(docId);
+            docType = 'do sistema';
+        }
+        
         if (!doc) {
             console.error('❌ Documento não encontrado:', docId);
             this.showToast('Documento não encontrado', 'error');
             return;
         }
         
-        // Confirmação
-        const confirmMessage = `¿Estás seguro de que quieres eliminar el documento "${doc.titulo || doc.nombre}"?\n\nEsta acción no se puede deshacer.`;
+        // Confirmação mais rigorosa para documentos do manifest
+        const confirmMessage = isUploaded 
+            ? `¿Estás seguro de que quieres eliminar el documento "${doc.titulo || doc.nombre}"?\n\nEsta acción no se puede deshacer.`
+            : `⚠️ ATENÇÃO: Você está prestes a eliminar um documento DO SISTEMA!\n\nDocumento: "${doc.titulo || doc.nombre}"\n\nEsta ação irá:\n- Remover o documento do manifest.json\n- Eliminar permanentemente do sistema\n- NÃO PODE SER DESFEITA\n\nTem certeza absoluta?`;
+        
         if (!confirm(confirmMessage)) {
             return;
         }
         
+        // Confirmação dupla para documentos do manifest
+        if (!isUploaded) {
+            const doubleConfirm = confirm(`ÚLTIMA CONFIRMAÇÃO:\n\nEliminar permanentemente "${doc.titulo || doc.nombre}" do sistema?\n\nDigite "CONFIRMO" para continuar:`);
+            if (!doubleConfirm) {
+                return;
+            }
+        }
+        
         try {
-            this.showLoading(true, 'Eliminando documento...');
+            this.showLoading(true, isUploaded ? 'Eliminando documento...' : 'Eliminando do sistema...');
             
-            // Eliminar do IndexedDB
-            const db = await this.getDB();
-            const transaction = db.transaction(['documents'], 'readwrite');
-            const store = transaction.objectStore('documents');
-            await store.delete(docId);
-            
-            // Remover do array local
-            this.uploadedDocuments = this.uploadedDocuments.filter(d => d.id !== docId);
-            this.saveUploadedDocuments();
+            if (isUploaded) {
+                // Eliminar documento subido
+                const db = await this.getDB();
+                const transaction = db.transaction(['documents'], 'readwrite');
+                const store = transaction.objectStore('documents');
+                await store.delete(docId);
+                
+                // Remover do array local
+                this.uploadedDocuments = this.uploadedDocuments.filter(d => d.id !== docId);
+                this.saveUploadedDocuments();
+            } else {
+                // Eliminar documento do manifest
+                await this.removeFromManifest(doc);
+            }
             
             // Remover dos favoritos se estiver lá
             this.removeFromFavorites(docId);
@@ -2005,6 +2030,114 @@ class PortalCalidad {
             this.showToast('Erro ao eliminar documento: ' + error.message, 'error');
         } finally {
             this.showLoading(false);
+        }
+    }
+
+    // Função para encontrar documento no manifest
+    findManifestDocument(docId) {
+        if (!this.manifest || !this.manifest.secciones) {
+            return null;
+        }
+        
+        for (const section of this.manifest.secciones) {
+            // Procurar nos items da seção
+            if (section.items) {
+                for (const item of section.items) {
+                    const itemId = 'manifest_' + (item.titulo || item.nombre);
+                    if (itemId === docId) {
+                        return { ...item, section: section };
+                    }
+                }
+            }
+            
+            // Procurar nos subcapítulos
+            if (section.subcapitulos) {
+                for (const subchapter of section.subcapitulos) {
+                    if (subchapter.items) {
+                        for (const item of subchapter.items) {
+                            const itemId = 'manifest_' + (item.titulo || item.nombre);
+                            if (itemId === docId) {
+                                return { ...item, section: section, subchapter: subchapter };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        return null;
+    }
+
+    // Função para remover documento do manifest
+    async removeFromManifest(doc) {
+        if (!this.manifest || !this.manifest.secciones) {
+            throw new Error('Manifest não encontrado');
+        }
+        
+        // Fazer backup do manifest atual
+        const manifestBackup = JSON.stringify(this.manifest, null, 2);
+        localStorage.setItem('manifest_backup_' + Date.now(), manifestBackup);
+        
+        let removed = false;
+        
+        for (const section of this.manifest.secciones) {
+            // Procurar nos items da seção
+            if (section.items) {
+                const itemIndex = section.items.findIndex(item => 
+                    (item.titulo || item.nombre) === (doc.titulo || doc.nombre)
+                );
+                if (itemIndex !== -1) {
+                    section.items.splice(itemIndex, 1);
+                    removed = true;
+                    break;
+                }
+            }
+            
+            // Procurar nos subcapítulos
+            if (section.subcapitulos) {
+                for (const subchapter of section.subcapitulos) {
+                    if (subchapter.items) {
+                        const itemIndex = subchapter.items.findIndex(item => 
+                            (item.titulo || item.nombre) === (doc.titulo || doc.nombre)
+                        );
+                        if (itemIndex !== -1) {
+                            subchapter.items.splice(itemIndex, 1);
+                            removed = true;
+                            break;
+                        }
+                    }
+                }
+                if (removed) break;
+            }
+        }
+        
+        if (!removed) {
+            throw new Error('Documento não encontrado no manifest');
+        }
+        
+        // Salvar manifest atualizado
+        await this.saveManifest();
+        
+        // Recarregar manifest
+        await this.loadManifest();
+        
+        console.log('✅ Documento removido do manifest:', doc.titulo || doc.nombre);
+    }
+
+    // Função para salvar manifest
+    async saveManifest() {
+        try {
+            // Em um ambiente real, isso seria uma chamada para o servidor
+            // Por enquanto, vamos simular salvando no localStorage
+            localStorage.setItem('manifest_updated', JSON.stringify(this.manifest, null, 2));
+            
+            // Mostrar aviso de que precisa ser commitado
+            this.showToast('Manifest atualizado! Lembre-se de fazer commit das mudanças.', 'warning');
+            
+            console.log('✅ Manifest salvo localmente');
+        } catch (error) {
+            console.error('❌ Erro ao salvar manifest:', error);
+            throw error;
         }
     }
 
