@@ -1010,14 +1010,7 @@
         {
           "codigo": "20-03",
           "titulo": "03 Auditorias Externas",
-          "items": [
-            {
-              "nombre": "Auditorías Externas",
-              "tipo": "html",
-              "ruta": "docs/20_Auditorias/auditorias-externas.html",
-              "descripcion": "Sistema completo de gestión de auditorías externas con organismos certificadores, preparación, seguimiento y acciones correctivas según UNE-EN ISO 9001:2015, ISO 14001:2015 e ISO 45001:2018"
-            }
-          ]
+          "items": []
         },
         {
           "codigo": "20-04",
@@ -1034,14 +1027,7 @@
         {
           "codigo": "20-05",
           "titulo": "05 Auditorias Ambientales",
-          "items": [
-            {
-              "nombre": "Auditorías Ambientales",
-              "tipo": "html",
-              "ruta": "docs/20_Auditorias/auditorias-ambientales.html",
-              "descripcion": "Sistema completo de auditorías ambientales con evaluación de aspectos ambientales, gestión de no conformidades, fortalezas y oportunidades de mejora según UNE-EN ISO 14001:2015"
-            }
-          ]
+          "items": []
         },
         {
           "codigo": "20-06",
@@ -1058,26 +1044,12 @@
         {
           "codigo": "20-07",
           "titulo": "07 Informes de Auditoria",
-          "items": [
-            {
-              "nombre": "Informes de Auditoría - Sistema Integral",
-              "tipo": "html",
-              "ruta": "docs/20_Auditorias/informes-auditoria.html",
-              "descripcion": "Sistema integral de elaboración y gestión de informes de auditoría con análisis de cumplimiento, métricas automáticas, normativas españolas y europeas según UNE-EN ISO 9001:2015, ISO 14001:2015, ISO 45001:2018"
-            }
-          ]
+          "items": []
         },
         {
           "codigo": "20-08",
           "titulo": "08 Acciones Correctivas",
-          "items": [
-            {
-              "nombre": "Acciones Correctivas - Sistema Integral",
-              "tipo": "html",
-              "ruta": "docs/20_Auditorias/acciones-correctivas.html",
-              "descripcion": "Sistema integral de gestión de acciones correctivas y preventivas con análisis de causas raíz, plan de acción, verificación de efectividad y seguimiento según UNE-EN ISO 9001:2015"
-            }
-          ]
+          "items": []
         },
         {
           "codigo": "20-09",
