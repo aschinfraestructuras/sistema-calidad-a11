@@ -36,12 +36,6 @@
               "tipo": "html",
               "ruta": "docs/02_Plan_Ensayos_Controles/registro-rfi-ensayos.html",
               "descripcion": "Sistema completo de gestión de RFI (Request for Information) para ensayos y controles con códigos automáticos, seguimiento de consultas y respuestas según normativas UNE-EN ISO 9001:2015"
-            },
-            {
-              "nombre": "Plan Ensayos UTE A-11 - Rev.02 Final Aprovado",
-              "tipo": "pdf",
-              "ruta": "docs/02_Plan_Ensayos_Controles/02.01-Plan_Ensayos/arquivos/Plan_Ensayos_UTE A-11_Rev.02_21.07.2025 Final - Aprovado.pdf",
-              "descripcion": "Plan de Ensayos oficial da UTE A-11 - Revisão 02 de 21.07.2025 - Documento final aprovado com todos os ensaios programados para a Autovía A-11"
             }
           ]
         },
@@ -53,14 +47,7 @@
         {
           "codigo": "02-03",
           "titulo": "03 Lotificación Estructuras",
-          "items": [
-            {
-              "nombre": "Planes de Control Específicos de Estructuras Rev.0 - Aprovado",
-              "tipo": "pdf",
-              "ruta": "02_Plan_Ensayos_Controles/02.03-Lotificación_estructuras/arquivos/Planes de Control Específicos de Estructuras Rev.0 - Aprovado.pdf",
-              "descripcion": "Planes de Control Específicos de Estructuras - Revisión 0 - Documento aprovado com planos de control para estruturas da Autovía A-11"
-            }
-          ]
+          "items": []
         }
       ]
     },
