@@ -3,1125 +3,371 @@
     {
       "codigo": "01",
       "titulo": "Sistema de Gestión de Documentos",
-      "items": [],
-      "subcapitulos": [
+      "items": [
         {
-          "codigo": "01-01",
-          "titulo": "01 Procedimientos de Calidad",
-          "items": []
+          "titulo": "Manual de Usuario - Portal de Calidad",
+          "ruta": "registros/01_PAC/2025-09-19_manual-usuario-portal.html",
+          "tags": ["manual", "usuario", "portal", "calidad"],
+          "fecha": "2025-09-19",
+          "estado": "Aprobado"
         },
         {
-          "codigo": "01-02",
-          "titulo": "02 PAC - Revisiones",
-          "items": []
+          "titulo": "Procedimiento de Subida de Documentos",
+          "ruta": "registros/01_PAC/01_Procedimientos_Calidad/02.01_Procedimentos_Ejecucion/2025-09-20_procedimiento-subida-documentos.html",
+          "tags": ["procedimiento", "subida", "documentos", "calidad"],
+          "fecha": "2025-09-20",
+          "estado": "Aprobado"
         },
         {
-          "codigo": "01-03",
-          "titulo": "03 Organigrama Obra",
-          "items": []
+          "titulo": "Normas de Nomenclatura de Archivos",
+          "ruta": "registros/01_PAC/01_Procedimientos_Calidad/02.02_Procedimentos_Generales/2025-09-21_normas-nomenclatura-archivos.html",
+          "tags": ["normas", "nomenclatura", "archivos", "organización"],
+          "fecha": "2025-09-21",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Sistema de Versiones - Control de Cambios",
+          "ruta": "registros/01_PAC/02_PAC_Revisiones/PAC_Rev00/2025-09-15_sistema-versiones-control.html",
+          "tags": ["versiones", "control", "cambios", "trazabilidad"],
+          "fecha": "2025-09-15",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Actualización del Sistema - Septiembre 2025",
+          "ruta": "registros/01_PAC/02_PAC_Revisiones/PAC_Rev01/2025-09-25_actualizacion-sistema-septiembre.html",
+          "tags": ["actualización", "sistema", "septiembre", "mejoras"],
+          "fecha": "2025-09-25",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Estructura Organizacional - Gestión Digital",
+          "ruta": "registros/01_PAC/03_Organigrama_Obra/2025-09-18_estructura-gestion-digital.html",
+          "tags": ["estructura", "organizacional", "gestión", "digital"],
+          "fecha": "2025-09-18",
+          "estado": "Aprobado"
         }
       ]
     },
     {
       "codigo": "02",
       "titulo": "Plan de Ensayos y Controles",
-      "items": [],
-      "subcapitulos": [
+      "items": [
         {
-          "codigo": "02-01",
-          "titulo": "01 Plan Ensayos",
-          "items": [
-            {
-              "nombre": "Registro RFI - Plan de Ensayos y Controles",
-              "tipo": "html",
-              "ruta": "docs/02_Plan_Ensayos_Controles/registro-rfi-ensayos.html",
-              "descripcion": "Sistema completo de gestión de RFI (Request for Information) para ensayos y controles con códigos automáticos, seguimiento de consultas y respuestas según normativas UNE-EN ISO 9001:2015"
-            }
-          ]
+          "titulo": "Plan de Ensayos - Suelos y Cimentaciones",
+          "ruta": "registros/02_Plan_Ensayos/2025-09-19_plan-ensayos-suelos.html",
+          "tags": ["ensayos", "suelos", "cimentación", "control"],
+          "fecha": "2025-09-19",
+          "estado": "Aprobado"
         },
         {
-          "codigo": "02-02",
-          "titulo": "02 Plan Ensayo Asistencia Tecnica",
-          "items": []
+          "titulo": "Plan de Ensayos - Hormigón y Armaduras",
+          "ruta": "registros/02_Plan_Ensayos/2025-09-20_plan-ensayos-hormigon.html",
+          "tags": ["ensayos", "hormigón", "armaduras", "control"],
+          "fecha": "2025-09-20",
+          "estado": "Aprobado"
         },
         {
-          "codigo": "02-03",
-          "titulo": "03 Lotificación Estructuras",
-          "items": []
+          "titulo": "Plan de Ensayos - Materiales de Construcción",
+          "ruta": "registros/02_Plan_Ensayos/2025-09-21_plan-ensayos-materiales.html",
+          "tags": ["ensayos", "materiales", "construcción", "control"],
+          "fecha": "2025-09-21",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Protocolo de Ensayos Destructivos",
+          "ruta": "registros/02_Plan_Ensayos/2025-09-22_protocolo-ensayos-destructivos.html",
+          "tags": ["protocolo", "ensayos", "destructivos", "calidad"],
+          "fecha": "2025-09-22",
+          "estado": "Aprobado"
         }
       ]
     },
     {
       "codigo": "03",
       "titulo": "Objetivos y Política de Calidad",
-      "items": [],
-      "subcapitulos": [
+      "items": [
         {
-          "codigo": "03-01",
-          "titulo": "01 Política ASCH-OHLA",
-          "items": []
-        },
-        {
-          "codigo": "03-02",
-          "titulo": "02 Objetivos 2025",
-          "items": []
-        },
-        {
-          "codigo": "03-03",
-          "titulo": "03 Manual de Calidad",
-          "items": []
+          "titulo": "Política de Calidad ASCH - A-11",
+          "ruta": "registros/03_Objetivos_Calidad/2025-09-19_politica-calidad.html",
+          "tags": ["política", "objetivos", "calidad", "ASCH"],
+          "fecha": "2025-09-19",
+          "estado": "Aprobado"
         }
       ]
     },
     {
       "codigo": "04",
       "titulo": "Programación y Comunicaciones de Obra",
-      "items": [],
-      "subcapitulos": [
+      "items": [
         {
-          "codigo": "04-01",
-          "titulo": "01 Cronogramas y Planificación obra",
-          "items": []
+          "titulo": "Solicitud de apertura de tajo – PI 26+950",
+          "ruta": "registros/04_Programacion_y_Comunicaciones/2025-09-19_apertura-tajo_PI-26950.html",
+          "tags": ["PPI", "apertura", "obra", "tajo"],
+          "fecha": "2025-09-19",
+          "estado": "Aprobado"
         },
         {
-          "codigo": "04-02",
-          "titulo": "02 Peticiones-RFI-Comunicaciones con DF",
-          "items": []
-        },
-        {
-          "codigo": "04-03",
-          "titulo": "03 Comunicaciones Materiales",
-          "items": []
-        },
-        {
-          "codigo": "04-04",
-          "titulo": "04 Comunicaciones PPI",
-          "items": []
-        },
-        {
-          "codigo": "04-05",
-          "titulo": "05 Comunicaciones Ensayos",
-          "items": [
-            {
-              "nombre": "Comunicación de Resultados de Ensayos",
-              "tipo": "html",
-              "ruta": "docs/04_Comunicacion_Resultados_Ensayos/comunicacion-resultados-ensayos.html",
-              "descripcion": "Sistema de comunicación de resultados de ensayos de laboratorio con certificación de conformidad, análisis técnico y distribución a stakeholders según normativas UNE-EN aplicables"
-            }
-          ]
+          "titulo": "Comunicación de inicio de actividad - PK 15+200",
+          "ruta": "registros/04_Programacion_y_Comunicaciones/2025-09-20_comunicacion-inicio_PK-15200.html",
+          "tags": ["comunicación", "inicio", "actividad", "PK"],
+          "fecha": "2025-09-20",
+          "estado": "Aprobado"
         }
       ]
     },
     {
       "codigo": "05",
       "titulo": "Trazabilidad de Materiales",
-      "items": [],
-      "subcapitulos": [
+      "items": [
         {
-          "codigo": "05-01",
-          "titulo": "01 Codigos de Obra - Trazabilidad",
-          "items": []
-        },
-        {
-          "codigo": "05-02",
-          "titulo": "02 Trazabilidad Suelos",
-          "items": []
-        },
-        {
-          "codigo": "05-03",
-          "titulo": "03 Trazabilidad Acero",
-          "items": []
-        },
-        {
-          "codigo": "05-04",
-          "titulo": "04 Trazabilidad Densidades",
-          "items": []
-        },
-        {
-          "codigo": "05-05",
-          "titulo": "05 Trazabilidad Hormigón",
-          "items": []
-        },
-        {
-          "codigo": "05-06",
-          "titulo": "06 Trazabilidad Placas de Carga",
-          "items": []
-        },
-        {
-          "codigo": "05-07",
-          "titulo": "07 Trazabilidad Tubos",
-          "items": []
+          "titulo": "Registro de trazabilidad - Hormigón PK 12+500",
+          "ruta": "registros/05_Trazabilidad/2025-09-19_trazabilidad-hormigon_PK-12500.html",
+          "tags": ["trazabilidad", "hormigón", "materiales", "registro"],
+          "fecha": "2025-09-19",
+          "estado": "Aprobado"
         }
       ]
     },
     {
       "codigo": "06",
       "titulo": "Puntos de Inspección y Control (PPI)",
-      "items": [],
-      "subcapitulos": [
+      "items": [
         {
-          "codigo": "06-01",
-          "titulo": "01 Formatos PPI - Documentación",
-          "items": [
-            {
-              "nombre": "Registro PPI - Puntos de Inspección y Control",
-              "tipo": "html",
-              "ruta": "docs/06_PPI/registro-ppi-inspeccion-control.html",
-              "descripcion": "Sistema completo de control de puntos de inspección con checklist, documentación fotográfica, firmas y seguimiento de conformidad según normativas UNE-EN ISO 9001:2015"
-            }
-          ]
+          "titulo": "PPI - Control de armaduras PI 23+280",
+          "ruta": "registros/06_PPI/2025-09-18_PPI-armaduras_PI-23280.html",
+          "tags": ["PPI", "armaduras", "control", "inspección"],
+          "fecha": "2025-09-18",
+          "estado": "Aprobado"
         },
         {
-          "codigo": "06-02",
-          "titulo": "02 Listado PPI - Control de Actividades",
-          "items": []
+          "titulo": "PPI - Control de hormigonado PK 18+750",
+          "ruta": "registros/06_PPI/2025-09-20_PPI-hormigonado_PK-18750.html",
+          "tags": ["PPI", "hormigonado", "control", "calidad"],
+          "fecha": "2025-09-20",
+          "estado": "Aprobado"
         },
         {
-          "codigo": "06-03",
-          "titulo": "03 PPI Global - Seguimiento General",
-          "items": []
+          "titulo": "PPI - Control de armaduras PK 15+200",
+          "ruta": "docs/06_PPI/2025-09-26_PPI-control-armaduras-PK-15200.html",
+          "tags": ["PPI", "armaduras", "control", "PK"],
+          "fecha": "2025-09-26",
+          "estado": "Aprobado"
+        },
+        {
+          "titulo": "Planificación Semanal PPIs - Semana 31",
+          "ruta": "docs/06_PPI/2025-07-25_planificacion-semanal-ppis.html",
+          "tags": ["PPI", "planificación", "semanal", "estructuras", "coordinación"],
+          "fecha": "2025-07-25",
+          "estado": "Aprobado"
         }
       ]
     },
     {
       "codigo": "07",
       "titulo": "Equipos, Maquinaria y Tajos",
-      "items": [],
-      "subcapitulos": [
+      "items": [
         {
-          "codigo": "07-01",
-          "titulo": "01 Control de Accesos",
-          "items": []
-        },
-        {
-          "codigo": "07-02",
-          "titulo": "02 Equipos y Maquinaria",
-          "items": [
-            {
-              "nombre": "Registro de Equipos y Maquinaria por Tajo",
-              "tipo": "html",
-              "ruta": "docs/07_Equipos_Maquinaria_Tajos/registro-equipos-maquinaria-tajos.html",
-              "descripcion": "Sistema completo de control de recursos de obra con códigos automáticos, tabelas editáveis, gestão de pessoal e equipamentos"
-            }
-          ]
-        },
-        {
-          "codigo": "07-03",
-          "titulo": "03 Gestión de Tajos",
-          "items": []
-        },
-        {
-          "codigo": "07-04",
-          "titulo": "04 Mantenimiento de Equipos",
-          "items": []
-        },
-        {
-          "codigo": "07-05",
-          "titulo": "05 Certificaciones de Maquinaria",
-          "items": []
+          "titulo": "Registro de equipos - Excavadora CAT 320",
+          "ruta": "registros/07_Equipos_Maquinaria_Tajos/2025-09-19_registro-equipos_CAT-320.html",
+          "tags": ["equipos", "maquinaria", "excavadora", "registro"],
+          "fecha": "2025-09-19",
+          "estado": "Aprobado"
         }
       ]
     },
     {
       "codigo": "08",
       "titulo": "Calibración de Equipos",
-      "items": [],
-      "subcapitulos": [
+      "items": [
         {
-          "codigo": "08-01",
-          "titulo": "01 Calibración Laboratorio Obra",
-          "items": []
-        },
-        {
-          "codigo": "08-02",
-          "titulo": "02 Certificados de Calibración",
-          "items": []
-        },
-        {
-          "codigo": "08-03",
-          "titulo": "03 Plan de Calibración",
-          "items": []
-        },
-        {
-          "codigo": "08-04",
-          "titulo": "04 Equipos de Medición",
-          "items": []
-        },
-        {
-          "codigo": "08-05",
-          "titulo": "05 Registros de Calibración",
-          "items": [
-            {
-              "nombre": "Registro de Calibración de Equipos",
-              "tipo": "html",
-              "ruta": "docs/08_Calibracion_Equipos/registro-calibracion-equipos.html",
-              "descripcion": "Sistema completo de control de calibración de equipos con códigos automáticos, parámetros de medición, certificados y trazabilidad según normativas UNE-EN ISO 9001:2015"
-            }
-          ]
+          "titulo": "Certificado de calibración - Balanza digital",
+          "ruta": "registros/08_Calibracion/2025-09-15_calibracion-balanza-digital.html",
+          "tags": ["calibración", "balanza", "certificado", "equipos"],
+          "fecha": "2025-09-15",
+          "estado": "Aprobado"
         }
       ]
     },
     {
       "codigo": "09",
       "titulo": "Certificados y Materiales",
-      "items": [],
-      "subcapitulos": [
+      "items": [
         {
-          "codigo": "09-01",
-          "titulo": "01 Certificados y Política Calidad ASCH",
-          "items": []
+          "titulo": "Nafuflex Basic 1 – Presentación y DOP",
+          "ruta": "registros/09_Certificados_y_Materiales/2025-09-19_presentacion-nafuflex.html",
+          "tags": ["material", "impermeabilización", "DOP", "SDS", "TDS"],
+          "fecha": "2025-09-19",
+          "estado": "Aprobado"
         },
         {
-          "codigo": "09-02",
-          "titulo": "02 Materiales Estructurales",
-          "items": []
-        },
-        {
-          "codigo": "09-03",
-          "titulo": "03 Materiales de Construcción",
-          "items": []
-        },
-        {
-          "codigo": "09-04",
-          "titulo": "04 Materiales de Drenaje",
-          "items": []
-        },
-        {
-          "codigo": "09-05",
-          "titulo": "05 Materiales de Pavimentación",
-          "items": []
-        },
-        {
-          "codigo": "09-06",
-          "titulo": "06 Elementos Auxiliares",
-          "items": []
-        },
-        {
-          "codigo": "09-07",
-          "titulo": "07 Anexos y Documentación",
-          "items": []
+          "titulo": "Certificado de conformidad - Acero B500S",
+          "ruta": "registros/09_Certificados_y_Materiales/2025-09-18_certificado-acero-B500S.html",
+          "tags": ["certificado", "acero", "B500S", "conformidad"],
+          "fecha": "2025-09-18",
+          "estado": "Aprobado"
         }
       ]
     },
     {
       "codigo": "10",
-      "titulo": "No Conformidades",
-      "items": [],
-      "subcapitulos": [
+      "titulo": "No Conformidades y Acciones Correctivas",
+      "items": [
         {
-          "codigo": "10-01",
-          "titulo": "01 Informes Técnicos",
-          "items": []
-        },
-        {
-          "codigo": "10-02",
-          "titulo": "02 Listado NC",
-          "items": []
-        },
-        {
-          "codigo": "10-03",
-          "titulo": "03 No Conformidades",
-          "items": [
-            {
-              "nombre": "Gestión de No Conformidades",
-              "tipo": "html",
-              "ruta": "docs/14_No_Conformidades/gestion-no-conformidades-completo.html",
-              "descripcion": "Sistema completo de gestión de no conformidades con registro, análisis de causas, acciones correctivas, seguimiento y cierre, garantizando la mejora continua del sistema de calidad"
-            }
-          ]
-        },
-        {
-          "codigo": "10-04",
-          "titulo": "04 Anexos",
-          "items": []
-        },
-        {
-          "codigo": "10-05",
-          "titulo": "05 Acciones Correctivas",
-          "items": []
-        },
-        {
-          "codigo": "10-06",
-          "titulo": "06 Seguimiento y Control",
-          "items": []
-        },
-        {
-          "codigo": "10-07",
-          "titulo": "07 Registros de NC",
-          "items": []
+          "titulo": "No conformidad - Defecto en armadura PK 14+300",
+          "ruta": "registros/10_No_Conformidades/2025-09-17_no-conformidad-armadura_PK-14300.html",
+          "tags": ["no conformidad", "armadura", "defecto", "correctiva"],
+          "fecha": "2025-09-17",
+          "estado": "Aprobado"
         }
       ]
     },
     {
       "codigo": "11",
-      "titulo": "Control Calidad Asistencia",
-      "items": [],
-      "subcapitulos": [
+      "titulo": "Control de Calidad y Asistencia Técnica",
+      "items": [
         {
-          "codigo": "11-01",
-          "titulo": "01 Calibraciones",
-          "items": []
-        },
-        {
-          "codigo": "11-02",
-          "titulo": "02 Firmes",
-          "items": []
-        },
-        {
-          "codigo": "11-03",
-          "titulo": "03 Geotecnia",
-          "items": []
-        },
-        {
-          "codigo": "11-04",
-          "titulo": "04 Laboratorio",
-          "items": []
-        },
-        {
-          "codigo": "11-05",
-          "titulo": "05 Materiales",
-          "items": []
+          "titulo": "Informe de asistencia técnica - Cimentación PI 25+100",
+          "ruta": "registros/11_Control_Calidad_Asistencia/2025-09-16_asistencia-cimentacion_PI-25100.html",
+          "tags": ["asistencia", "técnica", "cimentación", "control"],
+          "fecha": "2025-09-16",
+          "estado": "Aprobado"
         }
       ]
     },
     {
       "codigo": "12",
       "titulo": "Cálculos y Notas Técnicas",
-      "items": [],
-      "subcapitulos": [
+      "items": [
         {
-          "codigo": "12-01",
-          "titulo": "01 Informes Técnicos",
-          "items": []
-        },
-        {
-          "codigo": "12-02",
-          "titulo": "02 Cálculos Estructurales",
-          "items": [
-            {
-              "nombre": "Cálculos y Notas Técnicas",
-              "tipo": "html",
-              "ruta": "docs/12_Calculos_Notas_Tecnicas/calculos-notas-tecnicas.html",
-              "descripcion": "Sistema completo de cálculos estructurales con verificaciones, armado calculado, notas técnicas y validación según normativas EHE-08, CTE-DB-SE y códigos de cálculo vigentes"
-            }
-          ]
-        },
-        {
-          "codigo": "12-03",
-          "titulo": "03 Notas Técnicas",
-          "items": []
-        },
-        {
-          "codigo": "12-04",
-          "titulo": "04 Estudios Geotécnicos",
-          "items": []
-        },
-        {
-          "codigo": "12-05",
-          "titulo": "05 Informes de Costos",
-          "items": []
-        },
-        {
-          "codigo": "12-06",
-          "titulo": "06 Documentación Técnica",
-          "items": []
+          "titulo": "Cálculo de cimentación - Viaducto PK 20+500",
+          "ruta": "registros/12_Calculos_y_Notas_Tecnicas/2025-09-15_calculo-cimentacion-viaducto_PK-20500.html",
+          "tags": ["cálculo", "cimentación", "viaducto", "técnico"],
+          "fecha": "2025-09-15",
+          "estado": "Aprobado"
         }
       ]
     },
     {
       "codigo": "13",
       "titulo": "Control Geométrico",
-      "items": [],
-      "subcapitulos": [
+      "items": [
         {
-          "codigo": "13-01",
-          "titulo": "01 Replanteos",
-          "items": [
-            {
-              "nombre": "Control Geométrico y Topográfico",
-              "tipo": "html",
-              "ruta": "docs/13_Control_Geometrico/control-geometrico-completo.html",
-              "descripcion": "Sistema completo de control geométrico con replanteos, mediciones topográficas, control de niveles, verificaciones de tolerancias y certificaciones geométricas según normativas técnicas aplicables"
-            }
-          ]
-        },
-        {
-          "codigo": "13-02",
-          "titulo": "02 Control de Niveles",
-          "items": []
-        },
-        {
-          "codigo": "13-03",
-          "titulo": "03 Mediciones Topográficas",
-          "items": []
-        },
-        {
-          "codigo": "13-04",
-          "titulo": "04 Planos de Obra",
-          "items": []
-        },
-        {
-          "codigo": "13-05",
-          "titulo": "05 Certificaciones Geométricas",
-          "items": []
-        },
-        {
-          "codigo": "13-06",
-          "titulo": "06 Registros de Control",
-          "items": []
+          "titulo": "Levantamiento topográfico - PK 16+000 a PK 18+000",
+          "ruta": "registros/13_Control_Geometrico/2025-09-14_levantamiento-topografico_PK-16000-18000.html",
+          "tags": ["topografía", "levantamiento", "geométrico", "control"],
+          "fecha": "2025-09-14",
+          "estado": "Aprobado"
         }
       ]
     },
     {
       "codigo": "14",
-      "titulo": "Control Planos",
-      "items": [],
-      "subcapitulos": [
+      "titulo": "Control de Planos",
+      "items": [
         {
-          "codigo": "14-01",
-          "titulo": "01 Planos de Proyecto",
-          "items": []
-        },
-        {
-          "codigo": "14-02",
-          "titulo": "02 Planos de Ejecución",
-          "items": []
-        },
-        {
-          "codigo": "14-03",
-          "titulo": "03 Modificaciones de Planos",
-          "items": []
-        },
-        {
-          "codigo": "14-04",
-          "titulo": "04 Planos As-Built",
-          "items": []
-        },
-        {
-          "codigo": "14-05",
-          "titulo": "05 Control de Versiones",
-          "items": []
-        },
-        {
-          "codigo": "14-06",
-          "titulo": "06 Archivo de Planos",
-          "items": []
+          "titulo": "Revisión de planos - Estructura PI 22+150",
+          "ruta": "registros/14_Control_Planos/2025-09-13_revision-planos-estructura_PI-22150.html",
+          "tags": ["planos", "revisión", "estructura", "control"],
+          "fecha": "2025-09-13",
+          "estado": "Aprobado"
         }
       ]
     },
     {
       "codigo": "15",
-      "titulo": "Laboratorio",
-      "items": [],
-      "subcapitulos": [
+      "titulo": "Laboratorio y Ensayos",
+      "items": [
         {
-          "codigo": "15-01",
-          "titulo": "01 Comparativos Laboratorio",
-          "items": []
+          "titulo": "PI 23+280 – Ensayo de placa y coeficiente k",
+          "ruta": "registros/15_Laboratorio/2025-09-18_PI-23280_placa-k.html",
+          "tags": ["placa", "k", "cimentación", "ensayo"],
+          "fecha": "2025-09-18",
+          "estado": "Aprobado"
         },
         {
-          "codigo": "15-02",
-          "titulo": "02 Equipo Tecnico - Laboratorio Obra",
-          "items": []
-        },
-        {
-          "codigo": "15-03",
-          "titulo": "03 Estudios de materiales",
-          "items": []
-        },
-        {
-          "codigo": "15-04",
-          "titulo": "04 Formulas de Trabajo",
-          "items": []
-        },
-        {
-          "codigo": "15-05",
-          "titulo": "05 Ensayos de obra - Actas y Informes",
-          "items": [
-            {
-              "nombre": "Acta de Ensayos de Obra - Laboratorio",
-              "tipo": "html",
-              "ruta": "docs/15_Laboratorio/acta-ensayos-obra-laboratorio.html",
-              "descripcion": "Sistema completo de actas de ensayos de laboratorio con resultados, certificación, conformidad y seguimiento según normativas UNE-EN aplicables"
-            }
-          ]
-        },
-        {
-          "codigo": "15-06",
-          "titulo": "06 Campañas complementarias de Laboratorio",
-          "items": []
-        },
-        {
-          "codigo": "15-07",
-          "titulo": "07 Aceros",
-          "items": []
-        },
-        {
-          "codigo": "15-08",
-          "titulo": "08 Hormigones",
-          "items": []
-        },
-        {
-          "codigo": "15-09",
-          "titulo": "09 Suelos",
-          "items": []
-        },
-        {
-          "codigo": "15-10",
-          "titulo": "10 Áridos",
-          "items": []
-        },
-        {
-          "codigo": "15-11",
-          "titulo": "11 Asfaltos",
-          "items": []
-        },
-        {
-          "codigo": "15-12",
-          "titulo": "12 Densidades",
-          "items": []
-        },
-        {
-          "codigo": "15-13",
-          "titulo": "13 Placas de Carga",
-          "items": []
-        },
-        {
-          "codigo": "15-14",
-          "titulo": "14 Deflexiones-IRI",
-          "items": []
-        },
-        {
-          "codigo": "15-15",
-          "titulo": "15 Sondeos",
-          "items": []
-        },
-        {
-          "codigo": "15-16",
-          "titulo": "16 Testigos",
-          "items": []
-        },
-        {
-          "codigo": "15-17",
-          "titulo": "17 Suelo-Cemento",
-          "items": []
-        },
-        {
-          "codigo": "15-18",
-          "titulo": "18 Suelo-Estabilizado",
-          "items": []
-        },
-        {
-          "codigo": "15-19",
-          "titulo": "19 Zahorras",
-          "items": []
-        },
-        {
-          "codigo": "15-20",
-          "titulo": "20 Aglomerado",
-          "items": []
-        },
-        {
-          "codigo": "15-21",
-          "titulo": "21 CRT",
-          "items": []
-        },
-        {
-          "codigo": "15-22",
-          "titulo": "22 Lotificación",
-          "items": []
-        },
-        {
-          "codigo": "15-23",
-          "titulo": "23 Prestamos",
-          "items": []
-        },
-        {
-          "codigo": "15-24",
-          "titulo": "24 Anexos",
-          "items": []
+          "titulo": "Ensayo de compactación - Suelo PK 17+500",
+          "ruta": "registros/15_Laboratorio/2025-09-17_ensayo-compactacion-suelo_PK-17500.html",
+          "tags": ["compactación", "suelo", "ensayo", "laboratorio"],
+          "fecha": "2025-09-17",
+          "estado": "Aprobado"
         }
       ]
     },
     {
       "codigo": "16",
       "titulo": "Documentación General",
-      "items": [],
-      "subcapitulos": [
+      "items": [
         {
-          "codigo": "16-01",
-          "titulo": "01 Actas de Reunión",
-          "items": [
-            {
-              "nombre": "Acta de Reunión de Obra",
-              "tipo": "html",
-              "ruta": "docs/16_Documentacion_General/acta-reunion-obra.html",
-              "descripcion": "Sistema completo de actas de reunión con participantes, agenda, decisiones, seguimiento y firmas según protocolos de gestión de obra"
-            }
-          ]
-        },
-        {
-          "codigo": "16-02",
-          "titulo": "02 Características Generales Obra",
-          "items": [
-            {
-              "nombre": "Características Generales de Obra",
-              "tipo": "html",
-              "ruta": "docs/16_Documentacion_General/caracteristicas-generales-obra.html",
-              "descripcion": "Documentación técnica completa del proyecto con especificaciones, materiales, equipos, personal y características técnicas según normativas de construcción"
-            }
-          ]
-        },
-        {
-          "codigo": "16-03",
-          "titulo": "03 Contactos Obra",
-          "items": [
-            {
-              "nombre": "Contactos de Obra",
-              "tipo": "html",
-              "ruta": "docs/16_Documentacion_General/contactos-obra.html",
-              "descripcion": "Directorio completo de contactos del proyecto con información de personal, emergencias, técnicos y responsables según protocolos de comunicación"
-            }
-          ]
-        },
-        {
-          "codigo": "16-04",
-          "titulo": "04 Distribución de Funciones",
-          "items": [
-            {
-              "nombre": "Distribución de Funciones de Obra",
-              "tipo": "html",
-              "ruta": "docs/16_Documentacion_General/distribucion-funciones-obra.html",
-              "descripcion": "Sistema de organización y asignación de responsabilidades con matriz de funciones, jerarquías y flujo de comunicación según protocolos de gestión organizacional"
-            }
-          ]
-        },
-        {
-          "codigo": "16-05",
-          "titulo": "05 Estructuración Obra",
-          "items": [
-            {
-              "nombre": "Estructuración de Obra",
-              "tipo": "html",
-              "ruta": "docs/16_Documentacion_General/estructuracion-obra.html",
-              "descripcion": "Documentación de organización y planificación estructural con elementos técnicos, materiales, equipos y planificación temporal según normativas de construcción"
-            }
-          ]
-        },
-        {
-          "codigo": "16-06",
-          "titulo": "06 Fotos Obra",
-          "items": [
-            {
-              "nombre": "Fotos de Obra",
-              "tipo": "html",
-              "ruta": "docs/16_Documentacion_General/fotos-obra.html",
-              "descripcion": "Sistema de registro fotográfico del proyecto con información técnica, condiciones meteorológicas y seguimiento visual según protocolos de documentación"
-            }
-          ]
-        },
-        {
-          "codigo": "16-07",
-          "titulo": "07 Hoja de Firmas",
-          "items": [
-            {
-              "nombre": "Hoja de Firmas de Obra",
-              "tipo": "html",
-              "ruta": "docs/16_Documentacion_General/hoja-firmas-obra.html",
-              "descripcion": "Sistema de registro de firmas y aprobaciones con seguimiento de firmantes, fechas y estados según protocolos de gestión documental"
-            }
-          ]
-        },
-        {
-          "codigo": "16-08",
-          "titulo": "08 Logotipos Obra",
-          "items": [
-            {
-              "nombre": "Logotipos de Obra",
-              "tipo": "html",
-              "ruta": "docs/16_Documentacion_General/logotipos-obra.html",
-              "descripcion": "Gestión de identidad visual del proyecto con especificaciones técnicas, paleta de colores, tipografía y guías de uso según estándares corporativos"
-            }
-          ]
-        },
-        {
-          "codigo": "16-09",
-          "titulo": "09 Organigrama",
-          "items": [
-            {
-              "nombre": "Organigrama de Obra",
-              "tipo": "html",
-              "ruta": "docs/16_Documentacion_General/organigrama-obra.html",
-              "descripcion": "Estructura organizacional del proyecto con jerarquías, dependencias y flujo de comunicación según protocolos de gestión de recursos humanos"
-            }
-          ]
-        },
-        {
-          "codigo": "16-10",
-          "titulo": "10 Registros",
-          "items": [
-            {
-              "nombre": "Registros de Obra",
-              "tipo": "html",
-              "ruta": "docs/16_Documentacion_General/registros-obra.html",
-              "descripcion": "Sistema de gestión de registros y documentación con seguimiento de estados, responsables y próximas acciones según protocolos de gestión documental"
-            }
-          ]
-        },
-        {
-          "codigo": "16-11",
-          "titulo": "11 Revisión de Contrato",
-          "items": [
-            {
-              "nombre": "Revisión de Contrato",
-              "tipo": "html",
-              "ruta": "docs/16_Documentacion_General/revision-contrato.html",
-              "descripcion": "Análisis y seguimiento contractual con revisión de cláusulas, análisis de cumplimiento y evaluación de riesgos según protocolos legales"
-            }
-          ]
+          "titulo": "Manual de procedimientos de calidad",
+          "ruta": "registros/16_Documentacion_General/2025-09-12_manual-procedimientos-calidad.html",
+          "tags": ["manual", "procedimientos", "calidad", "documentación"],
+          "fecha": "2025-09-12",
+          "estado": "Aprobado"
         }
       ]
     },
     {
       "codigo": "17",
-      "titulo": "Control Económico Calidad Obra",
-      "items": [],
-      "subcapitulos": [
+      "titulo": "Control Económico de Calidad",
+      "items": [
         {
-          "codigo": "17-01",
-          "titulo": "01 Propuestas y Presupuestos",
-          "items": [
-            {
-              "nombre": "Propuestas y Presupuestos",
-              "tipo": "html",
-              "ruta": "docs/17_Control_Economico_Calidad/propuestas-presupuestos.html",
-              "descripcion": "Gestión de propuestas comerciales y presupuestos con desglose detallado, condiciones comerciales y seguimiento de aprobaciones según protocolos de gestión comercial"
-            }
-          ]
-        },
-        {
-          "codigo": "17-02",
-          "titulo": "02 Facturas y Pagos",
-          "items": [
-            {
-              "nombre": "Facturas y Pagos",
-              "tipo": "html",
-              "ruta": "docs/17_Control_Economico_Calidad/facturas-pagos.html",
-              "descripcion": "Control de facturación y gestión de pagos con seguimiento de estados, métodos de pago y conciliación bancaria según protocolos financieros"
-            }
-          ]
-        },
-        {
-          "codigo": "17-03",
-          "titulo": "03 Contratos y Convenios",
-          "items": [
-            {
-              "nombre": "Contratos y Convenios",
-              "tipo": "html",
-              "ruta": "docs/17_Control_Economico_Calidad/contratos-convenios.html",
-              "descripcion": "Gestión contractual y convenios con seguimiento de estados, condiciones especiales y renovaciones según protocolos legales y comerciales"
-            }
-          ]
-        },
-        {
-          "codigo": "17-04",
-          "titulo": "04 Previsiones de Costes",
-          "items": [
-            {
-              "nombre": "Previsiones de Costes",
-              "tipo": "html",
-              "ruta": "docs/17_Control_Economico_Calidad/previsiones-costes.html",
-              "descripcion": "Control presupuestario y previsiones de costes con análisis de desviaciones, factores de riesgo y medidas correctivas según protocolos de gestión financiera"
-            }
-          ]
-        },
-        {
-          "codigo": "17-05",
-          "titulo": "05 Correspondencia y Emails",
-          "items": [
-            {
-              "nombre": "Correspondencia y Emails",
-              "tipo": "html",
-              "ruta": "docs/17_Control_Economico_Calidad/correspondencia-emails.html",
-              "descripcion": "Gestión de comunicaciones y correspondencia con seguimiento de estados, prioridades y respuestas según protocolos de comunicación empresarial"
-            }
-          ]
+          "titulo": "Análisis de costes de calidad - Septiembre 2025",
+          "ruta": "registros/17_Control_Economico_Calidad_Obra/2025-09-30_analisis-costes-calidad-septiembre.html",
+          "tags": ["costes", "calidad", "análisis", "económico"],
+          "fecha": "2025-09-30",
+          "estado": "Borrador"
         }
       ]
     },
     {
       "codigo": "18",
-      "titulo": "Normativas",
-      "items": [],
-      "subcapitulos": [
+      "titulo": "Normativas y Reglamentos",
+      "items": [
         {
-          "codigo": "18-01",
-          "titulo": "01 Código Estructural",
-          "items": [
-            {
-              "nombre": "Código Estructural",
-              "tipo": "html",
-              "ruta": "docs/18_Normativas/codigo-estructural.html",
-              "descripcion": "Sistema completo de gestión del Código Estructural con referencias normativas, criterios de diseño, aplicación de normativas y certificación según CTE y Eurocódigos"
-            }
-          ]
-        },
-        {
-          "codigo": "18-02",
-          "titulo": "02 EHE (Instrucción de Hormigón Estructural)",
-          "items": [
-            {
-              "nombre": "EHE - Instrucción de Hormigón Estructural",
-              "tipo": "html",
-              "ruta": "docs/18_Normativas/ehe-hormigon-estructural.html",
-              "descripcion": "Sistema completo de gestión EHE-08 con características del hormigón, armaduras, clases de exposición, criterios de diseño y certificación estructural"
-            }
-          ]
-        },
-        {
-          "codigo": "18-03",
-          "titulo": "03 Memoria Obra",
-          "items": [
-            {
-              "nombre": "Memoria de Obra",
-              "tipo": "html",
-              "ruta": "docs/18_Normativas/memoria-obra.html",
-              "descripcion": "Sistema completo de gestión de memoria técnica con estructura documental, contenido por capítulos, anexos, planos y documentación técnica del proyecto"
-            }
-          ]
-        },
-        {
-          "codigo": "18-04",
-          "titulo": "04 Normas UNE",
-          "items": [
-            {
-              "nombre": "Normas UNE",
-              "tipo": "html",
-              "ruta": "docs/18_Normativas/normas-une.html",
-              "descripcion": "Sistema completo de gestión de normativas UNE con referencias a UNE-EN ISO 9001:2015, UNE-EN 206, UNE-EN 10025, Eurocódigos y aplicación de normativas"
-            }
-          ]
-        },
-        {
-          "codigo": "18-05",
-          "titulo": "05 PG3 (Pliego General de Condiciones)",
-          "items": [
-            {
-              "nombre": "PG3 - Pliego General de Condiciones",
-              "tipo": "html",
-              "ruta": "docs/18_Normativas/pg3-pliego-general.html",
-              "descripcion": "Sistema completo de gestión PG3 con condiciones generales de contratación, aplicación de artículos, modificaciones y cumplimiento normativo"
-            }
-          ]
-        },
-        {
-          "codigo": "18-06",
-          "titulo": "06 Pliego de Obra",
-          "items": [
-            {
-              "nombre": "Pliego de Obra",
-              "tipo": "html",
-              "ruta": "docs/18_Normativas/pliego-obra.html",
-              "descripcion": "Sistema completo de gestión del pliego de obra con condiciones específicas del proyecto, aplicación de artículos y modificaciones contractuales"
-            }
-          ]
-        },
-        {
-          "codigo": "18-07",
-          "titulo": "07 SEST (Suelo Estabilizado)",
-          "items": [
-            {
-              "nombre": "SEST - Suelo Estabilizado",
-              "tipo": "html",
-              "ruta": "docs/18_Normativas/sest-suelo-estabilizado.html",
-              "descripcion": "Sistema completo de gestión SEST con normativa de suelos estabilizados, proceso de estabilización, control de calidad y certificación"
-            }
-          ]
+          "titulo": "Normativa EHE-08 - Instrucción de Hormigón Estructural",
+          "ruta": "registros/18_Normativas/2025-09-10_normativa-EHE-08.html",
+          "tags": ["normativa", "EHE-08", "hormigón", "estructural"],
+          "fecha": "2025-09-10",
+          "estado": "Aprobado"
         }
       ]
     },
     {
       "codigo": "19",
       "titulo": "Pruebas Finales",
-      "items": [],
-      "subcapitulos": [
+      "items": [
         {
-          "codigo": "19-01",
-          "titulo": "01 Pruebas de Carga",
-          "items": []
-        },
-        {
-          "codigo": "19-02",
-          "titulo": "02 Pruebas de Funcionalidad",
-          "items": []
-        },
-        {
-          "codigo": "19-03",
-          "titulo": "03 Pruebas de Seguridad",
-          "items": []
-        },
-        {
-          "codigo": "19-04",
-          "titulo": "04 Certificaciones Finales",
-          "items": []
-        },
-        {
-          "codigo": "19-05",
-          "titulo": "05 Informes de Pruebas",
-          "items": []
+          "titulo": "Prueba de carga - Viaducto PK 20+500",
+          "ruta": "registros/19_Pruebas_Finales/2025-09-25_prueba-carga-viaducto_PK-20500.html",
+          "tags": ["prueba", "carga", "viaducto", "final"],
+          "fecha": "2025-09-25",
+          "estado": "Borrador"
         }
       ]
     },
     {
       "codigo": "20",
-      "titulo": "Auditorías",
-      "items": [],
-      "subcapitulos": [
+      "titulo": "Auditorías de Calidad",
+      "items": [
         {
-          "codigo": "20-01",
-          "titulo": "01 Plan de Auditorias",
-          "items": [
-            {
-              "nombre": "Plan de Auditorías",
-              "tipo": "html",
-              "ruta": "docs/20_Auditorias/plan-auditorias.html",
-              "descripcion": "Sistema completo de planificación de auditorías con programación, criterios, metodología, recursos necesarios y seguimiento según UNE-EN ISO 9001:2015, ISO 14001:2015 e ISO 45001:2018"
-            }
-          ]
-        },
-        {
-          "codigo": "20-02",
-          "titulo": "02 Auditorias Internas",
-          "items": [
-            {
-              "nombre": "Auditoría Interna de Calidad",
-              "tipo": "html",
-              "ruta": "docs/13_Auditorias/auditoria-interna-completa.html",
-              "descripcion": "Sistema completo de auditoría interna con checklist, evaluación de procesos, identificación de no conformidades, observaciones y oportunidades de mejora según UNE-EN ISO 9001:2015"
-            }
-          ]
-        },
-        {
-          "codigo": "20-03",
-          "titulo": "03 Auditorias Externas",
-          "items": []
-        },
-        {
-          "codigo": "20-04",
-          "titulo": "04 Auditorias de Calidad",
-          "items": [
-            {
-              "nombre": "Auditorías de Proveedores - Calidad",
-              "tipo": "html",
-              "ruta": "docs/20_Auditorias/auditorias-proveedores-calidad.html",
-              "descripcion": "Sistema completo de auditorías de proveedores con evaluación de criterios de calidad, gestión de no conformidades, fortalezas y oportunidades de mejora según UNE-EN ISO 9001:2015"
-            }
-          ]
-        },
-        {
-          "codigo": "20-05",
-          "titulo": "05 Auditorias Ambientales",
-          "items": []
-        },
-        {
-          "codigo": "20-06",
-          "titulo": "06 Auditorias de Seguridad",
-          "items": [
-            {
-              "nombre": "Auditorías de Seguridad y Salud Laboral",
-              "tipo": "html",
-              "ruta": "docs/20_Auditorias/auditorias-seguridad.html",
-              "descripcion": "Sistema completo de auditorías de seguridad y salud laboral con evaluación de riesgos, gestión de no conformidades, fortalezas y oportunidades de mejora según UNE-EN ISO 45001:2018 y normativa española"
-            }
-          ]
-        },
-        {
-          "codigo": "20-07",
-          "titulo": "07 Informes de Auditoria",
-          "items": []
-        },
-        {
-          "codigo": "20-08",
-          "titulo": "08 Acciones Correctivas",
-          "items": []
-        },
-        {
-          "codigo": "20-09",
-          "titulo": "09 Seguimiento de NC",
-          "items": [
-            {
-              "nombre": "Seguimiento de No Conformidades - Sistema Integral",
-              "tipo": "html",
-              "ruta": "docs/20_Auditorias/seguimiento-nc.html",
-              "descripcion": "Sistema integral de seguimiento y control de no conformidades con análisis de causas raíz, plan de acción, verificación de efectividad y historial de seguimiento según UNE-EN ISO 9001:2015"
-            }
-          ]
-        },
-        {
-          "codigo": "20-10",
-          "titulo": "10 Certificaciones de Auditoria",
-          "items": [
-            {
-              "nombre": "Certificaciones de Auditoría - Sistema Integral",
-              "tipo": "html",
-              "ruta": "docs/20_Auditorias/certificaciones-auditoria.html",
-              "descripcion": "Sistema integral de gestión de certificaciones y acreditaciones con seguimiento, renovación, historial de auditorías y métricas automáticas según normativas ISO 9001:2015, ISO 14001:2015, ISO 45001:2018"
-            }
-          ]
+          "titulo": "Auditoría interna de calidad - Q3 2025",
+          "ruta": "registros/20_Auditorias/2025-09-28_auditoria-interna-Q3-2025.html",
+          "tags": ["auditoría", "interna", "calidad", "Q3"],
+          "fecha": "2025-09-28",
+          "estado": "Borrador"
         }
       ]
     },
     {
       "codigo": "21",
-      "titulo": "Informes y Seguimiento",
-      "items": [],
-      "subcapitulos": [
+      "titulo": "Informes Mensuales",
+      "items": [
         {
-          "codigo": "21-01",
-          "titulo": "01 Informes Mensuales",
-          "items": [
-            {
-              "nombre": "Informe de Seguimiento y Control de Calidad",
-              "tipo": "html",
-              "ruta": "docs/21_Informes_Seguimiento/informe-seguimiento-completo.html",
-              "descripcion": "Sistema integral de seguimiento con KPIs, control económico, calidad, seguridad, hitos y análisis de riesgos según normativas UNE-EN ISO 9001:2015, 14001:2015 y OHSAS 18001:2007"
-            }
-          ]
-        },
-        {
-          "codigo": "21-02",
-          "titulo": "02 Informes Trimestrales",
-          "items": []
-        },
-        {
-          "codigo": "21-03",
-          "titulo": "03 Informes Anuales",
-          "items": []
-        },
-        {
-          "codigo": "21-04",
-          "titulo": "04 Informes de Progreso de Obra",
-          "items": []
-        },
-        {
-          "codigo": "21-05",
-          "titulo": "05 Seguimiento de Hitos y Plazos",
-          "items": []
-        },
-        {
-          "codigo": "21-06",
-          "titulo": "06 Presentaciones de Gestión",
-          "items": []
-        },
-        {
-          "codigo": "21-07",
-          "titulo": "07 Cuadros de Mando y KPIs",
-          "items": []
-        },
-        {
-          "codigo": "21-08",
-          "titulo": "08 Informes de Desviaciones",
-          "items": []
+          "titulo": "Informe mensual de calidad - Septiembre 2025",
+          "ruta": "registros/21_Informes_Mensuales/2025-09-30_informe-mensual-septiembre.html",
+          "tags": ["informe", "mensual", "calidad", "septiembre"],
+          "fecha": "2025-09-30",
+          "estado": "Borrador"
         }
       ]
     }
