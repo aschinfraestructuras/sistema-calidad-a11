@@ -1,7 +1,14 @@
 {
-  "buildCommand": "echo 'Static site'",
+  "buildCommand": "echo 'Portal de Calidad ASCH-OHLA - UTE A11 - Versão Final 25/09/2025'",
   "outputDirectory": ".",
   "framework": null,
+  "version": 2,
+  "builds": [
+    {
+      "src": "**/*",
+      "use": "@vercel/static"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*\\.pdf)",
@@ -9,6 +16,23 @@
         {
           "key": "Content-Type",
           "value": "application/pdf"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        },
+        {
+          "key": "Pragma",
+          "value": "no-cache"
+        },
+        {
+          "key": "Expires",
+          "value": "0"
         }
       ]
     }

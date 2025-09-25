@@ -1,39 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>FORÇAR LIMPEZA DE CACHE</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORCE CLEAR CACHE - Portal de Calidad</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+            color: white;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        h1 { font-size: 3rem; margin-bottom: 20px; }
+        p { font-size: 1.2rem; margin-bottom: 30px; }
+        .btn {
+            background: #dc2626;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+        }
+        .btn:hover { background: #b91c1c; }
+    </style>
 </head>
 <body>
-    <h1>LIMPEZA FORÇADA DE CACHE</h1>
-    <script>
-        // Limpar TODOS os dados
-        console.log('🧹 LIMPEZA FORÇADA INICIADA...');
+    <div class="container">
+        <h1>🚀 FORCE CLEAR CACHE</h1>
+        <p>Portal de Calidad ASCH-OHLA - UTE A11</p>
+        <p>Versão: <strong>FINAL COMPLETA</strong></p>
+        <p>Data: <strong>25 Setembro 2025</strong></p>
         
-        // Limpar localStorage
-        localStorage.clear();
-        console.log('✅ localStorage limpo');
+        <a href="/" class="btn">🏠 Ir para Portal</a>
+        <a href="/sistema" class="btn">⚙️ Portal Sistema</a>
         
-        // Limpar sessionStorage  
-        sessionStorage.clear();
-        console.log('✅ sessionStorage limpo');
-        
-        // Limpar cache do navegador
-        if ('caches' in window) {
-            caches.keys().then(function(names) {
-                for (let name of names) {
-                    caches.delete(name);
-                    console.log('✅ Cache removido:', name);
-                }
-            });
-        }
-        
-        console.log('🎉 LIMPEZA COMPLETA!');
-        alert('Cache limpo! Recarregue a página (F5)');
-        
-        // Redirecionar para o sistema
-        setTimeout(() => {
-            window.location.href = '/';
-        }, 2000);
-    </script>
+        <script>
+            // Force clear cache
+            if ('caches' in window) {
+                caches.keys().then(function(names) {
+                    for (let name of names) {
+                        caches.delete(name);
+                    }
+                });
+            }
+            
+            // Clear localStorage
+            localStorage.clear();
+            sessionStorage.clear();
+            
+            console.log('🧹 Cache cleared!');
+            console.log('🚀 Portal de Calidad ASCH-OHLA - UTE A11');
+            console.log('📅 Versão Final: 25 Setembro 2025');
+        </script>
+    </div>
 </body>
 </html>
