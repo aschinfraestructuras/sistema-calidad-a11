@@ -36,8 +36,6 @@ class PortalCalidad {
 
         // Botões
         document.getElementById('uploadBtn').addEventListener('click', () => this.showUpload());
-        document.getElementById('dashboardBtn').addEventListener('click', () => this.showDashboard());
-        document.getElementById('addDocumentBtn').addEventListener('click', () => this.showUpload());
 
         // Upload
         document.getElementById('closeUploadModal').addEventListener('click', () => this.hideUpload());
@@ -129,13 +127,6 @@ class PortalCalidad {
     showDocuments() {
         document.getElementById('welcomeSection').classList.add('hidden');
         document.getElementById('documentsSection').classList.remove('hidden');
-    }
-
-    showDashboard() {
-        document.getElementById('welcomeSection').classList.remove('hidden');
-        document.getElementById('documentsSection').classList.add('hidden');
-        document.querySelectorAll('.chapter-item').forEach(item => item.classList.remove('active'));
-        this.updateStats();
     }
 
     updateBreadcrumb(section) {
@@ -307,7 +298,6 @@ class PortalCalidad {
     async handleUpload() {
         const title = document.getElementById('documentTitle').value.trim();
         const chapter = document.getElementById('documentChapter').value;
-        const tags = document.getElementById('documentTags').value.trim();
         const file = document.getElementById('fileInput').files[0];
 
         if (!title || !chapter || !file) {
@@ -316,13 +306,10 @@ class PortalCalidad {
         }
 
         try {
-            this.showLoading(true);
-            
             const doc = {
                 id: 'uploaded_' + Date.now(),
                 titulo: title,
                 chapter: chapter,
-                tags: tags ? tags.split(',').map(t => t.trim()) : [],
                 fileName: file.name,
                 fileSize: file.size,
                 fileType: file.type,
@@ -343,8 +330,6 @@ class PortalCalidad {
         } catch (error) {
             console.error('❌ Erro:', error);
             this.showToast('Error al subir', 'error');
-        } finally {
-            this.showLoading(false);
         }
     }
 
@@ -457,13 +442,9 @@ class PortalCalidad {
     updateStats() {
         const total = this.getTotalCount();
         const uploaded = this.uploadedDocuments.length;
-        const recent = this.getRecentCount();
 
         document.getElementById('totalDocuments').textContent = total;
         document.getElementById('uploadedDocuments').textContent = uploaded;
-        document.getElementById('recentDocuments').textContent = recent;
-        document.getElementById('totalDocs').textContent = total;
-        document.getElementById('uploadedDocs').textContent = uploaded;
     }
 
     getTotalCount() {
@@ -474,20 +455,6 @@ class PortalCalidad {
             });
         }
         return count + this.uploadedDocuments.length;
-    }
-
-    getRecentCount() {
-        const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-        return this.uploadedDocuments.filter(doc => new Date(doc.uploadDate) > weekAgo).length;
-    }
-
-    showLoading(show) {
-        const spinner = document.getElementById('loadingSpinner');
-        if (show) {
-            spinner.classList.remove('hidden');
-        } else {
-            spinner.classList.add('hidden');
-        }
     }
 
     showToast(message, type = 'info') {
