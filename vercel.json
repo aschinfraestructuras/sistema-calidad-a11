@@ -39,6 +39,10 @@
   ],
   "rewrites": [
     {
+      "source": "/sistema",
+      "destination": "/sistema.html"
+    },
+    {
       "source": "/((?!docs|assets|data|registros|.*\\.html|.*\\.pdf|.*\\.json|.*\\.js|.*\\.css).*)",
       "destination": "/index.html"
     }
